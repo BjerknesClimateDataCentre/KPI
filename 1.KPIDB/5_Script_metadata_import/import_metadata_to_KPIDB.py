@@ -3,7 +3,7 @@
 ####################################
 
 ### Description:
-# This script reads the file received from the CP (called 'update file') containing 
+# This script reads the file received from the CP (called 'update file') containing
 # metadata updates, and imports them to the KPIDB (Key Performanice Indicators Database).
 
 # The csv file we get from CP will have headers:
@@ -62,9 +62,9 @@ order_dict = {
 # If the 'type' is not in our defined 'order_dict' we do not need this info in the KPIDB,
 # and we assign the order '999' (for easy removal in the next step).
 for dictionary in updates:
-	current_type = dictionary["Type"] 
+	current_type = dictionary["Type"]
 	dictionary['order'] = order_dict.get(current_type, 999)
-	
+
 # Remove the list items where order-value is 999
 updates[:] = [dictionary for dictionary in updates if dictionary.get('order') != 999]
 
