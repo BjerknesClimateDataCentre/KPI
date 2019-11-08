@@ -6,17 +6,18 @@ Creating Key Performance Indicators for the marine ICOS data
 The Ocean Thematic Centre (OTC) wish to create some Key Performance Indicators (KPI) for the marine ICOS data. These will give some insight into how the stations, sensors and instruments perform over time. The KPIs will basically be various plots which we imagine will show things like data frequency, how often a sensor fails, and how QC is performed etc. over various time scales. The exact list of plots have not yet been decided.
 
 We will setup a system so that various reports based on the KPIs plots can be made on the fly (possibly with an easy to use GUI). The reports we have in mind includes (but are not limited to):
-* station reports: giving insight into how a station has performed since entering ICOS. These are of interest to the Station PIs
-* annual reports: showing how the marine stations have perfomed in the last year. OTC can include these in their annual reports to stakeholders such as NFR and the Head Office.
-* sensor reports: combining statistics on a specific sensor type across the stations. These are relevant for the manufacturers.
-* country reports: how does the stations from a specific counry perform. Of interest to the countries focal point and their funders.
-* QuinCe report: can show how people QC their data, and shed light on weaknesses in the QC system, and possibly detect if QC is not performed in a similar way. This is of interest to the OTC and the further software development.
+* **station reports**: giving insight into how a station has performed since entering ICOS. These are of interest to the Station PIs
+* **annual reports**: showing how the marine stations have perfomed in the last year. OTC can include these in their annual reports to stakeholders such as NFR and the Head Office.
+* **sensor reports**: combining statistics on a specific sensor type across the stations. These are relevant for the manufacturers.
+* **country reports**: how does the stations from a specific counry perform. Of interest to the countries focal point and their funders.
+* **QuinCe report**: can show how people QC their data, and shed light on weaknesses in the QC system, and possibly detect if QC is not performed in a similar way. This is of interest to the OTC and the further software development.
 
 The tasks involved in creating the KPIs can be broken down to:
 1.	Create a KPI Database (KPIDB) containing all information we will need to create the KPIs
 2.	Create the KPI plots
 3.	Create the reports
 4.	GUI
+
 The rest of this document will describe these three steps and their sub-steps in detail.
 
 
