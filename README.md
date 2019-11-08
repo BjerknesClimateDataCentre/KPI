@@ -28,7 +28,7 @@ The KPIDB will be a synchronized simplified database containing the information 
 
 ### 1.1 Structure of the KPIDB ###
 KPIDB is a relational database created in Sqlite. See a sketch of the tables, their content and their links in the powerpoint file ‘KPIDB_sketch_v1.pptx’.
-This database structure was set up in an sqlite database. See the SQL script ‘KPIDB_create_emptyTables’ for how this was created. An empty KPIDB are also stored, named: ‘KPIDB_emptyTables.db’.
+This database structure was set up in an sqlite database. See the SQL script [KPIDB_schema.sql](/1.KPIDB/3_KPIDB_sql_schema) for how this was created.
 
 
 ### 1.2	Extracting metadata updates from the Carbon Portal ###
