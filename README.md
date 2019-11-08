@@ -22,7 +22,7 @@ The rest of this document will describe these three steps and their sub-steps in
 
 ## 1. Create the KPI Database (KPIDB) ##
 
-The KPIDB will be a synchronized simplified database containing the information needed to create the KPIs. It will rely on metadata from the 'OTC metadata entry' at the Carbon Portal, and QC statistics from QuinCe.
+The KPIDB will be a synchronized simplified database containing the information needed to create the KPIs. It will rely on metadata from the [OTC metadata entry](https://meta.icos-cp.eu/edit/otcentry/) at the Carbon Portal, and QC statistics from QuinCe.
 
 
 ### 1.1 Structure of the KPIDB ###
