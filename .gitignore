@@ -34,3 +34,8 @@ vignettes/*.pdf
 
 # Ignore sqlite database files
 *.db
+
+# Ignore some folders
+/Diverse
+/2.KPI_plots
+
