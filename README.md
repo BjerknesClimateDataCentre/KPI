@@ -23,17 +23,16 @@ The rest of this document will describe these three steps and their sub-steps in
 
 ## 1. Create the KPI Database (KPIDB) ##
 
-The KPIDB will be a synchronized simplified database containing the information needed to create the KPIs. It will rely on metadata from the [OTC metadata entry](https://meta.icos-cp.eu/edit/otcentry/) at the Carbon Portal, and QC statistics from QuinCe.
+The KPIDB will be a synchronized simplified database containing the information needed to create the KPIs. It will rely on metadata from the [ICOS OTC metadata entry](https://meta.icos-cp.eu/edit/otcentry/) at the Carbon Portal, and QC statistics from QuinCe.
 
 
-### 1.1 Structure of the KPIDB ###
-KPIDB is a relational database created in Sqlite. See a sketch of the tables, their content and their links in the powerpoint file ‘KPIDB_sketch_v1.pptx’.
-This database structure was set up in an sqlite database. See the SQL script [KPIDB_schema.sql](/1.KPIDB/3_KPIDB_sql_schema) for how this was created.
+#### 1.1 Structure of the KPIDB ####
+KPIDB is a relational database created in Sqlite. See a sketch of the tables, their content and their links in the powerpoint file [KPIDB_sketch_v1.pptx](/1.KPIDB/1_KPIDB_sketch).
+This database schema was set up in an sqlite database. See the SQL script [KPIDB_schema.sql](/1.KPIDB/3_KPIDB_sql_schema) for how this was created.
 
 
-### 1.2	Extracting metadata updates from the Carbon Portal ###
-The KPIs will somehow need to have access to the marine metadata which we currently are keeping up to date in the 'ICOS OTC metadata entry', a relational database at the CP servers. To avoid duplicating our efforts, and risk conflicting metadata, we wish to extract these metadata from the OTC metadata entry.
-A python script will daily requests for updates in the OTC metadata entry since our last request. We will only need the updates since we plan to store this information in a more simplified metadata database for the purpose of the KPIs (more on this later). We wish that the output from such a request is a csv file with header:
+#### 1.2	Extracting metadata updates from the Carbon Portal ####
+The KPIs will somehow need to have access to the marine metadata which we currently are keeping up to date in the [ICOS OTC metadata entry](https://meta.icos-cp.eu/edit/otcentry/), a relational database at the CP servers. To avoid duplicating our efforts, and risk conflicting metadata, we wish to extract these metadata from the OTC metadata entry. A python script will daily requests for updates in the OTC metadata entry since our last request. We will only need the updates since we plan to store this information in the KPIDB. We wish that the output from such a request is a csv file with header:
 type,id,field,value,link_type,link_id
 type - which type has been changed
 id - what is the id of the entry that changed (the last bit of the URL)
@@ -60,17 +59,18 @@ Assumed Role,skjelvan_gosars,role kind,Principal investigator,NA,NA
 Assumed Role,skjelvan_gosars,role's organization,R/V G.O.Sars,Station,RV_G.O.Sars
 
 
-### 1.3	Importing metadata to the KPIDB ###
-The python script ‘import_metadata_to_KPIDB.py’ will import the csv file requested from the CP, and export the metadata to the KPIDB.
-In order to do this, we first need to know how the structure of the OTC metadata entry database compares to the KPIDB we will create. The structure of the ‘OTC metadata entry’ and the KPIDB is similar, but not the same. Their similarities and differences had to be mapped in detail in order to convert from one to the other. The powerpoint file ‘compare_databases.pptx’ gives an overview of the structural differences, while the excel sheet ‘linking_databases.xlsx’ shows the conversions from one database to the other database in detail.
-More about this …?
+#### 1.3	Importing metadata to the KPIDB ####
+The python script [import_metadata_to_KPIDB.py](/1.KPIDB/5_Script_metadata_import) will import the csv file requested from the CP, and export the metadata to the KPIDB.
+In order to do this, we first need to know how the structure of the OTC metadata entry database compares to the KPIDB we will create. The structure of the ‘OTC metadata entry’ and the KPIDB is similar, but not the same. Their similarities and differences had to be mapped in detail in order to convert from one to the other. The powerpoint file [compare_databases.pptx](/1.KPIDB/2_KPIDB_VS_OTCMetadataEntry) gives an overview of the structural differences, while the excel sheet [linking_databases.xlsx](/1.KPIDB/2_KPIDB_VS_OTCMetadataEntry) shows the conversions from one database to the other database in detail.
+
+More about this to come…
 
 
-### 1.4	Extracting QC stats from QuinCe ###
+#### 1.4	Extracting QC stats from QuinCe ####
 To come…
 
 
-### 1.5	Extracting QC stats from QuinCe ###
+#### 1.5	Extracting QC stats from QuinCe ####
 To come…
 
 
