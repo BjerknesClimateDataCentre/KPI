@@ -11,7 +11,7 @@
 
 ### How to run the script
 # import os
-# os.chdir("C:/Users/cla023/MyFiles/Projects/ICOS_KPIs/1.KPIDB/4_Script_metadata_import")
+# os.chdir("C:/Users/cla023/MyFiles/Projects/KPI/1.KPIDB/5_Script_metadata_import")
 # exec(open("import_metadata_to_KPIDB.py").read())
 
 
