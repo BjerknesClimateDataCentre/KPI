@@ -1,0 +1,18 @@
+We record all the fact changes separately in a log. I have attached the current complete content of such a log for the OTC metadata, exported to a CSV file. The columns are:
+
+
+id - the sequential number of the change
+
+tstamp - time stamp for when the change has occurred
+
+ASSERTION - whether the change is an addition of a fact (i.e. assertion) or a removal (i.e. retraction): t for "true", f for "false"
+
+TYPE - type of statement: 1 for literal values (can be strings, date, numbers), 0 for values which are themselves resources
+
+SUBJECT - the resource that the statement is about
+
+PREDICATE - the property that the statement claims the subject to have
+
+OBJECT - the value of the property that the subject has
+
+LITATTR - for the cases of TYPE 1 statements, the XML Schema type of the literal value (e.g. xsd:string, xsd:dateTime, xsd:float), empty otherwise
