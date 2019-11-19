@@ -39,3 +39,5 @@ vignettes/*.pdf
 /Diverse
 /2.KPI_plots
 
+# Ignore python cache
+__pycache__
