@@ -1,36 +1,29 @@
-####################################
-### IMPORT METADATA TO THE KPIDB ###
-####################################
+###############################################################################
+### FUNCTION TO READ AND CLEANUP METADATA FILE FROM THE CP                  ###
+###############################################################################
 
 ### Description:
-# This script reads the file received from the CP (called 'update file')
-# containing metadata updates, and imports them to the KPIDB (Key Performanice
-# Indicators Database).
+# This function reads the file received from the CP containing metadata updates.
+# It returns the cleaned up metadata.
 
 # The csv file we get from CP will have headers:
-# Type,id,field,value,link_type,link_id
+# more....
 
-### How to run the script
-# import os
-# os.chdir("C:/Users/cla023/MyFiles/Projects/KPI/1.KPIDB/5_Script_metadata_import")
-# exec(open("import_metadata_to_KPIDB.py").read())
-
-
-#---------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 ### IMPORT PACKAGES ###
 import csv
 
-#---------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 ### READ THE UPDATES FILE ###
 
 # Read the update file and save the result in 'update_file'.
 # Add "newline=''" so that we do not mistake a line break as a new row.
 
-
 def import_data(filename):
 	with open(filename, newline='') as update_file:
-		# The csv.DictReader converts lines in the csv file to python dictionaries.
-		# The keys are their corresponding header in the first line.
+		# The csv.DictReader converts lines in the csv file to python
+		# dictionaries. The keys are their corresponding header in the first
+		# line.
 		updates_reader = csv.DictReader(update_file, delimiter=',')
 		# Store the dictionaries in a list
 		updates=[]
@@ -39,10 +32,16 @@ def import_data(filename):
 
 
 	#---------------------------------------------------------------------------
+	### ADD THE TYPE USING SPARQL ###
+
+
+
+	#---------------------------------------------------------------------------
 	### CLEANUP THE UPDATES FILE ###
 
-	# Import to the KPIDB needs to happen in a certain order. E.g. need to import a new
-	# person (from 'person' table) before we can import their role (from 'Assumed role' table).
+	# Import to the KPIDB needs to happen in a certain order. E.g. need to
+	# import a new person (from 'person' table) before we can import their role
+	# (from 'Assumed role' table).
 
 	# The order to sort - by Type - is:
 	order_dict = {
@@ -61,8 +60,9 @@ def import_data(filename):
 		'Instrument Deployment':13}
 
 	# Loop through the list of dictionaries, and add an 'order' key-value.
-	# If the 'type' is not in our defined 'order_dict' we do not need this info in the KPIDB,
-	# and we assign the order '999' (for easy removal in the next step).
+	# If the 'type' is not in our defined 'order_dict' we do not need this info
+	# in the KPIDB, and we assign the order '999' (for easy removal in the next
+	# step).
 	for dictionary in updates:
 		current_type = dictionary["Type"]
 		dictionary['order'] = order_dict.get(current_type, 999)
@@ -76,12 +76,3 @@ def import_data(filename):
 	updates = sorted(updates,key=lambda i:i['order'])
 
 	return updates
-
-
-
-	#---------------------------------------------------------------------------
-	### IMPORT UPDATES TO KPIDB ###
-
-	# Create a function which imports.
-	# Input is the dictionary items? Or type vs. KPIDB table name???? Need to think about this.
-	# Alternative, create a config file with conversions..'
