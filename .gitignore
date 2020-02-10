@@ -41,6 +41,7 @@ vignettes/*.pdf
 /1.KPIDB_onhold
 /3.Reports
 /4.GUI
+/Script/data_files
 
 # Ignore python cache
 __pycache__
