@@ -38,6 +38,9 @@ vignettes/*.pdf
 # Ignore some folders
 /Diverse
 /2.KPI_plots
+/1.KPIDB
+/3.Reports
+/4.GUI
 
 # Ignore python cache
 __pycache__
