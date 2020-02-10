@@ -38,7 +38,7 @@ vignettes/*.pdf
 # Ignore some folders
 /Diverse
 /2.KPI_plots
-/1.KPIDB
+/1.KPIDB_onhold
 /3.Reports
 /4.GUI
 
