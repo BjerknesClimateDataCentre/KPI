@@ -42,6 +42,7 @@ vignettes/*.pdf
 /3.Reports
 /4.GUI
 /Script/data_files
+/Script/output
 
 # Ignore python cache
 __pycache__
