@@ -13,11 +13,8 @@
 
 import quince_kpi as kpi
 import os
-
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-# import seaborn as sns    # Do I need this???
+import shutil
 
 
 ###----------------------------------------------------------------------------
@@ -37,8 +34,13 @@ for directory in directories:
 data_dir = os.path.join(script_dir,'data_files')
 output_dir = os.path.join(script_dir,'output')
 
+# !! While working on script: Cleanup content in output directory
+old_plots = os.listdir(output_dir)
+for plot in old_plots:
+	os.remove(os.path.join(output_dir, plot))
 
-###----------------------------------------------------------------------------
+
+###---------------------------------------------------------------------------
 ### Identify datasets
 ###----------------------------------------------------------------------------
 
@@ -49,6 +51,9 @@ output_dir = os.path.join(script_dir,'output')
 
 # Store the file names from the data direcotry in a list
 data_files = os.listdir(data_dir)
+
+# !!! Create document, write header and include the boat and temporal coverage,
+# plus other things we can extract from the data. E.g. map...
 
 
 ###----------------------------------------------------------------------------
@@ -102,12 +107,13 @@ parameters = kpi.get_parameters(df)
 
 
 # Plot one variable
+colname = "H2O Mole Fraction [umol mol-1]"
+#new_df = df.iloc[:20000]
 
-df_pco2_noNaN = df.dropna(subset=['pCO2 [uatm]'])
-df_pco2_noNaN.plot(kind='scatter', y='pCO2 [uatm]', x='Date/Time')
-plt.savefig(output_dir + '/pco2.png')
-
-
+#kpi.show_data(colname=colname, df=df, output_dir=output_dir)
 
 
+# Plot 'show_data' KPI for all variables:
+for parameter in parameters:
+	kpi.show_data(colname=parameter, df=df, output_dir=output_dir)
 
