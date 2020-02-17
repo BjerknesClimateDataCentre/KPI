@@ -9,6 +9,8 @@ verify_ssl = true
 requests = "*"
 pandas = "*"
 matplotlib = "*"
+pdfkit = "*"
+jinja2 = "*"
 
 [requires]
 python_version = "3.7"

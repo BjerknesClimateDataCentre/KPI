@@ -15,9 +15,9 @@ import quince_kpi as kpi
 import os
 import json
 import pandas as pd
-import jinja2
+from jinja2 import FileSystemLoader, Environment
 import pdfkit
-import wkhtmltopdf
+
 
 
 ###----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ for file in data_files:
 
 
 ###---------------------------------------------------------------------------
-### Initialise report and add basic information
+### Extract basic information
 ###----------------------------------------------------------------------------
 
 # Identify data level from filename
@@ -100,9 +100,6 @@ df_end = df['Date/Time'][len(df)-1]
 # Get the parameter names and units for current df
 parameters = kpi.get_parameters(df)
 
-#------
-#http://zetcode.com/python/jinja/
-
 
 ###----------------------------------------------------------------------------
 ### KPI: plot data
@@ -122,5 +119,18 @@ parameters = kpi.get_parameters(df)
 ### Finalise report
 ###----------------------------------------------------------------------------
 
-# Create the pdf in the output directory
-pdf.output('output/tuto1.pdf', 'F')
+# Load the html template
+templateLoader = FileSystemLoader("templates")
+templateEnv = Environment(loader=templateLoader)
+template = templateEnv.get_template("base.html")
+
+# Create the html string
+html_string = template.render(station=station,
+	df_start=df_start,
+	df_end=df_end
+	)
+
+# Write the html string to file and convert to pdf
+with open('output/report.html','w') as f:
+	f.write(html_string)
+pdfkit.from_file('output/report.html', 'output/report.pdf')
