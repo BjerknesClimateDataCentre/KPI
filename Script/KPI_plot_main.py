@@ -1,5 +1,5 @@
 ###############################################################################
-###  MAIN SCRIPT FOR MAKING KPI PLOTS                                       ###
+###  MAIN SCRIPT FOR MAKING KPI REPORTS                                     ###
 ###############################################################################
 
 
@@ -13,8 +13,11 @@
 
 import quince_kpi as kpi
 import os
+import json
 import pandas as pd
-import shutil
+import jinja2
+import pdfkit
+import wkhtmltopdf
 
 
 ###----------------------------------------------------------------------------
@@ -40,80 +43,84 @@ for plot in old_plots:
 	os.remove(os.path.join(output_dir, plot))
 
 
-###---------------------------------------------------------------------------
-### Identify datasets
+###----------------------------------------------------------------------------
+### Extract information from the config file
 ###----------------------------------------------------------------------------
 
-# !!! Create a function which reads all filenames in data direcotry and
-# extracts their vessel and data level info from the filename. Output is a list
-# of dictionaries. This will determine how the files are combined and how to
-# loop the KPIs plot creations.
+with open ('./config.json') as file:
+	configs = json.load(file)
+station_code = configs['station_code']
+data_levels = configs['data_levels']
 
+
+###---------------------------------------------------------------------------
+### Identify / extract / import (???) datasets
+###----------------------------------------------------------------------------
+
+# !!! This section cannot be completed before we know how the script will
+# extract/receive data from QuinCe.
+
+# !!! Suggestion: Create a function which reads all filenames in data direcotry
+# and extracts their vessel and data level info from the filename. Output is a
+# list of dictionaries. This will determine how the files are combined and how
+# to loop the KPIs plot creations.
+#-----------
+
+# !!! For now:
 # Store the file names from the data direcotry in a list
 data_files = os.listdir(data_dir)
 
-# !!! Create document, write header and include the boat and temporal coverage,
-# plus other things we can extract from the data. E.g. map...
-
-
-###----------------------------------------------------------------------------
-### Import data, set date time, and extract parameters
-###----------------------------------------------------------------------------
-
 # Loop through all files in data directory and read data into 'df'
+# !!! Currenlty this only works with one file!
 # !!! If more than one file: add the df's together (NaN's if some cols missing)
 for file in data_files:
 	data_path = os.path.join(data_dir, file)
 	df = pd.read_csv(data_path, low_memory=False)
 
-# Set the timestamp column
+
+###---------------------------------------------------------------------------
+### Initialise report and add basic information
+###----------------------------------------------------------------------------
+
+# Identify data level from filename
+for level in data_levels:
+	if level in data_files[0]:
+		data_level=level
+
+# Identify station name from filename
+for station_name, station_code in station_code.items():
+	if station_code in data_files[0]:
+		station = station_name
+
+# Set the timestamp column, and extract start and end date
 kpi.set_datetime(df)
+df_start = df['Date/Time'][0]
+df_end = df['Date/Time'][len(df)-1]
 
 # Get the parameter names and units for current df
 parameters = kpi.get_parameters(df)
 
+#------
+#http://zetcode.com/python/jinja/
+
 
 ###----------------------------------------------------------------------------
-### Make KPI plots
-###----------------------------------------------------------------------------
-
-#-------------
-# USefull stuff:
-#--------
-
-# Get all unique values for a column:
-# df['Colname'].unique()
-
-# Remove rows with NaN/'empty'
-# df = df.dropna(subset=['pCO2 [uatm]'])
-
-# Group data:
-# group_by_QCFlag = df.groupby(by=['colname QC Flag'])
-
-# Get average and count after grouping:
-# flag_average = group_by_QCFlag.mean()
-# flag_count = group_by_QCFlag.count()
-
-# Plot function - plot() with parameters:
-# kind - bar, barh, pie, scatter, kde
-# color - in hex codes
-# linestyle - solid, dotted, dashed
-# xlim, ylim
-# legend - true or false
-# labels - list corresponding to the number of cols in data frame
-# title - a string
-#------------
-
-
+### KPI: plot data
+###---------------------------------------------------------)-------------------
 
 # Plot one variable
-colname = "H2O Mole Fraction [umol mol-1]"
-#new_df = df.iloc[:20000]
-
+#colname = "H2O Mole Fraction [umol mol-1]"
 #kpi.show_data(colname=colname, df=df, output_dir=output_dir)
 
 
-# Plot 'show_data' KPI for all variables:
-for parameter in parameters:
-	kpi.show_data(colname=parameter, df=df, output_dir=output_dir)
+# Plot 'plot_data' KPI for all variables:
+#for parameter in parameters:
+#	kpi.plot_data(colname=parameter, df=df, output_dir=output_dir, cleaned=True)
 
+
+###----------------------------------------------------------------------------
+### Finalise report
+###----------------------------------------------------------------------------
+
+# Create the pdf in the output directory
+pdf.output('output/tuto1.pdf', 'F')
