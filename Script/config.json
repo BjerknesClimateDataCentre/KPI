@@ -1,0 +1,10 @@
+{
+    "station_code": {
+    	"Nuka Arctica": "26NA",
+    	"G.O. Sars": "58GS"
+    },
+    "data_levels" : [
+    	"NRT",
+    	"L2"
+    ]
+}
