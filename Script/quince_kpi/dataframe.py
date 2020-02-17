@@ -31,4 +31,3 @@ def get_parameters(df):
 	#		parameters[name] = unit
 
 	return parameters
-
