@@ -100,19 +100,25 @@ df_end = df['Date/Time'][len(df)-1]
 # Get the parameter names and units for current df
 parameters = kpi.get_parameters(df)
 
+# Create a dictionary which will be filled with information used in the report
+render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
+			 'df_end':df_end, 'parameters':parameters}
+
 
 ###----------------------------------------------------------------------------
 ### KPI: plot data
 ###---------------------------------------------------------)-------------------
 
-# Plot one variable
-#colname = "H2O Mole Fraction [umol mol-1]"
-#kpi.show_data(colname=colname, df=df, output_dir=output_dir)
 
+# Plot data
+#colnames = parameters
+colnames = ['H2O Mole Fraction [umol mol-1]',
+ 			'Instrument Ambient Pressure [hPa]',
+ 			'Atmospheric Pressure [hPa]',
+ 			'Temp [degC]']
 
-# Plot 'plot_data' KPI for all variables:
-#for parameter in parameters:
-#	kpi.plot_data(colname=parameter, df=df, output_dir=output_dir, cleaned=True)
+render_dict['filenames'] = kpi.plot_data(colnames=colnames, df=df,
+									output_dir=output_dir)
 
 
 ###----------------------------------------------------------------------------
@@ -122,15 +128,18 @@ parameters = kpi.get_parameters(df)
 # Load the html template
 templateLoader = FileSystemLoader("templates")
 templateEnv = Environment(loader=templateLoader)
-template = templateEnv.get_template("base.html")
+template = templateEnv.get_template("base.html.jinja")
 
 # Create the html string
-html_string = template.render(station=station,
-	df_start=df_start,
-	df_end=df_end
-	)
+html_string = template.render(render_dict)
 
 # Write the html string to file and convert to pdf
 with open('output/report.html','w') as f:
 	f.write(html_string)
 pdfkit.from_file('output/report.html', 'output/report.pdf')
+
+
+
+# LEs denne!
+#https://jinja.palletsprojects.com/en/2.11.x/templates/
+
