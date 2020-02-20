@@ -41,22 +41,27 @@ def plot_data(colnames, df, output_dir, cleaned=False):
 				ax.scatter(x=limited_df['Date/Time'], y=limited_df[colname],
 					c=col, label=flag, alpha=0.7, edgecolors='none', marker='.')
 			ax.legend(fontsize=11)
-			ax.set_title(letters[letter_count] + ')', loc='left', fontsize=15,
-				fontweight="bold")
+
 
 		else:
 			limited_df = df[df[color_column]==2]
 			ax.scatter(x=limited_df['Date/Time'], y=limited_df[colname],
 				c='green', alpha=0.7, edgecolors='none', marker='.')
 
-		# Make axis sideways, add axis labels, and grid
+		# Make axis sideways, add axis labels, grid and lettering
 		fig.autofmt_xdate()
 		plt.xlabel('Date/Time', fontsize=13)
 		plt.ylabel(colname, fontsize=13)
 		ax.grid(True)
+		if len(colnames) > 1:
+			ax.set_title(letters[letter_count] + ')', loc='left', fontsize=15,
+				fontweight="bold")
 
 		# Save plot to file
-		filename = colname.split(' [')[0] + '.png'
+		if cleaned is True:
+			filename = colname.split(' [')[0] + '_cleaned.png'
+		else:
+			filename = colname.split(' [')[0] + '.png'
 		filename = filename.replace(' ','_')
 		filepath = os.path.join(output_dir, filename)
 		plt.savefig(filepath)

@@ -8,6 +8,28 @@
 
 
 ###----------------------------------------------------------------------------
+### Input parameters
+###----------------------------------------------------------------------------
+
+# !!! Need input about for which stations and time period!!! To be added later.
+
+# The following input parameters show which kpi to run (if parameter is
+# gets defined, and for which columns).
+kpi_plot_data = ['H2O Mole Fraction [umol mol-1]',
+ 			'Instrument Ambient Pressure [hPa]',
+ 			'Atmospheric Pressure [hPa]',
+ 			'Temp [degC]']
+#kpi_plot_data = ['H2O Mole Fraction [umol mol-1]']
+
+
+kpi_plot_data_cleaned = ['H2O Mole Fraction [umol mol-1]',
+			'Instrument Ambient Pressure [hPa]',
+			'Atmospheric Pressure [hPa]',
+			'Temp [degC]']
+#kpi_plot_data_cleaned = ['H2O Mole Fraction [umol mol-1]']
+
+
+###----------------------------------------------------------------------------
 ### Import packages
 ###----------------------------------------------------------------------------
 
@@ -17,7 +39,6 @@ import json
 import pandas as pd
 from jinja2 import FileSystemLoader, Environment
 import pdfkit
-
 
 
 ###----------------------------------------------------------------------------
@@ -79,7 +100,7 @@ for file in data_files:
 
 
 ###---------------------------------------------------------------------------
-### Extract basic information
+### Extract basic information from the data frame
 ###----------------------------------------------------------------------------
 
 # Identify data level from filename
@@ -98,28 +119,26 @@ df_start = df['Date/Time'][0]
 df_end = df['Date/Time'][len(df)-1]
 
 # Get the parameter names and units for current df
-parameters = kpi.get_parameters(df)
+all_parameters = kpi.get_parameters(df)
 
 # Create a dictionary which will be filled with information used in the report
 render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
-			 'df_end':df_end, 'parameters':parameters}
+			 'df_end':df_end, 'all_parameters':all_parameters}
 
 
 ###----------------------------------------------------------------------------
 ### KPI: plot data
 ###---------------------------------------------------------)-------------------
 
+if 'kpi_plot_data' in globals():
+	#if plot_data_parameters is all
+	#colnames = all_parameters
+	render_dict['kpi_plot_data_filenames'] = kpi.plot_data(
+		colnames=kpi_plot_data, df=df, output_dir=output_dir)
 
-# Plot data
-#colnames = parameters
-colnames = ['H2O Mole Fraction [umol mol-1]',
- 			'Instrument Ambient Pressure [hPa]',
- 			'Atmospheric Pressure [hPa]',
- 			'Temp [degC]']
-
-render_dict['filenames'] = kpi.plot_data(colnames=colnames, df=df,
-									output_dir=output_dir)
-
+if 'kpi_plot_data_cleaned' in globals():
+	render_dict['kpi_plot_data_cleaned_filenames'] = kpi.plot_data(
+		colnames=kpi_plot_data, df=df, output_dir=output_dir, cleaned=True)
 
 ###----------------------------------------------------------------------------
 ### Finalise report
