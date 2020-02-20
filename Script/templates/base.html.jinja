@@ -10,9 +10,14 @@
 <p>The first paragraph.</p>
 <p>The second paragraph.</p>
 
-{% for filename in filenames %}
+{% for filename in kpi_plot_data_filenames %}
 	<img src={{ filename}} >      {# Add a nice framework and figure caption #}
 {% endfor %}
+
+{% for filename in kpi_plot_data_cleaned_filenames %}
+	<img src={{ filename}} >      {# Add a nice framework and figure caption #}
+{% endfor %}
+
 
 </body>
 </html>
