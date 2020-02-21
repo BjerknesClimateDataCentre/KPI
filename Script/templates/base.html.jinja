@@ -10,12 +10,17 @@
 <p>The first paragraph.</p>
 <p>The second paragraph.</p>
 
-{% for filename in kpi_plot_data_filenames %}
-	<img src={{ filename}} >      {# Add a nice framework and figure caption #}
-{% endfor %}
+
+<figure>
+	<img src={{ kpi_plot_data_filename}} >
+	<figcaption> Figure 1: This is the figure cation.
+	</figcaption>
+</figure>
+
+
 
 {% for filename in kpi_plot_data_cleaned_filenames %}
-	<img src={{ filename}} >      {# Add a nice framework and figure caption #}
+	<img src={{ filename}} >
 {% endfor %}
 
 
