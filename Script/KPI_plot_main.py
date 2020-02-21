@@ -6,28 +6,28 @@
 # Description
 # ...
 
-
 ###----------------------------------------------------------------------------
 ### Input parameters
 ###----------------------------------------------------------------------------
 
 # !!! Need input about for which stations and time period!!! To be added later.
+#--------
 
-# The following input parameters show which kpi to run (if parameter is
-# gets defined, and for which columns).
+# The following parameters show which kpi's to run and for which columns (list
+# of columnnames, or 'True' if want to run for all columns)
 kpi_plot_data = ['H2O Mole Fraction [umol mol-1]',
- 			'Instrument Ambient Pressure [hPa]',
- 			'Atmospheric Pressure [hPa]',
- 			'Temp [degC]']
-#kpi_plot_data = ['H2O Mole Fraction [umol mol-1]']
-
-
-kpi_plot_data_cleaned = ['H2O Mole Fraction [umol mol-1]',
 			'Instrument Ambient Pressure [hPa]',
 			'Atmospheric Pressure [hPa]',
 			'Temp [degC]']
-#kpi_plot_data_cleaned = ['H2O Mole Fraction [umol mol-1]']
+#kpi_plot_data = ['H2O Mole Fraction [umol mol-1]']
+#kpi_plot_data = True
 
+#kpi_plot_data_cleaned = ['H2O Mole Fraction [umol mol-1]',
+#			'Instrument Ambient Pressure [hPa]',
+#			'Atmospheric Pressure [hPa]',
+#			'Temp [degC]']
+#kpi_plot_data_cleaned = ['H2O Mole Fraction [umol mol-1]']
+#kpi_plot_data_cleaned = True
 
 ###----------------------------------------------------------------------------
 ### Import packages
@@ -128,17 +128,21 @@ render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
 
 ###----------------------------------------------------------------------------
 ### KPI: plot data
-###---------------------------------------------------------)-------------------
+###----------------------------------------------------------------------------
 
 if 'kpi_plot_data' in globals():
-	#if plot_data_parameters is all
-	#colnames = all_parameters
-	render_dict['kpi_plot_data_filenames'] = kpi.plot_data(
+	if kpi_plot_data is True:
+		kpi_plot_data = all_parameters
+	render_dict['kpi_plot_data_filename'] = kpi.plot_data(
 		colnames=kpi_plot_data, df=df, output_dir=output_dir)
 
 if 'kpi_plot_data_cleaned' in globals():
+	if kpi_plot_data_cleaned is True:
+		kpi_plot_data_cleaned = all_parameters
 	render_dict['kpi_plot_data_cleaned_filenames'] = kpi.plot_data(
-		colnames=kpi_plot_data, df=df, output_dir=output_dir, cleaned=True)
+		colnames=kpi_plot_data_cleaned, df=df, output_dir=output_dir,
+		cleaned=True)
+
 
 ###----------------------------------------------------------------------------
 ### Finalise report
