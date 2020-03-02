@@ -20,8 +20,8 @@
 #			'Atmospheric Pressure [hPa]']#,
 #			'Temp [degC]',
 #			'CO2 Mole Fraction [umol mol-1]']
-#kpi_plot_data = ['H2O Mole Fraction [umol mol-1]']
-kpi_plot_data = True
+kpi_plot_data = ['H2O Mole Fraction [umol mol-1]']
+#kpi_plot_data = True
 
 #kpi_plot_data_cleaned = ['H2O Mole Fraction [umol mol-1]',
 #			'Instrument Ambient Pressure [hPa]',
@@ -56,9 +56,10 @@ for directory in directories:
 	if not os.path.isdir('./'+ directory):
 		os.mkdir(os.path.join(script_dir,directory))
 
-# Store path to the data and output directories
+# Store path to the data and output directories, and the css path.
 data_dir = os.path.join(script_dir,'data_files')
 output_dir = os.path.join(script_dir,'output')
+css_path = os.path.join(script_dir,'templates') + '\\style.css'
 
 # !! While working on script: Cleanup content in output directory
 old_plots = os.listdir(output_dir)
@@ -124,7 +125,7 @@ df_end = df['Date/Time'][len(df)-1]
 all_parameters = kpi.get_parameters(df)
 
 # Create a dictionary which will be filled with information used in the report
-render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
+render_dict = {'css_path':css_path, 'data_level':data_level, 'station':station, 'df_start':df_start,
 			 'df_end':df_end, 'all_parameters':all_parameters}
 
 
@@ -147,7 +148,7 @@ if 'kpi_plot_data_cleaned' in globals():
 
 
 ###----------------------------------------------------------------------------
-### Finalise report
+### Create report
 ###----------------------------------------------------------------------------
 
 # Load the html template
@@ -162,7 +163,6 @@ html_string = template.render(render_dict)
 with open('output/report.html','w') as f:
 	f.write(html_string)
 pdfkit.from_file('output/report.html', 'output/report.pdf')
-
 
 
 # LEs denne!
