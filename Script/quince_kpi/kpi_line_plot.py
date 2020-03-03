@@ -1,9 +1,9 @@
 ###############################################################################
-###                                                                         ###
+### KPI: Line plot(s)                                                       ###
 ###############################################################################
 
 ### Description:
-#
+# The point of this KPI is to get an initial visualisation of the data.
 
 #------------------------------------------------------------------------------
 #import pandas as pd
@@ -45,7 +45,7 @@ def make_subplot(colname, df, cleaned, ax):
 
 
 # Function plots parameter(s) vs time and saves plot(s) in output directory
-def plot_data(colnames, df, output_dir, cleaned=False):
+def line_plot(colnames, df, output_dir, cleaned=False):
 
 	# Decide limit when plot in two columns:
 	plot_limit = 4
@@ -75,7 +75,7 @@ def plot_data(colnames, df, output_dir, cleaned=False):
 	for colname in colnames:
 
 		# Specify where in the figure to plot the next parameter
-		if n_plot > 1 and n_plot <= 4:
+		if n_plot >= 1 and n_plot <= 4:
 			ax = plt.subplot2grid((n_plot, 1), (letter_count,0))
 		elif n_plot > 5 and n_plot <= 8:
 			ax = plt.subplot2grid((math.ceil(n_plot/2), 2), (row_count,col_count))
