@@ -15,21 +15,23 @@
 
 # The following parameters show which kpi's to run and for which columns (list
 # of columnnames, or 'True' if want to run for all columns)
-#kpi_plot_data = ['H2O Mole Fraction [umol mol-1]',
+#kpi_line_plot = ['H2O Mole Fraction [umol mol-1]',
 #			'Instrument Ambient Pressure [hPa]',
 #			'Atmospheric Pressure [hPa]']#,
 #			'Temp [degC]',
 #			'CO2 Mole Fraction [umol mol-1]']
-kpi_plot_data = ['H2O Mole Fraction [umol mol-1]']
-#kpi_plot_data = True
+kpi_line_plot = ['H2O Mole Fraction [umol mol-1]']
+#kpi_line_plot = True
 
-#kpi_plot_data_cleaned = ['H2O Mole Fraction [umol mol-1]',
+#kpi_line_plot_cleaned = ['H2O Mole Fraction [umol mol-1]',
 #			'Instrument Ambient Pressure [hPa]',
 #			'Atmospheric Pressure [hPa]',
 #			'Temp [degC]',
 #			'CO2 Mole Fraction [umol mol-1]']
-#kpi_plot_data_cleaned = ['H2O Mole Fraction [umol mol-1]']
-#kpi_plot_data_cleaned = True
+#kpi_line_plot_cleaned = ['H2O Mole Fraction [umol mol-1]']
+#kpi_line_plot_cleaned = True
+
+
 
 ###----------------------------------------------------------------------------
 ### Import packages
@@ -133,17 +135,17 @@ render_dict = {'css_path':css_path, 'data_level':data_level, 'station':station, 
 ### KPI: plot data
 ###----------------------------------------------------------------------------
 
-if 'kpi_plot_data' in globals():
-	if kpi_plot_data is True:
-		kpi_plot_data = all_parameters
-	render_dict['kpi_plot_data_filename'] = kpi.plot_data(
-		colnames=kpi_plot_data, df=df, output_dir=output_dir)
+if 'kpi_line_plot' in globals():
+	if kpi_line_plot is True:
+		kpi_line_plot = all_parameters
+	render_dict['kpi_line_plot_filename'] = kpi.line_plot(
+		colnames=kpi_line_plot, df=df, output_dir=output_dir)
 
-if 'kpi_plot_data_cleaned' in globals():
-	if kpi_plot_data_cleaned is True:
-		kpi_plot_data_cleaned = all_parameters
-	render_dict['kpi_plot_data_cleaned_filename'] = kpi.plot_data(
-		colnames=kpi_plot_data_cleaned, df=df, output_dir=output_dir,
+if 'kpi_line_plot_cleaned' in globals():
+	if kpi_line_plot_cleaned is True:
+		kpi_line_plot_cleaned = all_parameters
+	render_dict['kpi_line_plot_cleaned_filename'] = kpi.line_plot(
+		colnames=kpi_line_plot_cleaned, df=df, output_dir=output_dir,
 		cleaned=True)
 
 
