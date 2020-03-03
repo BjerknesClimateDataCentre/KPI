@@ -13,6 +13,8 @@ import string
 import math
 
 
+#!Try to style these plots as if they were default seaborn plots (use sns.set())
+
 def make_subplot(colname, df, cleaned, ax):
 
 	# Remove rows with NaNs
@@ -28,21 +30,18 @@ def make_subplot(colname, df, cleaned, ax):
 		for flag, col in color_code.items():
 				limited_df = df[df[color_column]==flag]
 				ax.scatter(x=limited_df['Date/Time'], y=limited_df[colname],
-					c=col, label=flag, alpha=0.7, edgecolors='none', marker='.')
-
-# HOW TO ADD LEGENG WITH FLAG CODES
-				#ax.legend(fontsize=9, bbox_to_anchor=(1, 1))
-		#if letter_count == 0:
-			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1))
-		#if row_count == 0 and col_count == 1:
-			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1))
-
-		else:
-			limited_df = df[df[color_column]==2]
-			ax.scatter(x=limited_df['Date/Time'], y=limited_df[colname],
-				c='green', alpha=0.7, edgecolors='none', marker='.')
+					c=col, label=flag, alpha=0.7, edgecolors='none',
+					marker='.')
+	else:
+		limited_df = df[df[color_column]==2]
+		ax.scatter(x=limited_df['Date/Time'], y=limited_df[colname],
+			c='green', alpha=0.7, edgecolors='none', marker='.')
 
 	ax.grid(True)
+
+	# !!! To adjust the suplots- Try this:
+	#plt.subplots_adjust(bottom=0.2, wspace=0.35)
+	# Others inputs are: top, left, right, hspace
 
 
 # Function plots parameter(s) vs time and saves plot(s) in output directory
@@ -69,6 +68,7 @@ def plot_data(colnames, df, output_dir, cleaned=False):
 	# Set up the plot
 	fig, ax = plt.subplots(sharex=True, figsize=figsize)
 
+
 	letter_count = 0
 	row_count = 0
 	col_count = 0
@@ -84,6 +84,13 @@ def plot_data(colnames, df, output_dir, cleaned=False):
 
 		# Make subplot
 		make_subplot(colname, df, cleaned, ax)
+		ax.legend()
+		# HOW TO ADD LEGENG WITH FLAG CODES (try use 'loc' as input)
+				#ax.legend(fontsize=9, bbox_to_anchor=(1, 1))
+		#if letter_count == 0:
+			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1))
+		#if row_count == 0 and col_count == 1:
+			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1))
 
 		# Add title (and letter if needed)
 		if n_plot == 1:
@@ -93,7 +100,9 @@ def plot_data(colnames, df, output_dir, cleaned=False):
 			ax.set_title(title, loc='left', fontsize=10,
 				fontweight='bold')
 
-		# !!! Increase counters in a better way !!!
+		# !!! Increase counters in a better way !!! Create the index list first
+		# using 'list(range())' (or list comprehension), and use letter_count
+		# to index this list
 		# Increase counters
 		letter_count += 1
 
