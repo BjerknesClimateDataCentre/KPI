@@ -7,30 +7,35 @@
 # ...
 
 ###----------------------------------------------------------------------------
-### Input parameters
+### Input parameters . MOVE TO CONFIG!
 ###----------------------------------------------------------------------------
 
-# !!! Need input about for which stations and time period!!! To be added later.
+# !!! Need input about for which station(s) and time period!!!
+# To be added later.
 #--------
 
-# The following parameters show which kpi's to run and for which columns (list
-# of columnnames, or 'True' if want to run for all columns)
-#kpi_line_plot = ['H2O Mole Fraction [umol mol-1]',
-#			'Instrument Ambient Pressure [hPa]',
-#			'Atmospheric Pressure [hPa]']#,
-#			'Temp [degC]',
-#			'CO2 Mole Fraction [umol mol-1]']
-kpi_line_plot = ['H2O Mole Fraction [umol mol-1]']
-#kpi_line_plot = True
-
-#kpi_line_plot_cleaned = ['H2O Mole Fraction [umol mol-1]',
+# Which parameters to check ('True' means all):
+#parameters = ['Temp [degC]']
+parameters = ['Temp [degC]',
+			'fCO2 [uatm]',
+			'Atmospheric Pressure [hPa]']
+#parameters = ['H2O Mole Fraction [umol mol-1]',
 #			'Instrument Ambient Pressure [hPa]',
 #			'Atmospheric Pressure [hPa]',
 #			'Temp [degC]',
 #			'CO2 Mole Fraction [umol mol-1]']
-#kpi_line_plot_cleaned = ['H2O Mole Fraction [umol mol-1]']
-#kpi_line_plot_cleaned = True
+#parameters = True
 
+
+# Which KPI's to run:
+#kpi_line_plot = parameters
+#kpi_line_plot_cleaned = parameters
+kpi_bar_plot = parameters
+
+#---------------
+# !!! Change kpi input to list of kpi's to run, like this ...
+# KPI_list = [kpi_line_plot, kpi_bar_plot]
+# ..., and change the creation of their plots below to for-loop !!!
 
 
 ###----------------------------------------------------------------------------
@@ -61,9 +66,8 @@ for directory in directories:
 # Store path to the data and output directories, and the css path.
 data_dir = os.path.join(script_dir,'data_files')
 output_dir = os.path.join(script_dir,'output')
-css_path = os.path.join(script_dir,'templates') + '\\style.css'
 
-# !! While working on script: Cleanup content in output directory
+# Cleanup old content in output directory
 old_plots = os.listdir(output_dir)
 for plot in old_plots:
 	os.remove(os.path.join(output_dir, plot))
@@ -127,13 +131,20 @@ df_end = df['Date/Time'][len(df)-1]
 all_parameters = kpi.get_parameters(df)
 
 # Create a dictionary which will be filled with information used in the report
-render_dict = {'css_path':css_path, 'data_level':data_level, 'station':station, 'df_start':df_start,
+render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
 			 'df_end':df_end, 'all_parameters':all_parameters}
 
 
 ###----------------------------------------------------------------------------
-### KPI: plot data
+### Create KPIs
 ###----------------------------------------------------------------------------
+
+# Each chunk below represents a KPI plot. They will only be created if selected
+# above. The plots are stored in the output file and their paths are stored as
+# variables in 'render_dict' which are past on to the html template at the end
+# of this script.
+
+#!!! A Lot of repetition here. create a function for this?
 
 if 'kpi_line_plot' in globals():
 	if kpi_line_plot is True:
@@ -147,6 +158,10 @@ if 'kpi_line_plot_cleaned' in globals():
 	render_dict['kpi_line_plot_cleaned_filename'] = kpi.line_plot(
 		colnames=kpi_line_plot_cleaned, df=df, output_dir=output_dir,
 		cleaned=True)
+
+if 'kpi_bar_plot' in globals():
+	render_dict['kpi_bar_plot_filename'] = kpi.bar_plot(colnames=kpi_bar_plot,
+		df=df, output_dir=output_dir)
 
 
 ###----------------------------------------------------------------------------
