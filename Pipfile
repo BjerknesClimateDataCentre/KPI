@@ -11,6 +11,7 @@ pandas = "*"
 matplotlib = "*"
 pdfkit = "*"
 jinja2 = "*"
+seaborn = "*"
 
 [requires]
 python_version = "3.8"
