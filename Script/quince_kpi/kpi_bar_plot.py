@@ -1,5 +1,5 @@
 ###############################################################################
-### KPI: Bat plot(s)                                                        ###
+### KPI: Bar plot(s)                                                        ###
 ###############################################################################
 
 ### Description:
@@ -13,32 +13,65 @@ import numpy as np
 import os
 import pandas as pd
 
+# !!! Make stacked bars as an option !!! Is this possible in seaborn??
 
+# !!! The bar plot does not look good when include more than 7 or so parameters,
+# is it nessecary to fix, or simply always make stacked bars? (requires less
+# space hence looks good even with many params)
+
+# Function creates a barplot, saves the figure in the output directory, and
+# returns the filename back to the main script.
 def bar_plot(colnames, df, output_dir):
 
+	# In order to create the barplot we need to create a new data frame
+	# containing two columns: 'label' (containg the the parameter names), and
+	# 'value' (contaning the QC flags).
+	# First, create these columns as separate lists.
 	label = []
 	value = []
 	for colname in colnames:
-		colname = colname + ' QC Flag'
+		# Remove the unit-part from the column name
+		label_name = colname.split(" [")[0].replace(' ','\n')
+		# The new label_name is added to the label list and needs to be
+		# repeated as many times as there are measurements in df
+		label = label + [label_name]*len(df[colname])
 
-		add_to_label = [colname]*len(df[colname])
-		label = label + add_to_label
+		# Store the name of the QC column in df
+		flag_colname = colname + ' QC Flag'
+		# Add the QC flags from the current column to the value list
+		value = value + list(df[flag_colname])
 
-		add_to_value = list(df[colname])
-		value = value + add_to_value
+	# Create the new dataframe with the two columns. Change missing numbers to
+	# '999' to allow them to be counted and included in the barplot (as missing
+	# data).
+	new_df = pd.DataFrame({'label': label, 'value': value})
+	new_df = new_df.fillna(999)
 
-	new_df = pd.DataFrame({'labels': label, 'values': value})
+	# Define the figure size. (Width should be 1.5 times the number of
+	# paramaters, however, minimum 3 and maximum 9.5.)
+	width = sorted([3, 1.5*len(colnames), 9.5])[1]
+	height = 4
+	figsize = (width, height)
 
-	f, ax = plt.subplots(figsize=(12,7))
-	ax = sns.barplot(data=new_df, x='labels', y='values', estimator=len, hue='values')
+    # Create figure with barplot. ('estimator=len' means to plot the frequency
+    # each flag occure; 'hue=value' means the value column is used for color
+    # encoding)
+	f, ax = plt.subplots(figsize=figsize)
+	ax = sns.barplot(data=new_df, x='label', y='value', estimator=len,
+		hue='value')
 
+	# Edit the legend labels (words instead of the QC flag values)
+	new_labels = ['Good', 'Questionable', 'Bad', 'Missing']
+	h, l = ax.get_legend_handles_labels()
+	ax.legend(h, new_labels, loc=0, title=False, fontsize=6)
+
+	# Add axis labels
+	plt.ylabel('Frequency')
+	plt.xlabel('Parameter')
+
+	# Save file
 	filename = 'bar_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
-
-
-	#df_fco2 = df[colname[1]]
-	#print(type(df_fco2))
-	#print(df_fco2[0:150,])
 
 	return filename

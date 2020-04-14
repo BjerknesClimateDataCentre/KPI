@@ -2,40 +2,8 @@
 ###  MAIN SCRIPT FOR MAKING KPI REPORTS                                     ###
 ###############################################################################
 
-
 # Description
 # ...
-
-###----------------------------------------------------------------------------
-### Input parameters . MOVE TO CONFIG!
-###----------------------------------------------------------------------------
-
-# !!! Need input about for which station(s) and time period!!!
-# To be added later.
-#--------
-
-# Which parameters to check ('True' means all):
-#parameters = ['Temp [degC]']
-parameters = ['Temp [degC]',
-			'fCO2 [uatm]',
-			'Atmospheric Pressure [hPa]']
-#parameters = ['H2O Mole Fraction [umol mol-1]',
-#			'Instrument Ambient Pressure [hPa]',
-#			'Atmospheric Pressure [hPa]',
-#			'Temp [degC]',
-#			'CO2 Mole Fraction [umol mol-1]']
-#parameters = True
-
-
-# Which KPI's to run:
-#kpi_line_plot = parameters
-#kpi_line_plot_cleaned = parameters
-kpi_bar_plot = parameters
-
-#---------------
-# !!! Change kpi input to list of kpi's to run, like this ...
-# KPI_list = [kpi_line_plot, kpi_bar_plot]
-# ..., and change the creation of their plots below to for-loop !!!
 
 
 ###----------------------------------------------------------------------------
@@ -51,6 +19,42 @@ import pdfkit
 
 
 ###----------------------------------------------------------------------------
+### Input parameters . MOVE TO CONFIG!
+###----------------------------------------------------------------------------
+
+# !!! Need input about for which station(s) and time period!!!
+# To be added later.
+#--------
+
+# Which parameters to check ('True' means all). (While writing the this script
+# its important to check that the report looks good with varying number of
+# parameters.)
+parameters = ['Temp [degC]']
+#parameters = ['Temp [degC]',
+#			'fCO2 [uatm]',
+#			'Atmospheric Pressure [hPa]',
+#			'Instrument Ambient Pressure [hPa]']
+#parameters = ['H2Oparameters Mole Fraction [umol mol-1]',
+#			'Instrument Ambient Pressure [hPa]',
+#			'Atmospheric Pressure [hPa]',
+#			'Temp [degC]',
+#			'CO2 Mole Fraction [umol mol-1]']
+#parameters = True
+
+
+#---------------
+# Which KPI's to run:
+#kpi_line_plot = parameters
+#kpi_line_plot_cleaned = parameters
+#kpi_bar_plot = parameters
+
+#-----
+# ALTERNATIVE METHOD
+kpis = ['line_plot', 'bar_plot']
+kpi_functions = ['kpi.line_plot', 'kpi.bar_plot']
+
+
+###----------------------------------------------------------------------------
 ### Handling directories
 ###----------------------------------------------------------------------------
 
@@ -63,7 +67,7 @@ for directory in directories:
 	if not os.path.isdir('./'+ directory):
 		os.mkdir(os.path.join(script_dir,directory))
 
-# Store path to the data and output directories, and the css path.
+# Store path to the data and output directories
 data_dir = os.path.join(script_dir,'data_files')
 output_dir = os.path.join(script_dir,'output')
 
@@ -90,11 +94,12 @@ data_levels = configs['data_levels']
 # !!! This section cannot be completed before we know how the script will
 # extract/receive data from QuinCe.
 
-# !!! Suggestion: Create a function which reads all filenames in data direcotry
-# and extracts their vessel and data level info from the filename. Output is a
-# list of dictionaries. This will determine how the files are combined and how
-# to loop the KPIs plot creations.
-#-----------
+# !!! Suggestion for import: Create a function which reads all filenames in
+# data directory and extracts their vessel and data level info from the
+# filename. The functions output is a list of dictionaries with info on which
+# files to combine etc. which will be used as loop indexes later when KPIs are
+# created.
+# -----------
 
 # !!! For now:
 # Store the file names from the data direcotry in a list
@@ -102,7 +107,8 @@ data_files = os.listdir(data_dir)
 
 # Loop through all files in data directory and read data into 'df'
 # !!! Currenlty this only works with one file!
-# !!! If more than one file: add the df's together (NaN's if some cols missing)
+# !!! If more than one file (from the same station): add the df's together
+# (NaN's if some cols missing).
 for file in data_files:
 	data_path = os.path.join(data_dir, file)
 	df = pd.read_csv(data_path, low_memory=False)
@@ -115,22 +121,24 @@ for file in data_files:
 # Identify data level from filename
 for level in data_levels:
 	if level in data_files[0]:
-		data_level=level
+		data_level = level
 
 # Identify station name from filename
 for station_name, station_code in station_code.items():
 	if station_code in data_files[0]:
 		station = station_name
 
-# Set the timestamp column, and extract start and end date
+# Identify the timestamp column, and extract start and end date
 kpi.set_datetime(df)
 df_start = df['Date/Time'][0]
 df_end = df['Date/Time'][len(df)-1]
 
-# Get the parameter names and units for current df
+# Get all parameters names in df (excludes georef and QC params)
 all_parameters = kpi.get_parameters(df)
 
-# Create a dictionary which will be filled with information used in the report
+# Store the basic information extracted above in a dictionary.
+# (This dictionary will be filled with information thourghout this script, and
+# finally be used as input when the report is created.)
 render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
 			 'df_end':df_end, 'all_parameters':all_parameters}
 
@@ -144,24 +152,45 @@ render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
 # variables in 'render_dict' which are past on to the html template at the end
 # of this script.
 
-#!!! A Lot of repetition here. create a function for this?
+#if 'kpi_line_plot' in globals():
+#	if kpi_line_plot is True:
+#		kpi_line_plot = all_parameters
+#	render_dict['kpi_line_plot_filename'] = kpi.line_plot(
+#		colnames=kpi_line_plot, df=df, output_dir=output_dir)
 
-if 'kpi_line_plot' in globals():
-	if kpi_line_plot is True:
-		kpi_line_plot = all_parameters
-	render_dict['kpi_line_plot_filename'] = kpi.line_plot(
-		colnames=kpi_line_plot, df=df, output_dir=output_dir)
+#if 'kpi_line_plot_cleaned' in globals():
+#	if kpi_line_plot_cleaned is True:
+#		kpi_line_plot_cleaned = all_parameters
+#	render_dict['kpi_line_plot_cleaned_filename'] = kpi.line_plot(
+#		colnames=kpi_line_plot_cleaned, df=df, output_dir=output_dir,
+#		cleaned=True)
 
-if 'kpi_line_plot_cleaned' in globals():
-	if kpi_line_plot_cleaned is True:
-		kpi_line_plot_cleaned = all_parameters
-	render_dict['kpi_line_plot_cleaned_filename'] = kpi.line_plot(
-		colnames=kpi_line_plot_cleaned, df=df, output_dir=output_dir,
-		cleaned=True)
+#if 'kpi_bar_plot' in globals():
+#	if kpi_bar_plot is True:
+#		kpi_bar_plot = all_parameters
+#	render_dict['kpi_bar_plot_filename'] = kpi.bar_plot(colnames=kpi_bar_plot,
+#		df=df, output_dir=output_dir)
 
-if 'kpi_bar_plot' in globals():
-	render_dict['kpi_bar_plot_filename'] = kpi.bar_plot(colnames=kpi_bar_plot,
-		df=df, output_dir=output_dir)
+#--------
+# ALTERNATIVE METHOD:
+
+# Create the kpi_function string (instead of defining it in the input params)
+# !!! Why doesn't this work???
+#kpi_functions = []
+#for kpi in kpis:
+#	function = 'kpi.' + kpi
+#	kpi_functions.append(str(function))
+
+if parameters is True:
+	parameters = all_parameters
+
+for i in range(len(kpi_functions)):
+	filename = 'kpi_' + kpis[i] + '_filename'
+	render_dict[filename] = eval(kpi_functions[i])(colnames=parameters, df=df,
+		output_dir=output_dir)
+
+# !!! This method is shorter and looks better, however it does not allow
+# additional input parameters. How to get around this???
 
 
 ###----------------------------------------------------------------------------
@@ -180,8 +209,3 @@ html_string = template.render(render_dict)
 with open('output/report.html','w') as f:
 	f.write(html_string)
 pdfkit.from_file('output/report.html', 'output/report.pdf')
-
-
-# LEs denne!
-#https://jinja.palletsprojects.com/en/2.11.x/templates/
-
