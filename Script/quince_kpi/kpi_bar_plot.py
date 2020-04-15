@@ -6,21 +6,39 @@
 # The output plot will give an overview of how many flags of each type for
 # each parameter of interest.
 
+#----------
+# TODO:
+# - Make stacked bars as an option !!! Is this possible in seaborn??
+# - The bar plot does not look good when include more than 7 or so parameters,
+# is it nessecary to fix, or simply always make stacked bars? (requires less
+# space hence looks good even with many params)
+
+
 #------------------------------------------------------------------------------
+### Import packages
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import os
 import pandas as pd
 
-# !!! Make stacked bars as an option !!! Is this possible in seaborn??
 
-# !!! The bar plot does not look good when include more than 7 or so parameters,
-# is it nessecary to fix, or simply always make stacked bars? (requires less
-# space hence looks good even with many params)
+#------------------------------------------------------------------------------
+### Set variables
+
+# Figure sizes
+max_fig_width = 9.5
+min_fig_width = 3
+width_per_param = 1.5
+fig_height = 4
+
+
+#------------------------------------------------------------------------------
+### Functions
 
 # Function creates a barplot, saves the figure in the output directory, and
-# returns the filename back to the main script.
+# returns the figures filename back to the main script.
 def bar_plot(colnames, df, output_dir):
 
 	# In order to create the barplot we need to create a new data frame
@@ -49,9 +67,8 @@ def bar_plot(colnames, df, output_dir):
 
 	# Define the figure size. (Width should be 1.5 times the number of
 	# paramaters, however, minimum 3 and maximum 9.5.)
-	width = sorted([3, 1.5*len(colnames), 9.5])[1]
-	height = 4
-	figsize = (width, height)
+	fig_width = sorted([min_fig_width, width_per_param*len(colnames), max_fig_width])[1]
+	figsize = (fig_width, fig_height)
 
     # Create figure with barplot. ('estimator=len' means to plot the frequency
     # each flag occure; 'hue=value' means the value column is used for color

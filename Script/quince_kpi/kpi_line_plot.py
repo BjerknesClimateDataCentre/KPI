@@ -3,20 +3,59 @@
 ###############################################################################
 
 ### Description:
-# The point of this KPI is to get an initial visualisation of the data.
+# This KPI provides a visualisation of the data.
+
+#----------
+# TODO:
+# - Style these plots as if they were default seaborn plots (use sns.set())
+# - Improve layout when plot in three columns (things collide)
+# - Time label is not added if there is no subplot in the lowest row (e.g. when
+# plot 5 params). Fix this!
+
 
 #------------------------------------------------------------------------------
-#import pandas as pd
+### Import packages
+
 import matplotlib.pyplot as plt
 import os
 import string
 import math
 
 
-#!Try to style these plots as if they were default seaborn plots (use sns.set())
+#------------------------------------------------------------------------------
+### Set variables
+
+# Maximum number of plots to allow with 1 column and 2 columns
+limit_1col = 3
+limit_2col = 8
+
+# Figure sizes
+fig_width = 9.5
+fig_height = 3
+
+# Plot symbol alpha
+alpha = 0.7
+
+# Title fontsize:
+title_fontsize = 8
+
+#------------------------------------------------------------------------------
+### Functions
+
+# Returns how many rows and columns of subplots in the resulting figure
+def get_row_col(n_plot):
+	if n_plot <= limit_1col:
+		n_col = 1
+	elif n_plot > limit_1col and n_plot <= limit_2col:
+		n_col = 2
+	else:
+		n_col = 3
+	n_row = math.ceil(n_plot/n_col)
+
+	return n_row, n_col
+
 
 def make_subplot(colname, df, cleaned, ax):
-
 	# Remove rows with NaNs
 	df = df.dropna(subset=[colname])
 
@@ -30,99 +69,62 @@ def make_subplot(colname, df, cleaned, ax):
 		for flag, col in color_code.items():
 				limited_df = df[df[color_column]==flag]
 				ax.scatter(x=limited_df['Date/Time'], y=limited_df[colname],
-					c=col, label=flag, alpha=0.7, edgecolors='none',
+					c=col, label=flag, alpha=alpha, edgecolors='none',
 					marker='.')
 	else:
 		limited_df = df[df[color_column]==2]
 		ax.scatter(x=limited_df['Date/Time'], y=limited_df[colname],
-			c='green', alpha=0.7, edgecolors='none', marker='.')
+			c='green', alpha=alpha, edgecolors='none', marker='.')
 
 	ax.grid(True)
-
 	# !!! To adjust the suplots- Try this:
 	#plt.subplots_adjust(bottom=0.2, wspace=0.35)
-	# Others inputs are: top, left, right, hspace
+	# Other inputs are: top, left, right, hspace
 
 
-# Function plots parameter(s) vs time and saves plot(s) in output directory
+# Function plots parameter(s) vs time, saves the figure in the output
+# directory, and returns the figures filename back to the main script.
 def line_plot(colnames, df, output_dir, cleaned=False):
 
-	# Decide limit when plot in two columns:
-	plot_limit = 4
+	# Store number of plots to create
+	n_plot = len(colnames)
 
-	# Get number of columns to plot
-	n_plot=len(colnames)
-
-	# Set figsize
-	fig_width = 9.5
-	plot_height = 3
-	if n_plot <= plot_limit:
-		fig_height = plot_height*n_plot
-	else:
-		fig_height = plot_height*n_plot/2
-	figsize = (fig_width, fig_height)
-
-	# List of letters used for labelling the plots
-	letters=list(string.ascii_lowercase[0:n_plot])
+	# Get the number of rows and columns in figure
+	n_row, n_col = get_row_col(n_plot)
 
 	# Set up the plot
+	figsize = (fig_width, fig_height*n_row)
 	fig, ax = plt.subplots(sharex=True, figsize=figsize)
 
+	# Loop through all row and column positions and make their subplots
+	count = 0
+	for row in range(n_row):
+		for col in range(n_col):
 
-	letter_count = 0
-	row_count = 0
-	col_count = 0
-	for colname in colnames:
+			# Specify which param to plot, and where.
+			colname = colnames[count]
+			ax = plt.subplot2grid((n_row, n_col), (row,col))
 
-		# Specify where in the figure to plot the next parameter
-		if n_plot >= 1 and n_plot <= 4:
-			ax = plt.subplot2grid((n_plot, 1), (letter_count,0))
-		elif n_plot > 5 and n_plot <= 8:
-			ax = plt.subplot2grid((math.ceil(n_plot/2), 2), (row_count,col_count))
-		else:
-			ax = plt.subplot2grid((math.ceil(n_plot/3), 3), (row_count,col_count))
+			# Make subplot
+			make_subplot(colname, df, cleaned, ax)
+			ax.legend()
+			# !!! HOW TO ADD ONLY ONCE??
+			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1)) ???
 
-		# Make subplot
-		make_subplot(colname, df, cleaned, ax)
-		ax.legend()
-		# HOW TO ADD LEGENG WITH FLAG CODES (try use 'loc' as input)
-				#ax.legend(fontsize=9, bbox_to_anchor=(1, 1))
-		#if letter_count == 0:
-			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1))
-		#if row_count == 0 and col_count == 1:
-			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1))
-
-		# Add title (and letter if needed)
-		if n_plot == 1:
-			plt.title('     ' + colnames[0], fontsize=10, fontweight='bold')
-		else:
-			title = letters[letter_count] + ')     ' + colname
-			ax.set_title(title, loc='left', fontsize=10,
-				fontweight='bold')
-
-		# !!! Increase counters in a better way !!! Create the index list first
-		# using 'list(range())' (or list comprehension), and use letter_count
-		# to index this list
-		# Increase counters
-		letter_count += 1
-
-		if n_plot > 5 and n_plot <= 8:
-			if col_count == 1:
-				col_count = 0
-				row_count += 1
+			# Add title (and letter if needed)
+			if n_plot == 1:
+				plt.title('     ' + colnames[0], fontsize=title_fontsize,
+					fontweight='bold')
 			else:
-				col_count = 1
-		else:
-			if letter_count %3 == 0:
-				row_count += 1
-			if col_count == 0:
-				col_count = 1
-			elif col_count == 1:
-				col_count = 2
-			elif col_count == 2:
-				col_count = 0
+				title = string.ascii_lowercase[count] + ')     ' + colname
+				ax.set_title(title, loc='left', fontsize=title_fontsize,
+					fontweight='bold')
 
-	#----------------------
+			# Increase counter (stop when exceeds number of params)
+			count += 1
+			if count >= n_plot:
+				break
+
 	# Add x-axis sideways
 	fig.autofmt_xdate()
 
