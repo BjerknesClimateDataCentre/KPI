@@ -29,16 +29,16 @@ import pdfkit
 # Which parameters to check ('True' means all). (While writing the this script
 # its important to check that the report looks good with varying number of
 # parameters.)
-parameters = ['Temp [degC]']
+#parameters = ['Temp [degC]']
 #parameters = ['Temp [degC]',
 #			'fCO2 [uatm]',
 #			'Atmospheric Pressure [hPa]',
 #			'Instrument Ambient Pressure [hPa]']
-#parameters = ['H2Oparameters Mole Fraction [umol mol-1]',
-#			'Instrument Ambient Pressure [hPa]',
-#			'Atmospheric Pressure [hPa]',
-#			'Temp [degC]',
-#			'CO2 Mole Fraction [umol mol-1]']
+parameters = ['H2O Mole Fraction [umol mol-1]',
+			'Instrument Ambient Pressure [hPa]',
+			'Atmospheric Pressure [hPa]',
+			'Temp [degC]',
+			'CO2 Mole Fraction [umol mol-1]']
 #parameters = True
 
 
@@ -128,12 +128,12 @@ for station_name, station_code in station_code.items():
 	if station_code in data_files[0]:
 		station = station_name
 
-# Identify the timestamp column, and extract start and end date
+# Set the timestamp column, and extract start and end date
 kpi.set_datetime(df)
 df_start = df['Date/Time'][0]
 df_end = df['Date/Time'][len(df)-1]
 
-# Get all parameters names in df (excludes georef and QC params)
+# Get all parameters names in df (excludes georef and QC parameters)
 all_parameters = kpi.get_parameters(df)
 
 # Store the basic information extracted above in a dictionary.
@@ -171,6 +171,7 @@ render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
 #	render_dict['kpi_bar_plot_filename'] = kpi.bar_plot(colnames=kpi_bar_plot,
 #		df=df, output_dir=output_dir)
 
+
 #--------
 # ALTERNATIVE METHOD:
 
@@ -189,7 +190,7 @@ for i in range(len(kpi_functions)):
 	render_dict[filename] = eval(kpi_functions[i])(colnames=parameters, df=df,
 		output_dir=output_dir)
 
-# !!! This method is shorter and looks better, however it does not allow
+# !!! This alternative method is shorter and looks better, however it does not allow
 # additional input parameters. How to get around this???
 
 
