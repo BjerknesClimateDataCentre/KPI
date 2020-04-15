@@ -1,39 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-      <link rel="stylesheet" href='..\templates\style.css' type="text/css">
- </head>
+  <link rel="stylesheet" href='..\templates\style.css' type="text/css">
+</head>
 <body>
 
   <h1>Data Quality Report for {{station}} - {{df_start}} to {{df_end}}</h1>
 
-  <h2>Introduction<h2>
-
+  <h2>Introduction</h2>
     <p>The first paragraph.</p>
-    <p>The second paragraph.</p>
 
-    <!-- !!! Move all such kpi sections below to separate child jinja files
-       LINE PLOTS -->
+  <h2>Line Plot Section</h2>
+    <p>Some text about this...</p>
     <figure>
       <img src={{ kpi_line_plot_filename}} >
-      <figcaption> Figure 1: This is the figure caption.
+      <figcaption> Figure x: This is the figure caption.
       </figcaption>
     </figure>
 
     <figure>
       <img src={{ kpi_line_plot_cleaned_filename}} >
-      <figcaption> Figure 1: This is the figure caption.
+      <figcaption> Figure x: This is the figure caption.
       </figcaption>
     </figure>
 
-
-    <!-- BAR PLOTS-->
+  <h2>Bar Plot Section</h2>
+    <p>Some text about this...</p>
     <figure>
       <img src={{ kpi_bar_plot_filename}} >
-      <figcaption> Figure 1: This is the figure caption.
+      <figcaption> Figure x: This is the figure caption.
       </figcaption>
     </figure>
 
 
-</html>
+  <!-- ALTERNATIVE: Extract from child template, but this does not work!
+  <div id="line_plot">
+    {% block line_plot %}{% endblock %}
+  </div>
+
+  <div id="line_plot_cleaned">
+    {% block line_plot_cleaned %}{% endblock %}
+  </div>
+
+  <div id="bar_plot">
+    {% block bar_plot %}{% endblock %}
+  </div>
+  -->
+
 </body>
+</html>
