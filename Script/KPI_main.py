@@ -30,15 +30,15 @@ import pdfkit
 # its important to check that the report looks good with varying number of
 # parameters.)
 #parameters = ['Temp [degC]']
-#parameters = ['Temp [degC]',
-#			'fCO2 [uatm]',
-#			'Atmospheric Pressure [hPa]',
+parameters = ['Temp [degC]',
+			'fCO2 [uatm]',
+			'Atmospheric Pressure [hPa]']#,
 #			'Instrument Ambient Pressure [hPa]']
-parameters = ['H2O Mole Fraction [umol mol-1]',
-			'Instrument Ambient Pressure [hPa]',
-			'Atmospheric Pressure [hPa]',
-			'Temp [degC]',
-			'CO2 Mole Fraction [umol mol-1]']
+#parameters = ['H2O Mole Fraction [umol mol-1]',
+#			'Instrument Ambient Pressure [hPa]',
+#			'Atmospheric Pressure [hPa]',
+#			'Temp [degC]',
+#			'CO2 Mole Fraction [umol mol-1]']
 #parameters = True
 
 
@@ -192,7 +192,6 @@ for i in range(len(kpi_functions)):
 
 # !!! This alternative method is shorter and looks better, however it does not allow
 # additional input parameters. How to get around this???
-
 
 ###----------------------------------------------------------------------------
 ### Create report
