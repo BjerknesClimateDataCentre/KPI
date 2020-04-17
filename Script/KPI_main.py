@@ -32,8 +32,8 @@ import pdfkit
 #parameters = ['Temp [degC]']
 parameters = ['Temp [degC]',
 			'fCO2 [uatm]',
-			'Atmospheric Pressure [hPa]']#,
-#			'Instrument Ambient Pressure [hPa]']
+			'Atmospheric Pressure [hPa]',
+			'Instrument Ambient Pressure [hPa]']
 #parameters = ['H2O Mole Fraction [umol mol-1]',
 #			'Instrument Ambient Pressure [hPa]',
 #			'Atmospheric Pressure [hPa]',
@@ -192,6 +192,8 @@ for i in range(len(kpi_functions)):
 
 # !!! This alternative method is shorter and looks better, however it does not allow
 # additional input parameters. How to get around this???
+
+kpi.stacked_bar_plot(colnames=parameters, df=df, output_dir=output_dir)
 
 ###----------------------------------------------------------------------------
 ### Create report
