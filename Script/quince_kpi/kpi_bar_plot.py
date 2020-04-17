@@ -65,9 +65,10 @@ def bar_plot(colnames, df, output_dir):
 	new_df = pd.DataFrame({'label': label, 'value': value})
 	new_df = new_df.fillna(999)
 
-	# Define the figure size. (Width should be 1.5 times the number of
-	# paramaters, however, minimum 3 and maximum 9.5.)
-	fig_width = sorted([min_fig_width, width_per_param*len(colnames), max_fig_width])[1]
+	# Define the figure size. (Width depends on number of parameters, however,
+	# there is a minimum and maximum width to take into account)
+	fig_width = sorted([min_fig_width, width_per_param*len(colnames),
+		max_fig_width])[1]
 	figsize = (fig_width, fig_height)
 
     # Create figure with barplot. ('estimator=len' means to plot the frequency
@@ -92,3 +93,74 @@ def bar_plot(colnames, df, output_dir):
 	plt.savefig(filepath, bbox_inches='tight')
 
 	return filename
+
+def stacked_bar_plot(colnames, df, output_dir):
+
+	# Create a list with unique flags assigned to the chosen parameters
+	flag_list = []
+	for colname in colnames:
+		flag_colname = colname + ' QC Flag'
+		unique_list = df[flag_colname].unique()
+		for unique in unique_list:
+			if unique not in flag_list:
+				flag_list.append(unique)
+
+
+	print(flag_list + ' has type' + type(flag_list))
+	print(flag_list[0] + ' has type ' + type(flag_list[0]))
+	print(flag_list[1] + ' has type ' + type(flag_list[1]))
+	print(flag_list[2] + ' has type ' + type(flag_list[2]))
+	print(flag_list[3] + ' has type ' + type(flag_list[3]))
+
+
+	# Cleanup the flag list (replace NaN with Missing, and make numbers to int)
+	for flag in flag_list:
+		if type(flag) is str:
+			flag_list[flag] = 'Missing'
+			print(flag + "is a string")
+		if type(flag) is float:
+			flag_list[flag] = int(flag)
+			print(flag + " is a float")
+
+	print(flag_list)
+
+
+
+
+
+	# Create one list per flag containing the number of flags per param
+
+
+
+
+
+
+# EXAMPLE:
+# y-axis in bold
+#rc('font', weight='bold')
+
+# Values of each group
+#bars1 = [12, 28, 1, 8, 22]
+#bars2 = [28, 7, 16, 4, 10]
+#bars3 = [25, 3, 23, 25, 17]
+
+# Heights of bars1 + bars2
+#bars = np.add(bars1, bars2).tolist()
+
+# The position of the bars on the x-axis
+#r = [0,1,2,3,4]
+
+# Names of group and bar width
+#names = ['A','B','C','D','E']
+#barWidth = 1
+
+# Create brown bars
+#plt.bar(r, bars1, color='#7f6d5f', edgecolor='white', width=barWidth)
+# Create green bars (middle), on top of the firs ones
+#plt.bar(r, bars2, bottom=bars1, color='#557f2d', edgecolor='white', width=barWidth)
+# Create green bars (top)
+#plt.bar(r, bars3, bottom=bars, color='#2d7f5e', edgecolor='white', width=barWidth)
+
+# Custom X axis
+#plt.xticks(r, names, fontweight='bold')
+#plt.xlabel("group")
