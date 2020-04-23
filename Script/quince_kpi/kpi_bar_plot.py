@@ -18,12 +18,12 @@
 ### Import packages
 
 import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import matplotlib.patches as mpatches
 import seaborn as sns
 import numpy as np
 import os
 import pandas as pd
-import matplotlib.colors as colors
-import matplotlib.patches as mpatches
 
 
 #------------------------------------------------------------------------------
@@ -36,11 +36,23 @@ width_per_param = 1.5
 fig_height = 4
 
 # Width of bars in stacked bar plot
-# !!! Make this instead dependent on number of parameters
 barWidth = 0.75
+
+# Number of colnames which change a-axis label to vertical to avoid overlap
+limit_nColnames = 8
+
 
 #------------------------------------------------------------------------------
 ### Functions
+
+# Define the figure size. Width depends on number of parameters, however,
+# there is a minimum and maximum width to take into account.
+def get_figsize(colnames):
+	fig_width = sorted([min_fig_width, width_per_param*len(colnames),
+		max_fig_width])[1]
+	figsize = (fig_width, fig_height)
+	return figsize
+
 
 # Function creates a barplot, saves the figure in the output directory, and
 # returns the figures filename back to the main script.
@@ -70,11 +82,8 @@ def bar_plot(colnames, df, output_dir):
 	new_df = pd.DataFrame({'label': label, 'value': value})
 	new_df = new_df.fillna(999)
 
-	# Define the figure size. (Width depends on number of parameters, however,
-	# there is a minimum and maximum width to take into account)
-	fig_width = sorted([min_fig_width, width_per_param*len(colnames),
-		max_fig_width])[1]
-	figsize = (fig_width, fig_height)
+	# Get the figsize
+	figsize = get_figsize(colnames)
 
     # Create figure with barplot. ('estimator=len' means to plot the frequency
     # each flag occure; 'hue=value' means the value column is used for color
@@ -99,13 +108,14 @@ def bar_plot(colnames, df, output_dir):
 
 	return filename
 
-
+# Function creates a stacked barplot, saves the figure in the output directory,
+# and returns the figures filename back to the main script.
 def stacked_bar_plot(colnames, df, output_dir):
 	#---------
 	# STRUCTURE DATA FOR PLOTTING
-
 	# Create a list of unique flags given to the selected data.
 	unique_flags = []
+	add_nan = False
 	for colname in colnames:
 		flag_colname = colname + ' QC Flag'
 		unique_list = df[flag_colname].unique()
@@ -156,7 +166,6 @@ def stacked_bar_plot(colnames, df, output_dir):
 
 	#---------
 	# MAKE FIGURE:
-
 	# Position of the bars on the x-axis
 	r = list(range(len(colnames)))
 
@@ -172,13 +181,9 @@ def stacked_bar_plot(colnames, df, output_dir):
 		next_heights = np.add(previous_heights, value_list).tolist()
 		bottom_list.append(next_heights)
 		previous_heights = next_heights
-	print(bottom_list)
 
-	# Define the figure size. (Width depends on number of parameters, however,
-	# there is a minimum and maximum width to take into account)
-	fig_width = sorted([min_fig_width, width_per_param*len(colnames),
-		max_fig_width])[1]
-	figsize = (fig_width, fig_height)
+	# Get the figsize
+	figsize = get_figsize(colnames)
 
 	# Create figure
 	f, ax = plt.subplots(figsize=figsize)
@@ -198,12 +203,15 @@ def stacked_bar_plot(colnames, df, output_dir):
 		patchList.append(data_key)
 	plt.legend(handles=patchList)
 
-	# Add axis labels
-	# !!! Edit how the xlabels are shown depending on number of colnames!!!
-	#param_labels = [colname.split(' [')[0].replace(' ','\n')
-	#				for colname in colnames]
-	param_labels = [colname.split(' [')[0] for colname in colnames]
-	plt.xticks(r, param_labels, rotation='vertical')
+	# Add axis labels (depends on number of colnames/bars)
+	if len(colnames) >= limit_nColnames:
+		param_labels = [colname.split(' [')[0] for colname in colnames]
+		plt.xticks(r, param_labels, rotation='vertical')
+	else:
+		param_labels = [colname.split(' [')[0].replace(' ','\n')
+					for colname in colnames]
+		plt.xticks(r, param_labels)
+
 	plt.ylabel('Frequency')
 
 	# Save file
