@@ -6,13 +6,6 @@
 # The output plot will give an overview of how many flags of each type for
 # each parameter of interest.
 
-#----------
-# TODO:
-# - Make stacked bars as an option !!! Is this possible in seaborn??
-# - The bar plot does not look good when include more than 7 or so parameters,
-# is it nessecary to fix, or simply always make stacked bars? (requires less
-# space hence looks good even with many params)
-
 
 #------------------------------------------------------------------------------
 ### Import packages
