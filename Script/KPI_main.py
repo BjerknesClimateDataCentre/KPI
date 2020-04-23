@@ -30,16 +30,16 @@ import pdfkit
 # its important to check that the report looks good with varying number of
 # parameters.)
 #parameters = ['Temp [degC]']
-parameters = ['Temp [degC]',
-			'fCO2 [uatm]',
-			'Atmospheric Pressure [hPa]',
-			'Instrument Ambient Pressure [hPa]']
+#parameters = ['Temp [degC]',
+#			'fCO2 [uatm]',
+#			'Atmospheric Pressure [hPa]',
+#			'Instrument Ambient Pressure [hPa]']
 #parameters = ['H2O Mole Fraction [umol mol-1]',
 #			'Instrument Ambient Pressure [hPa]',
 #			'Atmospheric Pressure [hPa]',
 #			'Temp [degC]',
 #			'CO2 Mole Fraction [umol mol-1]']
-#parameters = True
+parameters = True
 
 
 #---------------
@@ -50,8 +50,8 @@ parameters = ['Temp [degC]',
 
 #-----
 # ALTERNATIVE METHOD
-kpis = ['line_plot', 'bar_plot']
-kpi_functions = ['kpi.line_plot', 'kpi.bar_plot']
+kpis = ['line_plot', 'bar_plot', 'stacked_bar_plot']
+kpi_functions = ['kpi.line_plot', 'kpi.bar_plot', 'kpi.stacked_bar_plot']
 
 
 ###----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ for i in range(len(kpi_functions)):
 # !!! This alternative method is shorter and looks better, however it does not allow
 # additional input parameters. How to get around this???
 
-kpi.stacked_bar_plot(colnames=parameters, df=df, output_dir=output_dir)
+#kpi.stacked_bar_plot(colnames=parameters, df=df, output_dir=output_dir)
 
 ###----------------------------------------------------------------------------
 ### Create report
