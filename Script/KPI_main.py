@@ -30,6 +30,8 @@ import pdfkit
 # its important to check that the report looks good with varying number of
 # parameters.)
 #parameters = ['Temp [degC]']
+parameters = ['Temp [degC]',
+			 'fCO2 [uatm]']
 #parameters = ['Temp [degC]',
 #			'fCO2 [uatm]',
 #			'Atmospheric Pressure [hPa]',
@@ -39,7 +41,14 @@ import pdfkit
 #			'Atmospheric Pressure [hPa]',
 #			'Temp [degC]',
 #			'CO2 Mole Fraction [umol mol-1]']
-parameters = True
+#parameters = ['H2O Mole Fraction [umol mol-1]',
+#			'Instrument Ambient Pressure [hPa]',
+#			'Atmospheric Pressure [hPa]',
+#			'Temp [degC]',
+#			'CO2 Mole Fraction [umol mol-1]',
+#			'fCO2 [uatm]',
+#			'Equilibrator Pressure (relative) [hPa]']
+#parameters = True
 
 
 #---------------
