@@ -34,6 +34,8 @@ barWidth = 0.75
 # Number of parameters which change a-axis label to vertical to avoid overlap
 limit_nParameters = 8
 
+color_dict = {'2':'green','3':'orange','4':'red', 'nan':'grey'}
+
 
 #------------------------------------------------------------------------------
 ### Functions
@@ -101,6 +103,7 @@ def bar_plot(parameters, df, output_dir):
 
 	return filename
 
+
 # Function creates a stacked barplot, saves the figure in the output directory,
 # and returns the figures filename back to the main script.
 def stacked_bar_plot(parameters, df, output_dir, **kwargs):
@@ -162,8 +165,10 @@ def stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	# Position of the bars on the x-axis
 	r = list(range(len(parameters)))
 
-	# Store name of default color plotting list
-	cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
+	# Create a color list based on the color dictionary
+	color_list = []
+	for flag in flag_dict.keys():
+		color_list.append(color_dict[flag])
 
 	# Create 'bottom_list' indicating the height for plotting each flag.
 	# (Flag1 is plotted at height 0, flag2 is plotted at height of flag 1,
@@ -186,8 +191,8 @@ def stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	for i in range(len(flag_dict)):
 		bars = list(flag_dict.values())[i]
 		bottom = bottom_list[i]
-		ax = plt.bar(r, bars, bottom=bottom, color=cycle[i], width=barWidth)
-		legend_dict[list(flag_dict.keys())[i]] = cycle[i]
+		ax = plt.bar(r, bars, bottom=bottom, color=color_list[i], width=barWidth)
+		legend_dict[list(flag_dict.keys())[i]] = color_list[i]
 
 	# Add legend
 	patchList = []
