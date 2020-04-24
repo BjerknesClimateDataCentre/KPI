@@ -6,5 +6,24 @@
     "data_levels" : [
     	"NRT",
     	"L2"
-    ]
+    ],
+    "parameters": {
+    	"Temp [degC]": true,
+    	"fCO2 [uatm]": false,
+    	"Atmospheric Pressure [hPa]": true
+    },
+    "intro_plot_config": {
+    	"line_plot": {
+    		"include": true,
+    		"function_input": {"cleaned": false}
+    	},
+    	"bar_plot": {
+    		"include": false,
+    		"function_input": {}
+    	},
+    	"stacked_bar_plot": {
+    		"include":true,
+    		"function_input": {}
+    	}
+    }
 }
