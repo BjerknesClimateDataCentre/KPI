@@ -32,8 +32,8 @@ import pdfkit
 # its important to check that the report looks good with varying number of
 # parameters.
 #parameters = ['Temp [degC]']
-parameters = ['Temp [degC]',
-			 'fCO2 [uatm]']
+#parameters = ['Temp [degC]',
+#			 'fCO2 [uatm]']
 #parameters = ['Temp [degC]',
 #			'fCO2 [uatm]',
 #			'Atmospheric Pressure [hPa]',
@@ -85,7 +85,7 @@ with open ('./config.json') as file:
 station_code = configs['station_code']
 data_levels = configs['data_levels']
 intro_plot_config = configs['intro_plot_config']
-parameters = configs['parameters']
+param_config = configs['param_config']
 
 
 ###---------------------------------------------------------------------------
@@ -135,6 +135,7 @@ df_start = df['Date/Time'][0]
 df_end = df['Date/Time'][len(df)-1]
 
 # Get all parameters names in df (excludes georef and QC parameters)
+# !!! Is this nessesary???
 all_parameters = kpi.get_parameters(df)
 
 # Store the basic information extracted above in a dictionary.
@@ -149,8 +150,15 @@ render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
 ###----------------------------------------------------------------------------
 
 # !!! Remove this when params are extracted from config file
-if parameters is True:
-	parameters = all_parameters
+#if parameters is True:
+#	parameters = all_parameters
+
+# Exrtract list of parameters to include
+parameters = []
+for param_name, config in param_config.items():
+	if config['include']:
+		parameters.append(param_name)
+
 
 # This function creates the KPI plots for the report introduction, store them
 # in the output directory, and stores their filenames in the render dictionary
