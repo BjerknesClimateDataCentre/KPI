@@ -55,12 +55,12 @@ def get_row_col(n_plot):
 	return n_row, n_col
 
 
-def make_subplot(colname, df, cleaned, ax):
+def make_subplot(parameter, df, cleaned, ax):
 	# Remove rows with NaNs
-	df = df.dropna(subset=[colname])
+	df = df.dropna(subset=[parameter])
 
 	# Identify the parameters QC flag columns
-	color_column = colname + ' QC Flag'
+	color_column = parameter + ' QC Flag'
 
 	# If cleaned is false, plot all data. Else, plot data with QC flag 2.
 	if cleaned is False:
@@ -68,12 +68,12 @@ def make_subplot(colname, df, cleaned, ax):
 		color_code = {2:'green',3:'orange',4:'red'}
 		for flag, col in color_code.items():
 				limited_df = df[df[color_column]==flag]
-				ax.scatter(x=limited_df['Date/Time'], y=limited_df[colname],
+				ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
 					c=col, label=flag, alpha=alpha, edgecolors='none',
 					marker='.')
 	else:
 		limited_df = df[df[color_column]==2]
-		ax.scatter(x=limited_df['Date/Time'], y=limited_df[colname],
+		ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
 			c='green', alpha=alpha, edgecolors='none', marker='.')
 
 	ax.grid(True)
@@ -84,14 +84,14 @@ def make_subplot(colname, df, cleaned, ax):
 
 # Function plots parameter(s) vs time, saves the figure in the output
 # directory, and returns the figures filename back to the main script.
-def line_plot(colnames, df, output_dir, **kwargs):
+def line_plot(parameters, df, output_dir, **kwargs):
 
 	# Create variables from kwargs
 	# !!! Must be a different way to use kwargs to that this step is not needed
 	cleaned = kwargs['kwargs']['cleaned']
 
 	# Store number of plots to create
-	n_plot = len(colnames)
+	n_plot = len(parameters)
 
 	# Get the number of rows and columns in figure
 	n_row, n_col = get_row_col(n_plot)
@@ -106,21 +106,21 @@ def line_plot(colnames, df, output_dir, **kwargs):
 		for col in range(n_col):
 
 			# Specify which param to plot, and where.
-			colname = colnames[count]
+			parameter = parameters[count]
 			ax = plt.subplot2grid((n_row, n_col), (row,col))
 
 			# Make subplot
-			make_subplot(colname, df, cleaned, ax)
+			make_subplot(parameter, df, cleaned, ax)
 			ax.legend()
 			# !!! HOW TO ADD ONLY ONCE??
 			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1)) ???
 
 			# Add title (and letter if needed)
 			if n_plot == 1:
-				plt.title('     ' + colnames[0], fontsize=title_fontsize,
+				plt.title('     ' + parameters[0], fontsize=title_fontsize,
 					fontweight='bold')
 			else:
-				title = string.ascii_lowercase[count] + ')     ' + colname
+				title = string.ascii_lowercase[count] + ')     ' + parameter
 				ax.set_title(title, loc='left', fontsize=title_fontsize,
 					fontweight='bold')
 
