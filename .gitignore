@@ -46,3 +46,6 @@ vignettes/*.pdf
 
 # Ignore python cache
 __pycache__
+
+# Ignore package script template file
+/Script/quince_kpi/template.py
