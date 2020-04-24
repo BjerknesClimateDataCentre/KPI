@@ -31,8 +31,8 @@ fig_height = 4
 # Width of bars in stacked bar plot
 barWidth = 0.75
 
-# Number of colnames which change a-axis label to vertical to avoid overlap
-limit_nColnames = 8
+# Number of parameters which change a-axis label to vertical to avoid overlap
+limit_nparameters = 8
 
 
 #------------------------------------------------------------------------------
@@ -40,8 +40,8 @@ limit_nColnames = 8
 
 # Define the figure size. Width depends on number of parameters, however,
 # there is a minimum and maximum width to take into account.
-def get_figsize(colnames):
-	fig_width = sorted([min_fig_width, width_per_param*len(colnames),
+def get_figsize(parameters):
+	fig_width = sorted([min_fig_width, width_per_param*len(parameters),
 		max_fig_width])[1]
 	figsize = (fig_width, fig_height)
 	return figsize
@@ -49,7 +49,7 @@ def get_figsize(colnames):
 
 # Function creates a barplot, saves the figure in the output directory, and
 # returns the figures filename back to the main script.
-def bar_plot(colnames, df, output_dir):
+def bar_plot(parameters, df, output_dir):
 
 	# In order to create the barplot we need to create a new data frame
 	# containing two columns: 'label' (containg the the parameter names), and
@@ -57,17 +57,17 @@ def bar_plot(colnames, df, output_dir):
 	# First, create these columns as separate lists.
 	label = []
 	value = []
-	for colname in colnames:
-		# Remove the unit-part from the column name
-		label_name = colname.split(" [")[0].replace(' ','\n')
+	for parameter in parameters:
+		# Remove the unit-part from the parameter name
+		label_name = parameter.split(" [")[0].replace(' ','\n')
 		# The new label_name is added to the label list and needs to be
 		# repeated as many times as there are measurements in df
-		label = label + [label_name]*len(df[colname])
+		label = label + [label_name]*len(df[parameter])
 
 		# Store the name of the QC column in df
-		flag_colname = colname + ' QC Flag'
+		flag_column = parameter + ' QC Flag'
 		# Add the QC flags from the current column to the value list
-		value = value + list(df[flag_colname])
+		value = value + list(df[flag_column])
 
 	# Create the new dataframe with the two columns. Change missing numbers to
 	# '999' to allow them to be counted and included in the barplot (as missing
@@ -76,7 +76,7 @@ def bar_plot(colnames, df, output_dir):
 	new_df = new_df.fillna(999)
 
 	# Get the figsize
-	figsize = get_figsize(colnames)
+	figsize = get_figsize(parameters)
 
     # Create figure with barplot. ('estimator=len' means to plot the frequency
     # each flag occure; 'hue=value' means the value column is used for color
@@ -103,15 +103,15 @@ def bar_plot(colnames, df, output_dir):
 
 # Function creates a stacked barplot, saves the figure in the output directory,
 # and returns the figures filename back to the main script.
-def stacked_bar_plot(colnames, df, output_dir, **kwargs):
+def stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	#---------
 	# STRUCTURE DATA FOR PLOTTING
 	# Create a list of unique flags given to the selected data.
 	unique_flags = []
 	add_nan = False
-	for colname in colnames:
-		flag_colname = colname + ' QC Flag'
-		unique_list = df[flag_colname].unique()
+	for parameter in parameters:
+		flag_column = parameter + ' QC Flag'
+		unique_list = df[flag_column].unique()
 		for flag in unique_list:
 			flag = str(flag).split('.')[0]
 			if flag == 'nan':
@@ -125,10 +125,10 @@ def stacked_bar_plot(colnames, df, output_dir, **kwargs):
 	# Create a list of dictionaries where each dict shows the flag frequency for
 	# one parameter.
 	freq_list = []
-	for colname in colnames:
+	for parameter in parameters:
 		# Count frequency of flags and store in a dictionary
-		flag_colname = colname + ' QC Flag'
-		flag_list = list(df[flag_colname])
+		flag_column = parameter + ' QC Flag'
+		flag_list = list(df[flag_column])
 		freq_dict = {}
 		for item in flag_list:
 			item = str(item)
@@ -160,7 +160,7 @@ def stacked_bar_plot(colnames, df, output_dir, **kwargs):
 	#---------
 	# MAKE FIGURE:
 	# Position of the bars on the x-axis
-	r = list(range(len(colnames)))
+	r = list(range(len(parameters)))
 
 	# Store name of default color plotting list
 	cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
@@ -168,7 +168,7 @@ def stacked_bar_plot(colnames, df, output_dir, **kwargs):
 	# Create 'bottom_list' indicating the height for plotting each flag.
 	# (Flag1 is plotted at height 0, flag2 is plotted at height of flag 1,
 	# flag 3 is plotted at height of flag1 + flag2, and so on...)
-	previous_heights = [0] * len(colnames)
+	previous_heights = [0] * len(parameters)
 	bottom_list = [previous_heights]
 	for value_list in flag_dict.values():
 		next_heights = np.add(previous_heights, value_list).tolist()
@@ -176,7 +176,7 @@ def stacked_bar_plot(colnames, df, output_dir, **kwargs):
 		previous_heights = next_heights
 
 	# Get the figsize
-	figsize = get_figsize(colnames)
+	figsize = get_figsize(parameters)
 
 	# Create figure
 	f, ax = plt.subplots(figsize=figsize)
@@ -196,13 +196,13 @@ def stacked_bar_plot(colnames, df, output_dir, **kwargs):
 		patchList.append(data_key)
 	plt.legend(handles=patchList)
 
-	# Add axis labels (depends on number of colnames/bars)
-	if len(colnames) >= limit_nColnames:
-		param_labels = [colname.split(' [')[0] for colname in colnames]
+	# Add axis labels (depends on number of parameters/bars)
+	if len(parameters) >= limit_nparameters:
+		param_labels = [parameter.split(' [')[0] for parameter in parameters]
 		plt.xticks(r, param_labels, rotation='vertical')
 	else:
-		param_labels = [colname.split(' [')[0].replace(' ','\n')
-					for colname in colnames]
+		param_labels = [parameter.split(' [')[0].replace(' ','\n')
+					for parameter in parameters]
 		plt.xticks(r, param_labels)
 
 	plt.ylabel('Frequency')

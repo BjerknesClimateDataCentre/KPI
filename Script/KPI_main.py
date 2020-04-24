@@ -163,7 +163,7 @@ for param_name, config in param_config.items():
 # This function creates the KPI plots for the report introduction, store them
 # in the output directory, and stores their filenames in the render dictionary
 kpi.intro_plots(intro_plot_config=intro_plot_config, render_dict=render_dict,
-	colnames=parameters, df=df, output_dir=output_dir)
+	parameters=parameters, df=df, output_dir=output_dir)
 
 # !!! Function for making plots for each parameter chapter
 
