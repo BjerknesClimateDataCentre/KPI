@@ -7,15 +7,105 @@
     	"NRT",
     	"L2"
     ],
-    "parameters": {
-    	"Temp [degC]": true,
-    	"fCO2 [uatm]": false,
-    	"Atmospheric Pressure [hPa]": true
+    "param_config": {
+    	"H2O Mole Fraction [umol mol-1]": {
+    		"include": false,
+    		"measured": true,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"Instrument Ambient Pressure [hPa]": {
+    		"include": false,
+    		"measured": true,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"Atmospheric Pressure [hPa]": {
+    		"include": true,
+    		"measured": true,
+    		"kpis" : {
+    			"flag_piechart": true
+    		}
+    	},
+    	"Temp [degC]": {
+    		"include": true,
+    		"measured": true,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"Equilibrator Pressure (relative) [hPa]": {
+    		"include": false,
+    		"measured": true,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"Temperature of Equilibration [degC]": {
+    		"include": false,
+    		"measured": true,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"CO2 Mole Fraction [umol mol-1]": {
+    		"include": false,
+    		"measured": true,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"P_sal [psu]": {
+    		"include": false,
+    		"measured": true,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"pCO2 In Water - Equilibrator Temperature [uatm]": {
+    		"include": false,
+    		"measured": false,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"pCO2 [uatm]": {
+    		"include": false,
+    		"measured": false,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"fCO2 [uatm]": {
+    		"include": true,
+    		"measured": false,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"pCO2 in atmosphere [uatm]": {
+    		"include": false,
+    		"measured": true,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	},
+    	"fCO2 in atmosphere [uatm]": {
+    		"include": false,
+    		"measured": false,
+    		"kpis": {
+    			"flag_piechart": true
+    		}
+    	}
     },
     "intro_plot_config": {
     	"line_plot": {
     		"include": true,
-    		"function_input": {"cleaned": false}
+    		"function_input": {
+    			"cleaned": false
+    		}
     	},
     	"bar_plot": {
     		"include": false,
