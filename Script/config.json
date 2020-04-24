@@ -11,6 +11,7 @@
     	"H2O Mole Fraction [umol mol-1]": {
     		"include": false,
     		"measured": true,
+    		"short_name": "H2O",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -18,6 +19,7 @@
     	"Instrument Ambient Pressure [hPa]": {
     		"include": false,
     		"measured": true,
+    		"short_name": "Pinst",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -25,6 +27,7 @@
     	"Atmospheric Pressure [hPa]": {
     		"include": true,
     		"measured": true,
+    		"short_name": "Patm",
     		"kpis" : {
     			"flag_piechart": true
     		}
@@ -32,6 +35,7 @@
     	"Temp [degC]": {
     		"include": true,
     		"measured": true,
+    		"short_name": "SST",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -39,6 +43,7 @@
     	"Equilibrator Pressure (relative) [hPa]": {
     		"include": false,
     		"measured": true,
+    		"short_name": "Peq",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -46,6 +51,7 @@
     	"Temperature of Equilibration [degC]": {
     		"include": false,
     		"measured": true,
+    		"short_name": "Teq",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -53,6 +59,7 @@
     	"CO2 Mole Fraction [umol mol-1]": {
     		"include": false,
     		"measured": true,
+    		"short_name": "xCO2",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -60,6 +67,7 @@
     	"P_sal [psu]": {
     		"include": false,
     		"measured": true,
+    		"short_name": "sal",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -67,6 +75,7 @@
     	"pCO2 In Water - Equilibrator Temperature [uatm]": {
     		"include": false,
     		"measured": false,
+    		"short_name": "pCO2_Teq",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -74,6 +83,7 @@
     	"pCO2 [uatm]": {
     		"include": false,
     		"measured": false,
+    		"short_name": "pCO2",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -81,6 +91,7 @@
     	"fCO2 [uatm]": {
     		"include": true,
     		"measured": false,
+    		"short_name": "fCO2",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -88,6 +99,7 @@
     	"pCO2 in atmosphere [uatm]": {
     		"include": false,
     		"measured": true,
+    		"short_name": "pCO2_atm",
     		"kpis": {
     			"flag_piechart": true
     		}
@@ -95,6 +107,7 @@
     	"fCO2 in atmosphere [uatm]": {
     		"include": false,
     		"measured": false,
+    		"short_name": "fCO2_atm",
     		"kpis": {
     			"flag_piechart": true
     		}

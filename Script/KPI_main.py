@@ -165,7 +165,14 @@ for param_name, config in param_config.items():
 kpi.intro_plots(intro_plot_config=intro_plot_config, render_dict=render_dict,
 	parameters=parameters, df=df, output_dir=output_dir)
 
-# !!! Function for making plots for each parameter chapter
+# Function for making plots for each parameter chapter
+# !!! Extract these from the config !!!
+parameter = parameters[2]
+short_name = "fCO2"
+filename = short_name + '_flag_piechart_filename'
+
+render_dict[filename] = kpi.flag_piechart(parameter=parameter, short_name=short_name, df=df,
+	output_dir=output_dir)
 
 
 ###----------------------------------------------------------------------------

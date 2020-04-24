@@ -134,9 +134,9 @@ def line_plot(parameters, df, output_dir, **kwargs):
 
 	# Save plot to file
 	if cleaned is True:
-		filename = 'kpi_plot_data_cleaned.png'
+		filename = 'plot_data_cleaned.png'
 	else:
-		filename = 'kpi_plot_data.png'
+		filename = 'plot_data.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 

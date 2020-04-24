@@ -32,7 +32,7 @@ fig_height = 4
 barWidth = 0.75
 
 # Number of parameters which change a-axis label to vertical to avoid overlap
-limit_nparameters = 8
+limit_nParameters = 8
 
 
 #------------------------------------------------------------------------------
@@ -197,7 +197,7 @@ def stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	plt.legend(handles=patchList)
 
 	# Add axis labels (depends on number of parameters/bars)
-	if len(parameters) >= limit_nparameters:
+	if len(parameters) >= limit_nParameters:
 		param_labels = [parameter.split(' [')[0] for parameter in parameters]
 		plt.xticks(r, param_labels, rotation='vertical')
 	else:
