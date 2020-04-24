@@ -84,7 +84,11 @@ def make_subplot(colname, df, cleaned, ax):
 
 # Function plots parameter(s) vs time, saves the figure in the output
 # directory, and returns the figures filename back to the main script.
-def line_plot(colnames, df, output_dir, cleaned=False):
+def line_plot(colnames, df, output_dir, **kwargs):
+
+	# Create variables from kwargs
+	# !!! Must be a different way to use kwargs to that this step is not needed
+	cleaned = kwargs['kwargs']['cleaned']
 
 	# Store number of plots to create
 	n_plot = len(colnames)

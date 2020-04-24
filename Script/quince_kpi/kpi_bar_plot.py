@@ -103,7 +103,7 @@ def bar_plot(colnames, df, output_dir):
 
 # Function creates a stacked barplot, saves the figure in the output directory,
 # and returns the figures filename back to the main script.
-def stacked_bar_plot(colnames, df, output_dir):
+def stacked_bar_plot(colnames, df, output_dir, **kwargs):
 	#---------
 	# STRUCTURE DATA FOR PLOTTING
 	# Create a list of unique flags given to the selected data.

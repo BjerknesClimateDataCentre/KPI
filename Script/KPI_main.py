@@ -26,9 +26,11 @@ import pdfkit
 # To be added later.
 #--------
 
-# Which parameters to check ('True' means all). (While writing the this script
+# !!! The list of parameters will be extracted from the config file.
+# !!! For conveniance, it's done in main script for now.
+# Which parameters to check ('True' means all). While writing the this script
 # its important to check that the report looks good with varying number of
-# parameters.)
+# parameters.
 #parameters = ['Temp [degC]']
 parameters = ['Temp [degC]',
 			 'fCO2 [uatm]']
@@ -49,18 +51,6 @@ parameters = ['Temp [degC]',
 #			'fCO2 [uatm]',
 #			'Equilibrator Pressure (relative) [hPa]']
 #parameters = True
-
-
-#---------------
-# Which KPI's to run:
-#kpi_line_plot = parameters
-#kpi_line_plot_cleaned = parameters
-#kpi_bar_plot = parameters
-
-#-----
-# ALTERNATIVE METHOD
-kpis = ['line_plot', 'bar_plot', 'stacked_bar_plot']
-kpi_functions = ['kpi.line_plot', 'kpi.bar_plot', 'kpi.stacked_bar_plot']
 
 
 ###----------------------------------------------------------------------------
@@ -94,6 +84,8 @@ with open ('./config.json') as file:
 	configs = json.load(file)
 station_code = configs['station_code']
 data_levels = configs['data_levels']
+intro_plot_config = configs['intro_plot_config']
+parameters = configs['parameters']
 
 
 ###---------------------------------------------------------------------------
@@ -156,51 +148,16 @@ render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
 ### Create KPIs
 ###----------------------------------------------------------------------------
 
-# Each chunk below represents a KPI plot. They will only be created if selected
-# above. The plots are stored in the output file and their paths are stored as
-# variables in 'render_dict' which are past on to the html template at the end
-# of this script.
-
-#if 'kpi_line_plot' in globals():
-#	if kpi_line_plot is True:
-#		kpi_line_plot = all_parameters
-#	render_dict['kpi_line_plot_filename'] = kpi.line_plot(
-#		colnames=kpi_line_plot, df=df, output_dir=output_dir)
-
-#if 'kpi_line_plot_cleaned' in globals():
-#	if kpi_line_plot_cleaned is True:
-#		kpi_line_plot_cleaned = all_parameters
-#	render_dict['kpi_line_plot_cleaned_filename'] = kpi.line_plot(
-#		colnames=kpi_line_plot_cleaned, df=df, output_dir=output_dir,
-#		cleaned=True)
-
-#if 'kpi_bar_plot' in globals():
-#	if kpi_bar_plot is True:
-#		kpi_bar_plot = all_parameters
-#	render_dict['kpi_bar_plot_filename'] = kpi.bar_plot(colnames=kpi_bar_plot,
-#		df=df, output_dir=output_dir)
-
-
-#--------
-# ALTERNATIVE METHOD:
-
-# Create the kpi_function string (instead of defining it in the input params)
-# !!! Why doesn't this work???
-#kpi_functions = []
-#for kpi in kpis:
-#	function = 'kpi.' + kpi
-#	kpi_functions.append(str(function))
-
+# !!! Remove this when params are extracted from config file
 if parameters is True:
 	parameters = all_parameters
 
-for i in range(len(kpi_functions)):
-	filename = 'kpi_' + kpis[i] + '_filename'
-	render_dict[filename] = eval(kpi_functions[i])(colnames=parameters, df=df,
-		output_dir=output_dir)
+# This function creates the KPI plots for the report introduction, store them
+# in the output directory, and stores their filenames in the render dictionary
+kpi.intro_plots(intro_plot_config=intro_plot_config, render_dict=render_dict,
+	colnames=parameters, df=df, output_dir=output_dir)
 
-# !!! This alternative method is shorter and looks better, however it does not allow
-# additional input parameters. How to get around this???
+# !!! Function for making plots for each parameter chapter
 
 
 ###----------------------------------------------------------------------------
