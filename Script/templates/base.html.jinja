@@ -18,15 +18,6 @@
       </figcaption>
     </figure>
 
-    <!-- Such  plots can be moved to indivdual parameter chapters
-    <figure>
-      <img src={{ kpi_line_plot_cleaned_filename}} >
-      <figcaption> Figure x: The data measured. Plots only show data flaged as
-        good.
-      </figcaption>
-    </figure>
-     -->
-
     <figure>
       <img src={{ kpi_stacked_bar_plot_filename}} >
       <figcaption> Figure x: The quality of the measured (and calculated parameters).
@@ -42,14 +33,21 @@
     </figure>
     -->
 
+  <!-- !!! These chapters needs to be created in a loop to allow for varying
+    parameters. For now these test chapters are fine-->
 
   <h2>Parameter 1</h2>
     <p>Some text about this parameter. See figures</p>
 
+    <figure>
+      <img src={{fCO2_flag_piechart_filename}} >
+      <figcaption> Figure x: The quality of the measured (and calculated parameters).
+      </figcaption>
+    </figure>
+
 
   <h2>Parameter 2</h2>
     <p>Some text about this parameter. See figures ...</p>
-
 
 
   <!-- ALTERNATIVE: Extract from child template, but this does not work!
