@@ -19,41 +19,6 @@ import pdfkit
 
 
 ###----------------------------------------------------------------------------
-### Input parameters . MOVE TO CONFIG!
-###----------------------------------------------------------------------------
-
-# !!! Need input about for which station(s) and time period!!!
-# To be added later.
-#--------
-
-# !!! The list of parameters will be extracted from the config file.
-# !!! For conveniance, it's done in main script for now.
-# Which parameters to check ('True' means all). While writing the this script
-# its important to check that the report looks good with varying number of
-# parameters.
-#parameters = ['Temp [degC]']
-#parameters = ['Temp [degC]',
-#			 'fCO2 [uatm]']
-#parameters = ['Temp [degC]',
-#			'fCO2 [uatm]',
-#			'Atmospheric Pressure [hPa]',
-#			'Instrument Ambient Pressure [hPa]']
-#parameters = ['H2O Mole Fraction [umol mol-1]',
-#			'Instrument Ambient Pressure [hPa]',
-#			'Atmospheric Pressure [hPa]',
-#			'Temp [degC]',
-#			'CO2 Mole Fraction [umol mol-1]']
-#parameters = ['H2O Mole Fraction [umol mol-1]',
-#			'Instrument Ambient Pressure [hPa]',
-#			'Atmospheric Pressure [hPa]',
-#			'Temp [degC]',
-#			'CO2 Mole Fraction [umol mol-1]',
-#			'fCO2 [uatm]',
-#			'Equilibrator Pressure (relative) [hPa]']
-#parameters = True
-
-
-###----------------------------------------------------------------------------
 ### Handling directories
 ###----------------------------------------------------------------------------
 
@@ -85,12 +50,29 @@ with open ('./config.json') as file:
 station_code = configs['station_code']
 data_levels = configs['data_levels']
 intro_plot_config = configs['intro_plot_config']
-param_config = configs['param_config']
+param_config_full = configs['param_config']
+
+
+## ---------
+# Simplify the param_config dictionary by removing what's unnesesary
+
+# Remove info on parameters not to be include in report
+param_config = { k : v for k, v in param_config_full.items() if v['include']}
+
+# Remove kpis set to 'false'. For kpis set to 'true', replace 'true' with
+# the filename this plot will have.
+
+
+print(param_config)
+
 
 
 ###---------------------------------------------------------------------------
 ### Identify / extract / import (???) datasets
 ###----------------------------------------------------------------------------
+
+# !!! Need input in config file about for which station(s) and time period!!!
+# To be added later.
 
 # !!! This section cannot be completed before we know how the script will
 # extract/receive data from QuinCe.
@@ -142,41 +124,40 @@ all_parameters = kpi.get_parameters(df)
 # (This dictionary will be filled with information thourghout this script, and
 # finally be used as input when the report is created.)
 render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
-			 'df_end':df_end, 'all_parameters':all_parameters}
+			 'df_end':df_end}
 
+# !!! Not sure where its best to do this
+render_dict['param_config'] = param_config
 
 ###----------------------------------------------------------------------------
 ### Create KPIs
 ###----------------------------------------------------------------------------
 
-# !!! Remove this when params are extracted from config file
-#if parameters is True:
-#	parameters = all_parameters
-
-# Exrtract list of parameters to include
-parameters = []
-for param_name, config in param_config.items():
-	if config['include']:
-		parameters.append(param_name)
-
-
 # This function creates the KPI plots for the report introduction, store them
 # in the output directory, and stores their filenames in the render dictionary
+parameters = list(param_config.keys())
 kpi.intro_plots(intro_plot_config=intro_plot_config, render_dict=render_dict,
 	parameters=parameters, df=df, output_dir=output_dir)
 
-# Function for making plots for each parameter chapter
-# !!! Extract these from the config !!!
-#parameter = parameters[2]
-#short_name = "fCO2"
-#filename = short_name + '_flag_piechart_filename'
 
+# Function for making pie charts for each parameter chapter
 for parameter, config in param_config.items():
-	if config['include']:
-		short_name = config['short_name']
-		filename = short_name + '_flag_piechart' + '_filename'
-		render_dict[filename] = kpi.flag_piechart(parameter=parameter,
-			short_name=short_name, df=df, output_dir=output_dir)
+	short_name = config['short_name']
+	filename = short_name + '_flag_piechart' + '_filename'
+	render_dict[filename] = kpi.flag_piechart(parameter=parameter, short_name=short_name,
+		df=df, output_dir=output_dir)
+
+
+
+# !!! Might be better to add the returned filenames into the param_config
+# dictionary, e.g. after 'kpis', add
+# 'figures': {'Patm_flag_piechart_filename': 'Patm_flag_piechart.png'}
+# It will then be easier to extract these filenames in the jinja template.
+
+
+# This works
+#kpi.plot_param(parameter=parameter, short_name=short_name, df=df,
+#	output_dir=output_dir)
 
 
 ###----------------------------------------------------------------------------
