@@ -7,6 +7,7 @@
 
   <h1>Data Quality Report for {{station}} - {{df_start}} to {{df_end}}</h1>
 
+  <!-- INTRODUCTION CHAPTER -->
   <h2>Introduction</h2>
     <p>This is a quality assesment of dataset *datasetname*, collected on ICOS
       station {{station}}. See figures for a quick overview of the data and the
@@ -33,20 +34,21 @@
     </figure>
     -->
 
-  <!-- !!! These chapters needs to be created in a loop to allow for varying
-    parameters. For now these test chapters are fine-->
+
+  <!-- PARAMETER CHAPTERS -->
   {% for parameter, config in param_config.items() %}
     <h2> {{config['short_name']}} </h2>
     <p>Some text about this parameter. See figures</p>
 
+    {% for kpi_name, filename in config['kpis'].items() %}
         <figure>
-          <img src={{Patm_flag_piechart_filename}} >
+          <img src={{filename}} >
           <figcaption> Figure x: The quality of the measured (and calculated parameters).
           </figcaption>
         </figure>
+    {% endfor %}
 
   {% endfor %}
-
 
 
   <!-- ALTERNATIVE: Extract from child template, but this does not work!
