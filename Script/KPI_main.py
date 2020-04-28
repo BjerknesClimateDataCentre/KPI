@@ -57,14 +57,16 @@ param_config_full = configs['param_config']
 # Simplify the param_config dictionary by removing what's unnesesary
 
 # Remove info on parameters not to be include in report
-param_config = { k : v for k, v in param_config_full.items() if v['include']}
+param_config_short = { k : v for k, v in param_config_full.items() if v['include']}
 
 # Remove kpis set to 'false'. For kpis set to 'true', replace 'true' with
 # the filename this plot will have.
-
-
-print(param_config)
-
+param_config = param_config_short
+for param, config in param_config_short.items():
+	for kpi_name, boolean in config['kpis'].items():
+		if boolean is True:
+			filename = config['short_name'] + '_' + kpi_name + '.png'
+			param_config[param]['kpis'][kpi_name] = filename
 
 
 ###---------------------------------------------------------------------------
@@ -129,6 +131,7 @@ render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
 # !!! Not sure where its best to do this
 render_dict['param_config'] = param_config
 
+
 ###----------------------------------------------------------------------------
 ### Create KPIs
 ###----------------------------------------------------------------------------
@@ -143,16 +146,8 @@ kpi.intro_plots(intro_plot_config=intro_plot_config, render_dict=render_dict,
 # Function for making pie charts for each parameter chapter
 for parameter, config in param_config.items():
 	short_name = config['short_name']
-	filename = short_name + '_flag_piechart' + '_filename'
-	render_dict[filename] = kpi.flag_piechart(parameter=parameter, short_name=short_name,
+	kpi.flag_piechart(parameter=parameter, short_name=short_name,
 		df=df, output_dir=output_dir)
-
-
-
-# !!! Might be better to add the returned filenames into the param_config
-# dictionary, e.g. after 'kpis', add
-# 'figures': {'Patm_flag_piechart_filename': 'Patm_flag_piechart.png'}
-# It will then be easier to extract these filenames in the jinja template.
 
 
 # This works
