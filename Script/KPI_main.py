@@ -150,9 +150,10 @@ for parameter, config in param_config.items():
 		df=df, output_dir=output_dir)
 
 
-# This works
-#kpi.plot_param(parameter=parameter, short_name=short_name, df=df,
-#	output_dir=output_dir)
+# Function for plotting the data for all parameters
+parameter = "Temp [degC]"
+filename = kpi.single_line_plot(parameter=parameter, short_name=short_name, df=df,
+	output_dir=output_dir)
 
 
 ###----------------------------------------------------------------------------

@@ -6,6 +6,9 @@
 # The output plot will give an overview of how many flags of each type for
 # each parameter of interest.
 
+# TODO:
+# - use short name for figure labels (on both stacked and unctacked bar_plot)
+
 
 #------------------------------------------------------------------------------
 ### Import packages
