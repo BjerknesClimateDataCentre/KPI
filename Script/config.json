@@ -13,7 +13,8 @@
     		"measured": true,
     		"short_name": "H2O",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"Instrument Ambient Pressure [hPa]": {
@@ -21,7 +22,8 @@
     		"measured": true,
     		"short_name": "Pinst",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"Atmospheric Pressure [hPa]": {
@@ -29,7 +31,8 @@
     		"measured": true,
     		"short_name": "Patm",
     		"kpis" : {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"Temp [degC]": {
@@ -37,7 +40,8 @@
     		"measured": true,
     		"short_name": "SST",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"Equilibrator Pressure (relative) [hPa]": {
@@ -45,7 +49,8 @@
     		"measured": true,
     		"short_name": "Peq",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"Temperature of Equilibration [degC]": {
@@ -53,7 +58,8 @@
     		"measured": true,
     		"short_name": "Teq",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"CO2 Mole Fraction [umol mol-1]": {
@@ -61,7 +67,8 @@
     		"measured": true,
     		"short_name": "xCO2",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"P_sal [psu]": {
@@ -69,7 +76,8 @@
     		"measured": true,
     		"short_name": "sal",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"pCO2 In Water - Equilibrator Temperature [uatm]": {
@@ -77,7 +85,8 @@
     		"measured": false,
     		"short_name": "pCO2_Teq",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"pCO2 [uatm]": {
@@ -85,7 +94,8 @@
     		"measured": false,
     		"short_name": "pCO2",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"fCO2 [uatm]": {
@@ -93,7 +103,8 @@
     		"measured": false,
     		"short_name": "fCO2",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"pCO2 in atmosphere [uatm]": {
@@ -101,7 +112,8 @@
     		"measured": true,
     		"short_name": "pCO2_atm",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	},
     	"fCO2 in atmosphere [uatm]": {
@@ -109,7 +121,8 @@
     		"measured": false,
     		"short_name": "fCO2_atm",
     		"kpis": {
-    			"flag_piechart": true
+    			"flag_piechart": true,
+                "single_line_plot": true
     		}
     	}
     },
