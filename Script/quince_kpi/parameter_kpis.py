@@ -36,7 +36,7 @@ alpha = 0.7
 color_dict = {'2':'green','3':'orange','4':'red', 'nan':'grey'}
 
 # Title fontsize:
-title_fontsize = 14
+title_fontsize = 11
 
 # Factor used to define upper and lower plot range
 k = 1.5
@@ -145,7 +145,7 @@ def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
 	#plt.xlabel('Time')
 
 	# Save the plot to file
-	filename = short_name + '_lineplot.png'
+	filename = short_name + '_single_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 
