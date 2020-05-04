@@ -17,7 +17,7 @@
     		}
     	},
     	"Instrument Ambient Pressure [hPa]": {
-    		"include": false,
+    		"include": true,
     		"measured": true,
     		"short_name": "Pinst",
     		"kpis": {
@@ -25,7 +25,7 @@
     		}
     	},
     	"Atmospheric Pressure [hPa]": {
-    		"include": true,
+    		"include": false,
     		"measured": true,
     		"short_name": "Patm",
     		"kpis" : {
@@ -41,7 +41,7 @@
     		}
     	},
     	"Equilibrator Pressure (relative) [hPa]": {
-    		"include": false,
+    		"include": true,
     		"measured": true,
     		"short_name": "Peq",
     		"kpis": {
@@ -49,7 +49,7 @@
     		}
     	},
     	"Temperature of Equilibration [degC]": {
-    		"include": false,
+    		"include": true,
     		"measured": true,
     		"short_name": "Teq",
     		"kpis": {
@@ -57,7 +57,7 @@
     		}
     	},
     	"CO2 Mole Fraction [umol mol-1]": {
-    		"include": false,
+    		"include": true,
     		"measured": true,
     		"short_name": "xCO2",
     		"kpis": {
@@ -65,7 +65,7 @@
     		}
     	},
     	"P_sal [psu]": {
-    		"include": false,
+    		"include": true,
     		"measured": true,
     		"short_name": "sal",
     		"kpis": {
