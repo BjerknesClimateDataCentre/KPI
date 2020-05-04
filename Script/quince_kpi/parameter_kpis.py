@@ -10,15 +10,14 @@
 # TODO:
 #  - in single_line_plot:
 #     - make one common y label
-#     - move legend to better location
-#     - add lettering to plots
-#     - add the k values next to the blue lines (remove k=3 line?)
+
 
 #------------------------------------------------------------------------------
 ### Import packages
 import matplotlib.pyplot as plt
 import os
 import numpy as np
+
 
 #------------------------------------------------------------------------------
 ### Set variables
@@ -33,6 +32,9 @@ alpha = 0.7
 
 # QC Flag color dictionary
 color_dict = {'2':'green','3':'orange','4':'red', 'nan':'grey'}
+
+# Title fontsize:
+title_fontsize = 14
 
 
 #------------------------------------------------------------------------------
@@ -120,15 +122,19 @@ def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
 					c=col, label=flag, alpha=alpha, edgecolors='none',
 					marker='.')
 
-	# Add the lower and upper values to plot a)
+	# Add the lower and upper values to plot a), and text with the k value
 	plt.axhline(y=upper, color='blue', linestyle='-')
 	plt.axhline(y=upper_extreme, color='blue', linestyle='-')
+	ax.text(max(df['Date/Time']), upper, 'k = 1.5', color='blue', fontsize=13,
+		style='italic', fontweight='bold', backgroundcolor='w')
+	ax.text(max(df['Date/Time']), upper_extreme, 'k = 3.0', color='blue',
+		fontsize=13, style='italic', fontweight='bold', backgroundcolor='w')
 
 	# Add grid and labels etc.
-	ax.legend()
 	ax.grid(True)
 	fig.autofmt_xdate()
 	plt.ylabel(parameter)
+	ax.set_title('a)', loc='left', fontsize=title_fontsize, fontweight='bold')
 
 	# Create the second plot removing outliers
 	ax = plt.subplot2grid((2, 1), (1,0))
@@ -144,9 +150,12 @@ def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
 				alpha=alpha, edgecolors='none', marker='.')
 
 	# Add grid, labels etc.
+	ax.legend()
 	ax.grid(True)
 	fig.autofmt_xdate()
 	plt.ylabel(parameter)
+	ax.set_title('b)', loc='left', fontsize=title_fontsize, fontweight='bold')
+
 	#plt.xlabel('Time')
 
 	# Save the plot to file
