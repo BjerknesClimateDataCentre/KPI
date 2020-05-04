@@ -10,6 +10,8 @@
 # TODO:
 #  - in single_line_plot:
 #     - make one common y label
+#  - move word 'outliers' since this is defined as something that might
+# be different from waht we mean. ' We use the method to scale the plot'.
 
 
 #------------------------------------------------------------------------------
@@ -35,6 +37,9 @@ color_dict = {'2':'green','3':'orange','4':'red', 'nan':'grey'}
 
 # Title fontsize:
 title_fontsize = 14
+
+# Factor used to define upper and lower plot range
+k = 1.5
 
 
 #------------------------------------------------------------------------------
@@ -71,64 +76,54 @@ def flag_piechart(parameter, short_name, df, output_dir, **kwargs):
 	return filename
 
 
-def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
-
-	# Remove rows with NaNs
-	df = df.dropna(subset=[parameter])
-	#df = df[df[parameter] > 0]
-
-
+def make_plot(df, parameter, ax):
 	# Identify the parameters QC flag columns
 	color_column = parameter + ' QC Flag'
 
-	# Remove NaNs from color_dict since we cannot see the missing values
+	# Remove NaNs from color_dict since missing values are not plotted
 	color_dict_noNan = color_dict
-	color_dict_noNan.pop('nan')
+	if 'nan' in color_dict:
+		color_dict_noNan.pop('nan')
 
-	# The figure created will contain two plots: a) show all measurements, b)
-	# show measurements without outliers.
-	# "The IQR can be used to identify outlier by defining limits on the
-	# sample values that are a factor k of the IQR below the 25th percentile or
-	# above the 75th percentile. The common value for the factor k is the value
-	# 1.5. A factor k of 3 or more can be used to identify values that are
-	# extreme outliers or “far outs” when described in the context of box and
-	# whisker plots (https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/)
-	# Plot b) show measurements within k=1.5 as cutoff. Plot a) will, in
-	# addition to all values, show the lower and upper outlier cut offs as
-	# lines, both with k=1.5 and k=3. In this way the reader can decide for
-	# themselves if the 1.5 cutoff is sufficient in each case.
-
-	# Calculate the IQR, the outlier cutoffs, and the lower and upper ranges
-	q25 = np.percentile(df.loc[:,parameter], 25)
-	q75 = np.percentile(df.loc[:,parameter], 75)
-	iqr = q75 - q25
-	cut_off = iqr * 1.5
-	cut_off_extreme = iqr * 3
-	lower = min(q25 - cut_off,0)
-	upper = q75 + cut_off
-	lower_extreme = min(q25 - cut_off_extreme, 0)
-	upper_extreme = q75 + cut_off_extreme
-
-	# Set up the figure
-	fig, ax = plt.subplots(figsize=(line_fig_width,line_fig_height))
-
-	# Create the first plot with all values (colored by flag)
-	ax = plt.subplot2grid((2, 1), (0,0))
-
-	# Add one flag at the time to the plot
 	for flag, col in color_dict_noNan.items():
 		limited_df = df[df[color_column]==int(flag)]
 		ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
 					c=col, label=flag, alpha=alpha, edgecolors='none',
 					marker='.')
 
-	# Add the lower and upper values to plot a), and text with the k value
+def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
+
+	# Remove rows with NaNs
+	df = df.dropna(subset=[parameter])
+
+	# The figure created will contain two plots: a) show all measurements, b)
+	# show measurements where the highest and lowest values are removed
+	# (scaled). Use the following method to define the upper and lower cutoffs:
+	# "The IQR can be used to identify outlier by defining limits on the sample
+	# values that are a factor k of the IQR below the 25th percentile or
+	# above the 75th percentile. The common value for the factor k is the value
+	# 1.5. A factor k of 3 or more can be used to identify values that are
+	# extreme outliers or “far outs” when described in the context of box and
+	# whisker plots (https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/)
+
+	# Calculate the IQR, cutoffs, and the lower and upper ranges
+	q25 = np.percentile(df.loc[:,parameter], 25)
+	q75 = np.percentile(df.loc[:,parameter], 75)
+	iqr = q75 - q25
+	cut_off = iqr * k
+	lower = q25 - cut_off
+	upper = q75 + cut_off
+
+	# Set up the figure
+	fig, ax = plt.subplots(figsize=(line_fig_width,line_fig_height))
+
+	# Create the first plot with all values (colored by QC flag)
+	ax = plt.subplot2grid((2, 1), (0,0))
+	make_plot(df=df, parameter=parameter, ax=ax)
+
+	# Add the lower and upper values to plot
 	plt.axhline(y=upper, color='blue', linestyle='-')
-	plt.axhline(y=upper_extreme, color='blue', linestyle='-')
-	ax.text(max(df['Date/Time']), upper, 'k = 1.5', color='blue', fontsize=13,
-		style='italic', fontweight='bold', backgroundcolor='w')
-	ax.text(max(df['Date/Time']), upper_extreme, 'k = 3.0', color='blue',
-		fontsize=13, style='italic', fontweight='bold', backgroundcolor='w')
+	plt.axhline(y=lower, color='blue', linestyle='-')
 
 	# Add grid and labels etc.
 	ax.grid(True)
@@ -136,18 +131,10 @@ def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
 	plt.ylabel(parameter)
 	ax.set_title('a)', loc='left', fontsize=title_fontsize, fontweight='bold')
 
-	# Create the second plot removing outliers
+	# Create the second plot removing values outside upper and lower range
 	ax = plt.subplot2grid((2, 1), (1,0))
-
-	# Create new data frame whene outliers are excluded
-	df_outliers_removed = df[(df[parameter] > lower) & (df[parameter] < upper)]
-
-	# Add one flag at the time to the plot
-	for flag, col in color_dict_noNan.items():
-		limited_df = df_outliers_removed[df_outliers_removed[color_column]==int(flag)]
-		ax.scatter(x=limited_df['Date/Time'],
-				y=limited_df[parameter], c=col, label=flag,
-				alpha=alpha, edgecolors='none', marker='.')
+	df_scaled = df[(df[parameter] > lower) & (df[parameter] < upper)]
+	make_plot(df=df_scaled, parameter=parameter, ax=ax)
 
 	# Add grid, labels etc.
 	ax.legend()
@@ -155,7 +142,6 @@ def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
 	fig.autofmt_xdate()
 	plt.ylabel(parameter)
 	ax.set_title('b)', loc='left', fontsize=title_fontsize, fontweight='bold')
-
 	#plt.xlabel('Time')
 
 	# Save the plot to file
