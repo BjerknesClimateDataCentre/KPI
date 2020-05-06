@@ -1,11 +1,11 @@
 {
     "station_code": {
-    	"Nuka Arctica": "26NA",
-    	"G.O. Sars": "58GS"
+        "Nuka Arctica": "26NA",
+        "G.O. Sars": "58GS"
     },
     "data_levels" : [
-    	"NRT",
-    	"L2"
+        "NRT",
+        "L2"
     ],
     "intro_plot_config": {
         "line_plot": {
@@ -24,135 +24,213 @@
         }
     },
     "param_config": {
-    	"H2O Mole Fraction [umol mol-1]": {
-    		"include": false,
-    		"measured": true,
-    		"short_name": "H2O",
+        "H2O Mole Fraction [umol mol-1]": {
+            "include": false,
+            "measured": true,
+            "short_name": "H2O",
             "chapter_title": "H2O Mole Fraction",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"Instrument Ambient Pressure [hPa]": {
-    		"include": false,
-    		"measured": true,
-    		"short_name": "Pinst",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "Instrument Ambient Pressure [hPa]": {
+            "include": false,
+            "measured": true,
+            "short_name": "Pinst",
             "chapter_title": "Instrument Ambient Pressure",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"Atmospheric Pressure [hPa]": {
-    		"include": false,
-    		"measured": true,
-    		"short_name": "Patm",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "Atmospheric Pressure [hPa]": {
+            "include": false,
+            "measured": true,
+            "short_name": "Patm",
             "chapter_title": "Atmospheric Pressure",
-    		"kpis" : {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"Temp [degC]": {
-    		"include": true,
-    		"measured": true,
-    		"short_name": "SST",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "Temp [degC]": {
+            "include": true,
+            "measured": true,
+            "short_name": "SST",
             "chapter_title": "Sea Surface Temperature",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"Equilibrator Pressure (relative) [hPa]": {
-    		"include": false,
-    		"measured": true,
-    		"short_name": "Peq",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "Equilibrator Pressure (relative) [hPa]": {
+            "include": false,
+            "measured": true,
+            "short_name": "Peq",
             "chapter_title": "Equilibrator Pressure",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"Temperature of Equilibration [degC]": {
-    		"include": false,
-    		"measured": true,
-    		"short_name": "Teq",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "Temperature of Equilibration [degC]": {
+            "include": false,
+            "measured": true,
+            "short_name": "Teq",
             "chapter_title": "Temperatur of Equilibration",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"CO2 Mole Fraction [umol mol-1]": {
-    		"include": true,
-    		"measured": true,
-    		"short_name": "xCO2",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "CO2 Mole Fraction [umol mol-1]": {
+            "include": true,
+            "measured": true,
+            "short_name": "xCO2",
             "chapter_title": "Mole Fraction of CO2 (xCO2)",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"P_sal [psu]": {
-    		"include": true,
-    		"measured": true,
-    		"short_name": "sal",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "P_sal [psu]": {
+            "include": true,
+            "measured": true,
+            "short_name": "sal",
             "chapter_title": "Salinity",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"pCO2 In Water - Equilibrator Temperature [uatm]": {
-    		"include": false,
-    		"measured": false,
-    		"short_name": "pCO2_Teq",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "pCO2 In Water - Equilibrator Temperature [uatm]": {
+            "include": false,
+            "measured": false,
+            "short_name": "pCO2_Teq",
             "chapter_title": "Partial Pressure of CO2 (pCO2) at Equilibrator Temperature",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"pCO2 [uatm]": {
-    		"include": false,
-    		"measured": false,
-    		"short_name": "pCO2",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "pCO2 [uatm]": {
+            "include": false,
+            "measured": false,
+            "short_name": "pCO2",
             "chapter_title": "Partial Pressure of CO2 (pCO2)",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"fCO2 [uatm]": {
-    		"include": false,
-    		"measured": false,
-    		"short_name": "fCO2",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "fCO2 [uatm]": {
+            "include": false,
+            "measured": false,
+            "short_name": "fCO2",
             "chapter_title": "Fugacity of CO2 (fCO2)",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"pCO2 in atmosphere [uatm]": {
-    		"include": false,
-    		"measured": true,
-    		"short_name": "pCO2_atm",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "pCO2 in atmosphere [uatm]": {
+            "include": false,
+            "measured": true,
+            "short_name": "pCO2_atm",
             "chapter_title": "Partial Pressure of CO2 (pCO2) in Atmosphere",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	},
-    	"fCO2 in atmosphere [uatm]": {
-    		"include": false,
-    		"measured": false,
-    		"short_name": "fCO2_atm",
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        },
+        "fCO2 in atmosphere [uatm]": {
+            "include": false,
+            "measured": false,
+            "short_name": "fCO2_atm",
             "chapter_title": "Fugacity of CO2 (fCO2) in Atmosphere",
-    		"kpis": {
-    			"flag_piechart": true,
-                "single_line_plot": true
-    		}
-    	}
+            "kpis": {
+                "flag_piechart": {
+                    "include": true,
+                    "figcaption": "This is the piechart figcaption."
+                },
+                "single_line_plot": {
+                    "include": true,
+                    "figcaption": "This is the single line plot figurecaption."
+                }
+            }
+        }
     }
 }

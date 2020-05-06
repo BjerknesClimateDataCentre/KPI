@@ -54,19 +54,26 @@ param_config_full = configs['param_config']
 
 
 ## ---------
-# Simplify the param_config dictionary by removing what's unnesesary
+# Simplify the param_config dictionary to only contain what to include in report
 
-# Remove info on parameters not to be include in report
+# Remove parameters not to be include in report from the param_config dict
 param_config_short = { k : v for k, v in param_config_full.items() if v['include']}
 
-# Remove kpis set to 'false'. For kpis set to 'true', replace 'true' with
-# the filename this plot will have.
+# Loop through each parameter in the param_config dict and remove kpis where
+# include is set to 'false'. For kpis with 'include' set to true, add the
+# filename of the figure that will be created, and its figure number to be used
+# in the report
+chapter_count = 2
 param_config = param_config_short
 for param, config in param_config_short.items():
-	for kpi_name, boolean in config['kpis'].items():
-		if boolean is True:
+	fig_count = 1
+	for kpi_name, kpi_dict in config['kpis'].items():
+		if kpi_dict['include'] is True:
 			filename = config['short_name'] + '_' + kpi_name + '.png'
-			param_config[param]['kpis'][kpi_name] = filename
+			param_config[param]['kpis'][kpi_name]['filename'] = filename
+			param_config[param]['kpis'][kpi_name]['fignumber'] = str(chapter_count) + '.' + str(fig_count)
+		fig_count += 1
+	chapter_count += 1
 
 
 ###---------------------------------------------------------------------------
@@ -158,7 +165,7 @@ for parameter, config in param_config.items():
 	df=df, output_dir=output_dir)
 
 
-#print(render_dict)
+print(render_dict)
 
 
 ###----------------------------------------------------------------------------
