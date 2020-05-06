@@ -139,5 +139,3 @@ def line_plot(parameters, df, output_dir, **kwargs):
 		filename = 'line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
-
-	return filename
