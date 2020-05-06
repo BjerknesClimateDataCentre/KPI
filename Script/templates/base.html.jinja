@@ -5,25 +5,31 @@
 </head>
 <body>
 
-  <h1>Data Quality Report for {{station}} - {{df_start}} to {{df_end}}</h1>
+  <h1>Data Quality Report</h1>
+  <h2> For ICOS station <i>{{station}}</i> - {{df_start}} to {{df_end}}</h2>
 
   <!-- INTRODUCTION CHAPTER -->
-  <h2>Introduction</h2>
-    <p>This is a quality assesment of dataset *datasetname*, collected on ICOS
-      station {{station}}. See figures for a quick overview of the data and the
-      data quality.</p>
+  <h3>1.  Introduction</h3>
+    <p>This is a quality assesment of dataset '{{data_filename}}'. Data was
+      collected on ICOS station <i>{{station}}</i> between {{df_start}} and
+      {{df_end}}. See figures for a quick overview of the data and the data
+      quality.</p>
 
     <figure>
       <img src={{ line_plot_filename}} >
-      <figcaption> Figure x: The data measured. Colors indicate the quality flag.
+      <figcaption> <strong>Figure x</strong>: The data measured. Colors indicate the quality flag.
       </figcaption>
     </figure>
 
     <figure>
       <img src={{ stacked_bar_plot_filename}} >
-      <figcaption> Figure x: The quality of the measured (and calculated parameters).
+      <figcaption> <strong>Figure x</strong>: The quality of the measured (and calculated
+        parameters).
       </figcaption>
     </figure>
+
+    <p> The following sections look closer into the quality of the
+      parameters... </p>
 
     <!-- Add if else statement on which bar plot to show (depending on number
     of parameters)
@@ -37,13 +43,13 @@
 
   <!-- PARAMETER CHAPTERS -->
   {% for parameter, config in param_config.items() %}
-    <h2> {{config['short_name']}} </h2>
+    <h3> {{loop.index + 1}}.  {{config['chapter_title']}} </h3>
     <p>Some text about this parameter. See figures</p>
 
     {% for kpi_name, filename in config['kpis'].items() %}
         <figure>
           <img src={{filename}} >
-          <figcaption> Figure x: The quality of the measured (and calculated parameters).
+          <figcaption><strong>Figure</strong>: The quality of the measured (and calculated parameters).
           </figcaption>
         </figure>
     {% endfor %}
