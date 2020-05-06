@@ -25,9 +25,9 @@ import numpy as np
 ### Set variables
 
 # Figure sizes
-pie_fig_size = 4
-line_fig_width = 9.5
-line_fig_height = 6
+pie_fig_size = 2.5
+line_fig_width = 9
+line_fig_height = 4.5
 
 # Plot symbol alpha
 alpha = 0.7
@@ -36,7 +36,7 @@ alpha = 0.7
 color_dict = {'2':'green','3':'orange','4':'red', 'nan':'grey'}
 
 # Title fontsize:
-title_fontsize = 11
+title_fontsize = 9
 
 # Factor used to define upper and lower plot range
 k = 1.5

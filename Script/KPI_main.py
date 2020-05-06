@@ -115,8 +115,8 @@ for station_name, station_code in station_code.items():
 
 # Set the timestamp column, and extract start and end date
 kpi.set_datetime(df)
-df_start = df['Date/Time'][0]
-df_end = df['Date/Time'][len(df)-1]
+df_start = str(df['Date/Time'][0].date())
+df_end = str(df['Date/Time'][len(df)-1].date())
 
 # Get all parameters names in df (excludes georef and QC parameters)
 # !!! Is this nessesary???
@@ -125,8 +125,8 @@ all_parameters = kpi.get_parameters(df)
 # Store the basic information extracted above in a dictionary.
 # (This dictionary will be filled with information thourghout this script, and
 # finally be used as input when the report is created.)
-render_dict = {'data_level':data_level, 'station':station, 'df_start':df_start,
-			 'df_end':df_end}
+render_dict = {'data_filename': file, 'data_level':data_level,
+			'station':station, 'df_start':df_start, 'df_end':df_end}
 
 # !!! Not sure where its best to do this
 render_dict['param_config'] = param_config
@@ -158,6 +158,8 @@ for parameter, config in param_config.items():
 	df=df, output_dir=output_dir)
 
 
+#print(render_dict)
+
 
 ###----------------------------------------------------------------------------
 ### Create report
@@ -174,4 +176,6 @@ html_string = template.render(render_dict)
 # Write the html string to file and convert to pdf
 with open('output/report.html','w') as f:
 	f.write(html_string)
-pdfkit.from_file('output/report.html', 'output/report.pdf')
+options = {'margin-top': '0.75in', 'margin-right': '0.75in',
+	'margin-bottom': '0.75in', 'margin-left': '0.75in'}
+pdfkit.from_file('output/report.html', 'output/report.pdf', options=options)

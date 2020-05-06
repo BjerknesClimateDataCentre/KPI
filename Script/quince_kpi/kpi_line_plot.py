@@ -37,7 +37,7 @@ fig_height = 3
 alpha = 0.7
 
 # Title fontsize:
-title_fontsize = 11
+title_fontsize = 9
 
 #------------------------------------------------------------------------------
 ### Functions
