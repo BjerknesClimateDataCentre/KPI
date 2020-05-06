@@ -46,10 +46,11 @@
     <h3> {{loop.index + 1}}.  {{config['chapter_title']}} </h3>
     <p>Some text about this parameter. See figures</p>
 
-    {% for kpi_name, filename in config['kpis'].items() %}
+    {% for kpi_name, kpi_dict in config['kpis'].items() %}
         <figure>
-          <img src={{filename}} >
-          <figcaption><strong>Figure</strong>: The quality of the measured (and calculated parameters).
+          <img src={{kpi_dict['filename']}} >
+          <figcaption><strong>Figure {{kpi_dict['fignumber']}}</strong>:
+            {{kpi_dict['figcaption']}}
           </figcaption>
         </figure>
     {% endfor %}
