@@ -47,12 +47,10 @@
             "chapter_title": "Instrument Ambient Pressure",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -63,12 +61,10 @@
             "chapter_title": "Atmospheric Pressure",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -79,12 +75,10 @@
             "chapter_title": "Sea Surface Temperature",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -95,12 +89,10 @@
             "chapter_title": "Equilibrator Pressure",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -111,12 +103,10 @@
             "chapter_title": "Temperatur of Equilibration",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -127,12 +117,10 @@
             "chapter_title": "Mole Fraction of CO2 (xCO2)",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -143,12 +131,10 @@
             "chapter_title": "Salinity",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -159,12 +145,10 @@
             "chapter_title": "Partial Pressure of CO2 (pCO2) at Equilibrator Temperature",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -175,12 +159,10 @@
             "chapter_title": "Partial Pressure of CO2 (pCO2)",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -191,12 +173,10 @@
             "chapter_title": "Fugacity of CO2 (fCO2)",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -207,12 +187,10 @@
             "chapter_title": "Partial Pressure of CO2 (pCO2) in Atmosphere",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         },
@@ -223,14 +201,19 @@
             "chapter_title": "Fugacity of CO2 (fCO2) in Atmosphere",
             "kpis": {
                 "flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "single_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
                 }
             }
         }
+    },
+    "figcaptions": {
+        "line_plot": "This is the line plot figure caption.",
+        "stacked_bar_plot": "This is the stacked bar plot figure caption",
+        "flag_piechart": "This is the new caption for piechart!",
+        "single_line_plot": "This is the new caption for sinle line plot.",
+        "bar_plot": "This is the fig caption for bar plot."
     }
 }

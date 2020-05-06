@@ -42,19 +42,32 @@ for plot in old_plots:
 
 
 ###----------------------------------------------------------------------------
-### Extract information from the config file
+### Extract configurations and create render dictionary
 ###----------------------------------------------------------------------------
 
 with open ('./config.json') as file:
 	configs = json.load(file)
 station_code = configs['station_code']
 data_levels = configs['data_levels']
-intro_plot_config = configs['intro_plot_config']
+intro_plot_config_full = configs['intro_plot_config']
 param_config_full = configs['param_config']
-
+figcaptions = configs['figcaptions']
 
 ## ---------
-# Simplify the param_config dictionary to only contain what to include in report
+# Extract only relevant information from the intro plot configuration
+intro_plot_config_short = {k : v for k, v in intro_plot_config_full.items() if v['include']}
+
+# Add filename of the figure that will be created and its figure number to be
+# used in the report (always in section 1 in report, so start with '1.').
+intro_plot_count = 1
+intro_plot_config = intro_plot_config_short
+for kpi_name, config in intro_plot_config_short.items():
+	intro_plot_config[kpi_name]['filename'] = kpi_name + '.png'
+	intro_plot_config[kpi_name]['fignumber'] = '1.' + str(intro_plot_count)
+	intro_plot_count += 1
+
+## ---------
+# Extract only relevant information from the parameter configuration
 
 # Remove parameters not to be include in report from the param_config dict
 param_config_short = { k : v for k, v in param_config_full.items() if v['include']}
@@ -74,6 +87,13 @@ for param, config in param_config_short.items():
 			param_config[param]['kpis'][kpi_name]['fignumber'] = str(chapter_count) + '.' + str(fig_count)
 		fig_count += 1
 	chapter_count += 1
+
+## ---------
+# Add certain configs to the render dictionary.
+# (This dictionary will be filled with information thourghout this script, and
+# finally be used as input when the report is created.)
+render_dict = {'intro_plot_config': intro_plot_config,
+	'param_config': param_config, 'figcaptions': figcaptions}
 
 
 ###---------------------------------------------------------------------------
@@ -130,24 +150,19 @@ df_end = str(df['Date/Time'][len(df)-1].date())
 all_parameters = kpi.get_parameters(df)
 
 # Store the basic information extracted above in a dictionary.
-# (This dictionary will be filled with information thourghout this script, and
-# finally be used as input when the report is created.)
-render_dict = {'data_filename': file, 'data_level':data_level,
-			'station':station, 'df_start':df_start, 'df_end':df_end}
-
-# !!! Not sure where its best to do this
-render_dict['param_config'] = param_config
+render_dict.update({'data_filename': file, 'data_level':data_level,
+			'station':station, 'df_start':df_start, 'df_end':df_end})
 
 
 ###----------------------------------------------------------------------------
 ### Create KPIs
 ###----------------------------------------------------------------------------
 
-# This function creates the KPI plots for the report introduction, store them
-# in the output directory, and stores their filenames in the render dictionary
+# This function creates the KPI plots for the report introduction, and store
+# them in the output directory
 parameters = list(param_config.keys())
-kpi.intro_plots(intro_plot_config=intro_plot_config, render_dict=render_dict,
-	parameters=parameters, df=df, output_dir=output_dir)
+kpi.intro_plots(intro_plot_config=intro_plot_config, parameters=parameters,
+	df=df, output_dir=output_dir)
 
 
 # Function for making pie charts for each parameter chapter
@@ -165,7 +180,7 @@ for parameter, config in param_config.items():
 	df=df, output_dir=output_dir)
 
 
-print(render_dict)
+#print(render_dict)
 
 
 ###----------------------------------------------------------------------------

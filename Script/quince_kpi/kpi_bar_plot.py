@@ -8,7 +8,7 @@
 
 # TODO:
 # - use short name for figure labels (on both stacked and unctacked bar_plot)
-
+# - bar_plot need colors according to the color dictionary
 
 #------------------------------------------------------------------------------
 ### Import packages
@@ -52,9 +52,8 @@ def get_figsize(parameters):
 	return figsize
 
 
-# Function creates a barplot, saves the figure in the output directory, and
-# returns the figures filename back to the main script.
-def bar_plot(parameters, df, output_dir):
+# Function creates a barplot, and saves the figure in the output directory.
+def bar_plot(parameters, df, output_dir, **kwargs):
 
 	# In order to create the barplot we need to create a new data frame
 	# containing two columns: 'label' (containg the the parameter names), and
@@ -104,11 +103,9 @@ def bar_plot(parameters, df, output_dir):
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 
-	return filename
 
-
-# Function creates a stacked barplot, saves the figure in the output directory,
-# and returns the figures filename back to the main script.
+# Function creates a stacked barplot, and saves the figure in the output
+# directory.
 def stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	#---------
 	# STRUCTURE DATA FOR PLOTTING
@@ -219,5 +216,3 @@ def stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	filename = 'stacked_bar_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
-
-	return filename

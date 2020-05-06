@@ -12,33 +12,20 @@
   <h3>1.  Introduction</h3>
     <p>This is a quality assesment of dataset '{{data_filename}}'. Data was
       collected on ICOS station <i>{{station}}</i> between {{df_start}} and
-      {{df_end}}. See figures for a quick overview of the data and the data
-      quality.</p>
+      {{df_end}}. Processing and automatic QC performed in QuinCe. See figures
+       for a quick overview of the data and the data quality.</p>
 
-    <figure>
-      <img src={{ line_plot_filename}} >
-      <figcaption> <strong>Figure x</strong>: The data measured. Colors indicate the quality flag.
-      </figcaption>
-    </figure>
+    {% for kpi_name, config in intro_plot_config.items() %}
+      <figure>
+        <img src={{config['filename']}} >
+        <figcaption><strong>Figure {{config['fignumber']}}</strong>:
+          {{figcaptions[kpi_name]}} </figcaption>
+      </figure>
+    {% endfor %}
 
-    <figure>
-      <img src={{ stacked_bar_plot_filename}} >
-      <figcaption> <strong>Figure x</strong>: The quality of the measured (and calculated
-        parameters).
-      </figcaption>
-    </figure>
 
     <p> The following sections look closer into the quality of the
       parameters... </p>
-
-    <!-- Add if else statement on which bar plot to show (depending on number
-    of parameters)
-    <figure>
-      <img src={{ kpi_bar_plot_filename}} >
-      <figcaption> Figure x: This is the figure caption.
-      </figcaption>
-    </figure>
-    -->
 
 
   <!-- PARAMETER CHAPTERS -->
@@ -50,7 +37,7 @@
         <figure>
           <img src={{kpi_dict['filename']}} >
           <figcaption><strong>Figure {{kpi_dict['fignumber']}}</strong>:
-            {{kpi_dict['figcaption']}}
+            {{figcaptions[kpi_name]}}
           </figcaption>
         </figure>
     {% endfor %}
