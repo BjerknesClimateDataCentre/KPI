@@ -7,7 +7,7 @@
         "NRT",
         "L2"
     ],
-    "intro_plot_config": {
+    "intro_config": {
         "line_plot": {
             "include": true,
             "function_input": {
@@ -19,7 +19,7 @@
             "function_input": {}
         },
         "stacked_bar_plot": {
-            "include":true,
+            "include": true,
             "function_input": {}
         }
     },
@@ -75,7 +75,7 @@
             "chapter_title": "Sea Surface Temperature",
             "kpis": {
                 "flag_piechart": {
-                    "include": true
+                    "include": false
                 },
                 "single_line_plot": {
                     "include": true
