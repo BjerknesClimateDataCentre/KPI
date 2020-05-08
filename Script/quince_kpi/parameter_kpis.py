@@ -53,13 +53,16 @@ def flag_piechart(parameter, short_name, df, output_dir, **kwargs):
 
 	# Get the unique flags and their frequencies
 	flag_freq = np.unique(flag_list_cleaned, return_counts=True)
-	unique_flags = flag_freq[0]
+	unique_flags = list(flag_freq[0])
 	freq = flag_freq[1]
 
 	# Create color list:
 	color_list = []
 	for flag in unique_flags:
-		color_list.append(color_dict[flag])
+		if flag == 'nan':
+			color_list.append('grey')
+		else:
+			color_list.append(color_dict[flag])
 
 	# Create pie chart
 	plt.subplots(figsize=(pie_fig_size,pie_fig_size))
@@ -90,6 +93,7 @@ def make_plot(df, parameter, ax):
 		ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
 					c=col, label=flag, alpha=alpha, edgecolors='none',
 					marker='.')
+
 
 def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
 

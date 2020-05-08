@@ -15,7 +15,7 @@
       {{df_end}}. Processing and automatic QC performed in QuinCe. See figures
        for a quick overview of the data and the data quality.</p>
 
-    {% for kpi_name, config in intro_plot_config.items() %}
+    {% for kpi_name, config in intro_config.items() %}
       <figure>
         <img src={{config['filename']}} >
         <figcaption><strong>Figure {{config['fignumber']}}</strong>:
