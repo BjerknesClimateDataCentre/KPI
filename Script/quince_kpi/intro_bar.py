@@ -1,5 +1,5 @@
 ###############################################################################
-### KPI: Bar plot(s)                                                        ###
+###  Bar plot(s) for introduction section                                   ###
 ###############################################################################
 
 ### Description:
@@ -53,7 +53,7 @@ def get_figsize(parameters):
 
 
 # Function creates a barplot, and saves the figure in the output directory.
-def bar_plot(parameters, df, output_dir, **kwargs):
+def intro_bar_plot(parameters, df, output_dir, **kwargs):
 
 	# In order to create the barplot we need to create a new data frame
 	# containing two columns: 'label' (containg the the parameter names), and
@@ -99,14 +99,14 @@ def bar_plot(parameters, df, output_dir, **kwargs):
 	plt.ylabel('Frequency')
 
 	# Save file
-	filename = 'bar_plot.png'
+	filename = 'intro_bar_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 
 
 # Function creates a stacked barplot, and saves the figure in the output
 # directory.
-def stacked_bar_plot(parameters, df, output_dir, **kwargs):
+def intro_stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	#---------
 	# STRUCTURE DATA FOR PLOTTING
 	# Create a list of unique flags given to the selected data.
@@ -213,6 +213,6 @@ def stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	plt.ylabel('Frequency')
 
 	# Save file
-	filename = 'stacked_bar_plot.png'
+	filename = 'intro_stacked_bar_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')

@@ -84,7 +84,7 @@ def make_subplot(parameter, df, cleaned, ax):
 
 # Function plots parameter(s) vs time, saves the figure in the output
 # directory, and returns the figures filename back to the main script.
-def line_plot(parameters, df, output_dir, **kwargs):
+def intro_line_plot(parameters, df, output_dir, **kwargs):
 
 	# Create variables from kwargs
 	# !!! Must be a different way to use kwargs to that this step is not needed
@@ -134,8 +134,8 @@ def line_plot(parameters, df, output_dir, **kwargs):
 
 	# Save plot to file
 	if cleaned is True:
-		filename = 'line_plot.png'
+		filename = 'intro_line_plot.png'
 	else:
-		filename = 'line_plot.png'
+		filename = 'intro_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')

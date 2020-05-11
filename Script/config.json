@@ -8,17 +8,17 @@
         "L2"
     ],
     "intro_config": {
-        "line_plot": {
+        "intro_line_plot": {
             "include": true,
             "function_input": {
                 "cleaned": false
             }
         },
-        "bar_plot": {
+        "intro_bar_plot": {
             "include": false,
             "function_input": {}
         },
-        "stacked_bar_plot": {
+        "intro_stacked_bar_plot": {
             "include": true,
             "function_input": {}
         }
@@ -31,11 +31,11 @@
             "chapter_title": "H2O Mole Fraction",
             "chapter_text": "Some general text about H2O Mole Fraction...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true,
                     "figcaption": "This is the piechart figcaption."
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true,
                     "figcaption": "This is the single line plot figurecaption."
                 }
@@ -48,10 +48,10 @@
             "chapter_title": "Instrument Ambient Pressure",
             "chapter_text": "Some general text about Instrument Ambient Pressure...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -63,10 +63,10 @@
             "chapter_title": "Atmospheric Pressure",
             "chapter_text": "Some general text about Atmospheric Pressure...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -78,10 +78,10 @@
             "chapter_title": "Sea Surface Temperature",
             "chapter_text": "Some general text about Temperature...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": false
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -93,10 +93,10 @@
             "chapter_title": "Equilibrator Pressure",
             "chapter_text": "Some general text about Equilibrator Pressure...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -108,10 +108,10 @@
             "chapter_title": "Temperatur of Equilibration",
             "chapter_text": "Some general text about Temperature of Equilibration...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -123,10 +123,10 @@
             "chapter_title": "Mole Fraction of CO2 (xCO2)",
             "chapter_text": "Some general text about CO2 Mole Fraction...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -138,10 +138,10 @@
             "chapter_title": "Salinity",
             "chapter_text": "Some general text about Salinity...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -153,10 +153,10 @@
             "chapter_title": "Partial Pressure of CO2 (pCO2) at Equilibrator Temperature",
             "chapter_text": "Some general text about pCO2 In Water...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -168,10 +168,10 @@
             "chapter_title": "Partial Pressure of CO2 (pCO2)",
             "chapter_text": "Some general text about pCO2...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -183,10 +183,10 @@
             "chapter_title": "Fugacity of CO2 (fCO2)",
             "chapter_text": "Some general text about fCO2...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -198,10 +198,10 @@
             "chapter_title": "Partial Pressure of CO2 (pCO2) in Atmosphere",
             "chapter_text": "Some general text about pCO2 in Atmosphere...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
@@ -213,35 +213,35 @@
             "chapter_title": "Fugacity of CO2 (fCO2) in Atmosphere",
             "chapter_text": "Some general text about fCO2 in Atmosphere...",
             "kpis": {
-                "flag_piechart": {
+                "meas_param_flag_piechart": {
                     "include": true
                 },
-                "single_line_plot": {
+                "meas_param_line_plot": {
                     "include": true
                 }
             }
         }
     },
     "kpi_config": {
-        "line_plot": {
+        "intro_line_plot": {
             "figcaptions": "This is the line plot figure caption.",
             "figtext": "*description of line_plot*."
         },
-        "stacked_bar_plot": {
+        "intro_bar_plot": {
+            "figcaptions": "This is the figure caption for bar plot.",
+            "fig_text": "*description of bar_plot*."
+        },
+        "intro_stacked_bar_plot": {
             "figcaptions": "This is the stacked bar plot figure caption",
             "figtext": "*description of stacked_bar_plot*."
         },
-        "flag_piechart": {
+        "meas_param_flag_piechart": {
             "figcaptions": "This is the figure caption for piechart!",
             "figtext": "*description of flag_piechart*."
         },
-        "single_line_plot": {
+        "meas_param_line_plot": {
             "figcaptions": "This is the figure caption for single line plot.",
             "figtext": "*description of single_line_plot*."
-        },
-        "bar_plot": {
-            "figcaptions": "This is the figure caption for bar plot.",
-            "fig_text": "*description of bar_plot*."
         }
     }
 }

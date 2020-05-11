@@ -1,5 +1,5 @@
 ###############################################################################
-### KPI plots/tables for individual parameters
+### KPI plots/tables for individual measured parameters
 ###############################################################################
 
 ### Description:
@@ -45,7 +45,7 @@ k = 1.5
 #------------------------------------------------------------------------------
 ### Functions
 
-def flag_piechart(parameter, short_name, df, output_dir, **kwargs):
+def meas_param_flag_piechart(parameter, short_name, df, output_dir, **kwargs):
 
 	# Store the parameters QC flags in a list (remove '.0' if needed)
 	flag_list = list(df[parameter + ' QC Flag'])
@@ -72,11 +72,9 @@ def flag_piechart(parameter, short_name, df, output_dir, **kwargs):
 	plt.tight_layout()
 
 	# Save the plot to file
-	filename = short_name + '_flag_piechart.png'
+	filename = short_name + '_meas_param_flag_piechart.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
-
-	return filename
 
 
 def make_plot(df, parameter, ax):
@@ -95,7 +93,7 @@ def make_plot(df, parameter, ax):
 					marker='.')
 
 
-def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
+def meas_param_line_plot(parameter, short_name, df, output_dir, **kwargs):
 
 	# Remove rows with NaNs
 	df = df.dropna(subset=[parameter])
@@ -149,8 +147,6 @@ def single_line_plot(parameter, short_name, df, output_dir, **kwargs):
 	#plt.xlabel('Time')
 
 	# Save the plot to file
-	filename = short_name + '_single_line_plot.png'
+	filename = short_name + '_meas_param_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
-
-	return filename
