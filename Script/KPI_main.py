@@ -60,22 +60,24 @@ kpi_config = configs['kpi_config']
 # Removes info about intro kpi's that will not be included in the report
 intro_config = kpi.remove_false(d=intro_config)
 
-# Add filename and figure number for the introduction chapter figures
-intro_config = kpi.add_filename_fignumber(kpi_dict=intro_config,
-	kpi_type='intro', chapter_count=1, short_name='')
+# Add filename and figure number for the introduction section figures
+returned = kpi.add_filename_fignumber(kpi_dict=intro_config,
+	kpi_type='intro', short_name='', section_count=1, fig_count=1)
+intro_config = returned[0]
 
 # Remove info about parameters that will not be included in the report
 param_config = kpi.remove_false(d=param_config)
 
 # Remove info about parameter kpis that will not be included in the report, and
-# add filename and figure number for the parameter chapters figures
-chapter_count = 2
+# add filename and figure number for the parameter section figures
+fig_count = 1
 for param, config in param_config.items():
 	param_config[param]['kpis'] = kpi.remove_false(config['kpis'])
-	param_config[param]['kpis'] = kpi.add_filename_fignumber(kpi_dict=config['kpis'],
+	returned = kpi.add_filename_fignumber(kpi_dict=config['kpis'],
 		kpi_type='parameter', short_name=config['short_name'],
-		chapter_count=chapter_count)
-	chapter_count += 1
+		section_count=2, fig_count=fig_count)
+	param_config[param]['kpis'] = returned[0]
+	fig_count = returned[1]
 
 ## ---------
 # Add the intro and parameter configs to the render dictionary. This dictionary

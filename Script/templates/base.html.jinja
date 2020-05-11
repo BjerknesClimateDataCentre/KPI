@@ -5,11 +5,16 @@
 </head>
 <body>
 
+  <!-------------------------------------------------------------------------->
+  <!-- REPORT TITLE -->
   <h1>Data Quality Report</h1>
   <h2> For ICOS station <i>{{station}}</i> - {{df_start}} to {{df_end}}</h2>
 
-  <!-- INTRODUCTION CHAPTER -->
-  <h3>1.  Introduction</h3>
+
+  <!-------------------------------------------------------------------------->
+  <!-- INTRODUCTION SECTION -->
+
+  <h3>1.&emsp;Introduction</h3>
     <p>This is a quality assesment of dataset '{{data_filename}}'. Data was
       collected on ICOS station <i>{{station}}</i> between {{df_start}} and
       {{df_end}}. Processing and automatic QC performed in QuinCe. The figures
@@ -23,6 +28,10 @@
     {% endfor %}
     </p>
 
+    <p> The following sections look closer into the quality of the
+      measured (and calculated) parameters. </p>
+
+
     {% for kpi_name, config in intro_config.items() %}
       <figure>
         <img src={{config['filename']}} >
@@ -32,15 +41,14 @@
     {% endfor %}
 
 
-    <p> The following sections look closer into the quality of the
-      parameters... </p>
+  <!-------------------------------------------------------------------------->
+  <!-- MEASURED PARAMETER SECTION -->
 
-
-  <!-- PARAMETER CHAPTERS -->
+  <h3>2.&emsp;Measured parameters</h3>
   {% for parameter, config in param_config.items() %}
 
     <!-- Add section title with numbering -->
-    <h3> {{loop.index + 1}}.  {{config['chapter_title']}} </h3>
+    <h4> 2.{{loop.index + 1}}&emsp;{{config['chapter_title']}} </h4>
 
     <!-- Add sentence about the parameter in question -->
     <p> {{config['chapter_text']}}
@@ -62,6 +70,11 @@
     {% endfor %}
 
   {% endfor %}
+
+
+  <!-------------------------------------------------------------------------->
+  <!-- CALCULATED PARAMETER SECTION -->
+
 
 </body>
 </html>
