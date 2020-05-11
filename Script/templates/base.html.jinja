@@ -12,8 +12,16 @@
   <h3>1.  Introduction</h3>
     <p>This is a quality assesment of dataset '{{data_filename}}'. Data was
       collected on ICOS station <i>{{station}}</i> between {{df_start}} and
-      {{df_end}}. Processing and automatic QC performed in QuinCe. See figures
-       for a quick overview of the data and the data quality.</p>
+      {{df_end}}. Processing and automatic QC performed in QuinCe. The figures
+      in this section gives an overview of the measurements (and possibly
+      calculated data) and their quality.
+    </p>
+
+    <p>
+    {% for kpi_name, config in intro_config.items() %}
+      Figure {{config['fignumber']}} shows {{kpi_config[kpi_name]['figtext']}}
+    {% endfor %}
+    </p>
 
     {% for kpi_name, config in intro_config.items() %}
       <figure>
@@ -30,8 +38,10 @@
 
   <!-- PARAMETER CHAPTERS -->
   {% for parameter, config in param_config.items() %}
+
     <!-- Add section title with numbering -->
     <h3> {{loop.index + 1}}.  {{config['chapter_title']}} </h3>
+
     <!-- Add sentence about the parameter in question -->
     <p> {{config['chapter_text']}}
 
@@ -52,21 +62,6 @@
     {% endfor %}
 
   {% endfor %}
-
-
-  <!-- ALTERNATIVE: Extract from child template, but this does not work!
-  <div id="line_plot">
-    {% block line_plot %}{% endblock %}
-  </div>
-
-  <div id="line_plot_cleaned">
-    {% block line_plot_cleaned %}{% endblock %}
-  </div>
-
-  <div id="bar_plot">
-    {% block bar_plot %}{% endblock %}
-  </div>
-  -->
 
 </body>
 </html>

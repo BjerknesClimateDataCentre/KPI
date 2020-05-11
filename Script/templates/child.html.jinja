@@ -31,3 +31,20 @@
       </figcaption>
     </figure>
 {% endblock %}
+
+
+<!---------------------------------------------------------------------
+IN MAIN TEMPLATE:
+  <!-- ALTERNATIVE: Extract from child template, but this does not work!-->
+  <div id="line_plot">
+    {% block line_plot %}{% endblock %}
+  </div>
+
+  <div id="line_plot_cleaned">
+    {% block line_plot_cleaned %}{% endblock %}
+  </div>
+
+  <div id="bar_plot">
+    {% block bar_plot %}{% endblock %}
+  </div>
+  -->
