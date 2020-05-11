@@ -5,23 +5,32 @@ p {
 
 h1 {
 	font-family: Calibri;
-	font-size: 30;
+	font-size: 40px;
 	text-align: center;
 	text-transform: uppercase;
 }
 
 h2 {
 	font-family: Calibri;
-	font-size: 24;
+	font-size: 30px;
 	text-align: center;
 }
 
 h3 {
 	font-family: Calibri;
-	font-size: 14;
+	font-size: 20px;
 	margin-left: 50px;
 	margin-top:75px;
 	color: #26428b;
+	font-style: bold;
+	text-transform: capitalize;
+}
+
+h4 {
+	font-family: Calibri;
+	font-size: 17px;
+	margin-top:30px;
+	color: black;
 	font-style: bold;
 }
 

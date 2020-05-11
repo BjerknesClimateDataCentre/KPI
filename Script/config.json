@@ -146,6 +146,23 @@
                 }
             }
         },
+        "pCO2 in atmosphere [uatm]": {
+            "include": false,
+            "measured": true,
+            "short_name": "pCO2_atm",
+            "chapter_title": "Partial Pressure of CO2 (pCO2) in Atmosphere",
+            "chapter_text": "Some general text about pCO2 in Atmosphere...",
+            "kpis": {
+                "meas_param_flag_piechart": {
+                    "include": true
+                },
+                "meas_param_line_plot": {
+                    "include": true
+                }
+            }
+        }
+    },
+    "calc_param_config": {
         "pCO2 In Water - Equilibrator Temperature [uatm]": {
             "include": false,
             "measured": false,
@@ -176,42 +193,27 @@
                 }
             }
         },
-        "fCO2 [uatm]": {
-            "include": false,
-            "measured": false,
-            "short_name": "fCO2",
-            "chapter_title": "Fugacity of CO2 (fCO2)",
-            "chapter_text": "Some general text about fCO2...",
-            "kpis": {
-                "meas_param_flag_piechart": {
-                    "include": true
-                },
-                "meas_param_line_plot": {
-                    "include": true
-                }
-            }
-        },
-        "pCO2 in atmosphere [uatm]": {
-            "include": false,
-            "measured": true,
-            "short_name": "pCO2_atm",
-            "chapter_title": "Partial Pressure of CO2 (pCO2) in Atmosphere",
-            "chapter_text": "Some general text about pCO2 in Atmosphere...",
-            "kpis": {
-                "meas_param_flag_piechart": {
-                    "include": true
-                },
-                "meas_param_line_plot": {
-                    "include": true
-                }
-            }
-        },
         "fCO2 in atmosphere [uatm]": {
             "include": false,
             "measured": false,
             "short_name": "fCO2_atm",
             "chapter_title": "Fugacity of CO2 (fCO2) in Atmosphere",
             "chapter_text": "Some general text about fCO2 in Atmosphere...",
+            "kpis": {
+                "meas_param_flag_piechart": {
+                    "include": true
+                },
+                "meas_param_line_plot": {
+                    "include": true
+                }
+            }
+        },
+        "fCO2 [uatm]": {
+            "include": false,
+            "measured": false,
+            "short_name": "fCO2",
+            "chapter_title": "Fugacity of CO2 (fCO2)",
+            "chapter_text": "Some general text about fCO2...",
             "kpis": {
                 "meas_param_flag_piechart": {
                     "include": true

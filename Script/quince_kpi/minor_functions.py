@@ -31,14 +31,13 @@ def remove_false(d):
 	return d
 
 # Run through a kpi dictionary and add filename and figurenumber
-def add_filename_fignumber(kpi_dict, kpi_type, short_name, chapter_count):
-	count = 1
+def add_filename_fignumber(kpi_dict, kpi_type, short_name, section_count, fig_count=1):
 	for kpi_name, kpi_config in kpi_dict.items():
 		if kpi_type == 'intro':
 			filename = kpi_name + '.png'
 		else:
 			filename = short_name + '_' + kpi_name + '.png'
 		kpi_dict[kpi_name]['filename'] = filename
-		kpi_dict[kpi_name]['fignumber'] = str(chapter_count) + '.' +  str(count)
-		count += 1
-	return kpi_dict
+		kpi_dict[kpi_name]['fignumber'] = str(section_count) + '.' +  str(fig_count)
+		fig_count += 1
+	return [kpi_dict, fig_count]
