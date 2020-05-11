@@ -19,7 +19,7 @@
       <figure>
         <img src={{config['filename']}} >
         <figcaption><strong>Figure {{config['fignumber']}}</strong>:
-          {{figcaptions[kpi_name]}} </figcaption>
+          {{kpi_config[kpi_name]['figcaptions']}} </figcaption>
       </figure>
     {% endfor %}
 
@@ -30,16 +30,25 @@
 
   <!-- PARAMETER CHAPTERS -->
   {% for parameter, config in param_config.items() %}
+    <!-- Add section title with numbering -->
     <h3> {{loop.index + 1}}.  {{config['chapter_title']}} </h3>
-    <p>Some text about this parameter. See figures</p>
+    <!-- Add sentence about the parameter in question -->
+    <p> {{config['chapter_text']}}
 
+    <!-- Add sentences about each figure in this section -->
     {% for kpi_name, kpi_dict in config['kpis'].items() %}
-        <figure>
-          <img src={{kpi_dict['filename']}} >
-          <figcaption><strong>Figure {{kpi_dict['fignumber']}}</strong>:
-            {{figcaptions[kpi_name]}}
-          </figcaption>
-        </figure>
+      Figure {{kpi_dict['fignumber']}} shows {{kpi_config[kpi_name]['figtext']}}
+    {% endfor %}
+    </p>
+
+    <!-- Add all images in this section -->
+    {% for kpi_name, kpi_dict in config['kpis'].items() %}
+      <figure>
+        <img src={{kpi_dict['filename']}} >
+        <figcaption><strong>Figure {{kpi_dict['fignumber']}}</strong>:
+          {{kpi_config[kpi_name]['figcaptions']}}
+        </figcaption>
+      </figure>
     {% endfor %}
 
   {% endfor %}

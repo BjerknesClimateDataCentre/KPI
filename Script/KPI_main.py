@@ -52,7 +52,7 @@ station_code = configs['station_code']
 data_levels = configs['data_levels']
 intro_config = configs['intro_config']
 param_config = configs['param_config']
-figcaptions = configs['figcaptions']
+kpi_config = configs['kpi_config']
 
 ## ---------
 # Intro and param config cleanup
@@ -82,7 +82,7 @@ for param, config in param_config.items():
 # will be filled with information thourghout this script, and finally be used
 # as input when the report is created.
 render_dict = {'intro_config': intro_config, 'param_config': param_config,
-	'figcaptions': figcaptions}
+	'kpi_config': kpi_config}
 
 
 ###---------------------------------------------------------------------------
@@ -157,6 +157,7 @@ kpi.meas_param_plots(param_config=param_config, parameters=parameters, df=df,
 	output_dir=output_dir)
 
 print(render_dict)
+
 
 ###----------------------------------------------------------------------------
 ### Create report
