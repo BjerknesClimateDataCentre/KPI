@@ -29,6 +29,7 @@
             "measured": true,
             "short_name": "H2O",
             "chapter_title": "H2O Mole Fraction",
+            "chapter_text": "Some general text about H2O Mole Fraction...",
             "kpis": {
                 "flag_piechart": {
                     "include": true,
@@ -45,6 +46,7 @@
             "measured": true,
             "short_name": "Pinst",
             "chapter_title": "Instrument Ambient Pressure",
+            "chapter_text": "Some general text about Instrument Ambient Pressure...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -59,6 +61,7 @@
             "measured": true,
             "short_name": "Patm",
             "chapter_title": "Atmospheric Pressure",
+            "chapter_text": "Some general text about Atmospheric Pressure...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -73,6 +76,7 @@
             "measured": true,
             "short_name": "SST",
             "chapter_title": "Sea Surface Temperature",
+            "chapter_text": "Some general text about Temperature...",
             "kpis": {
                 "flag_piechart": {
                     "include": false
@@ -87,6 +91,7 @@
             "measured": true,
             "short_name": "Peq",
             "chapter_title": "Equilibrator Pressure",
+            "chapter_text": "Some general text about Equilibrator Pressure...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -101,6 +106,7 @@
             "measured": true,
             "short_name": "Teq",
             "chapter_title": "Temperatur of Equilibration",
+            "chapter_text": "Some general text about Temperature of Equilibration...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -115,6 +121,7 @@
             "measured": true,
             "short_name": "xCO2",
             "chapter_title": "Mole Fraction of CO2 (xCO2)",
+            "chapter_text": "Some general text about CO2 Mole Fraction...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -129,6 +136,7 @@
             "measured": true,
             "short_name": "sal",
             "chapter_title": "Salinity",
+            "chapter_text": "Some general text about Salinity...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -143,6 +151,7 @@
             "measured": false,
             "short_name": "pCO2_Teq",
             "chapter_title": "Partial Pressure of CO2 (pCO2) at Equilibrator Temperature",
+            "chapter_text": "Some general text about pCO2 In Water...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -157,6 +166,7 @@
             "measured": false,
             "short_name": "pCO2",
             "chapter_title": "Partial Pressure of CO2 (pCO2)",
+            "chapter_text": "Some general text about pCO2...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -171,6 +181,7 @@
             "measured": false,
             "short_name": "fCO2",
             "chapter_title": "Fugacity of CO2 (fCO2)",
+            "chapter_text": "Some general text about fCO2...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -185,6 +196,7 @@
             "measured": true,
             "short_name": "pCO2_atm",
             "chapter_title": "Partial Pressure of CO2 (pCO2) in Atmosphere",
+            "chapter_text": "Some general text about pCO2 in Atmosphere...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -199,6 +211,7 @@
             "measured": false,
             "short_name": "fCO2_atm",
             "chapter_title": "Fugacity of CO2 (fCO2) in Atmosphere",
+            "chapter_text": "Some general text about fCO2 in Atmosphere...",
             "kpis": {
                 "flag_piechart": {
                     "include": true
@@ -209,11 +222,26 @@
             }
         }
     },
-    "figcaptions": {
-        "line_plot": "This is the line plot figure caption.",
-        "stacked_bar_plot": "This is the stacked bar plot figure caption",
-        "flag_piechart": "This is the new caption for piechart!",
-        "single_line_plot": "This is the new caption for sinle line plot.",
-        "bar_plot": "This is the fig caption for bar plot."
+    "kpi_config": {
+        "line_plot": {
+            "figcaptions": "This is the line plot figure caption.",
+            "figtext": "*description of line_plot*."
+        },
+        "stacked_bar_plot": {
+            "figcaptions": "This is the stacked bar plot figure caption",
+            "figtext": "*description of stacked_bar_plot*."
+        },
+        "flag_piechart": {
+            "figcaptions": "This is the figure caption for piechart!",
+            "figtext": "*description of flag_piechart*."
+        },
+        "single_line_plot": {
+            "figcaptions": "This is the figure caption for single line plot.",
+            "figtext": "*description of single_line_plot*."
+        },
+        "bar_plot": {
+            "figcaptions": "This is the figure caption for bar plot.",
+            "fig_text": "*description of bar_plot*."
+        }
     }
 }
