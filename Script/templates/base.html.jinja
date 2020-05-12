@@ -15,12 +15,27 @@
   <!-- INTRODUCTION SECTION -->
 
   <h3>1.&emsp;Introduction</h3>
-    <p>This is a quality assesment of dataset '{{data_filename}}'. Data was
-      collected on ICOS station <i>{{station}}</i> between {{df_start}} and
-      {{df_end}}. Processing and automatic QC performed in QuinCe. The figures
-      in this section gives an overview of the measurements (and possibly
-      calculated data) and their quality.
-    </p>
+    <p>This is a quality assesment of {{data_level}} dataset
+      '{{data_filename}}'. Data was collected on ICOS station
+      <i>{{station}}</i> between {{df_start}} and {{df_end}}. Processing and
+      automatic QC are performed in <i>QuinCe</i> (an online tool for data
+      reduction and quality control of surface ocean <i>f</i>CO<sub>2</sub> data). The
+      figures in this section gives an overview of the data and quality of the
+      measured parameters:</p>
+      <ul>
+      {% for param, config in meas_param_config.items() %}
+        <li>{{config['chapter_title']}} ({{config['fig_label_name']}})</li>
+      {% endfor %}
+      </ul>
+
+      {% if calc_param_config != {} %}
+        <p>... and the calculated parameters:</p>
+        <ul>
+        {% for param, config in calc_param_config.items() %}
+          <li>{{config['chapter_title']}} ({{config['fig_label_name']}})</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
 
     <p>
     {% for kpi_name, config in intro_config.items() %}
@@ -28,8 +43,8 @@
     {% endfor %}
     </p>
 
-    <p> The following sections look closer into the quality of the
-      measured (and calculated) parameters. </p>
+    <p>The following sections look closer into the quality of each
+    parameter.</p>
 
 
     {% for kpi_name, config in intro_config.items() %}
@@ -45,10 +60,10 @@
   <!-- MEASURED PARAMETER SECTION -->
 
   <h3>2.&emsp;Measured parameters</h3>
-  {% for parameter, config in param_config.items() %}
+  {% for parameter, config in meas_param_config.items() %}
 
     <!-- Add section title with numbering -->
-    <h4> 2.{{loop.index + 1}}&emsp;{{config['chapter_title']}} </h4>
+    <h4> 2.{{loop.index}}&emsp;{{config['chapter_title']}} </h4>
 
     <!-- Add sentence about the parameter in question -->
     <p> {{config['chapter_text']}}
@@ -74,6 +89,34 @@
 
   <!-------------------------------------------------------------------------->
   <!-- CALCULATED PARAMETER SECTION -->
+
+  {% if calc_param_config != {} %}
+    <h3>3.&emsp;Calculated parameters</h3>
+    {% for parameter, config in calc_param_config.items() %}
+
+      <!-- Add section title with numbering -->
+      <h4> 3.{{loop.index}}&emsp;{{config['chapter_title']}} </h4>
+
+      <!-- Add sentence about the parameter in question -->
+      <p> {{config['chapter_text']}}
+
+      <!-- Add sentences about each figure in this section -->
+      {% for kpi_name, kpi_dict in config['kpis'].items() %}
+        Figure {{kpi_dict['fignumber']}} shows {{kpi_config[kpi_name]['figtext']}}
+      {% endfor %}
+      </p>
+
+      <!-- Add all images in this section -->
+      {% for kpi_name, kpi_dict in config['kpis'].items() %}
+        <figure>
+          <img src={{kpi_dict['filename']}} >
+          <figcaption><strong>Figure {{kpi_dict['fignumber']}}</strong>:
+            {{kpi_config[kpi_name]['figcaptions']}}
+          </figcaption>
+        </figure>
+      {% endfor %}
+    {% endfor %}
+  {% endif %}
 
 
 </body>
