@@ -47,44 +47,47 @@ for plot in old_plots:
 
 # Store configuration variables
 with open ('./config.json') as file:
-	configs = json.load(file)
-station_code = configs['station_code']
-data_levels = configs['data_levels']
-intro_config = configs['intro_config']
-param_config = configs['param_config']
-kpi_config = configs['kpi_config']
+	all_configs = json.load(file)
 
 ## ---------
 # Intro and param config cleanup
 
 # Removes info about intro kpi's that will not be included in the report
-intro_config = kpi.remove_false(d=intro_config)
+intro_config = kpi.remove_false(d=all_configs['intro_config'])
 
 # Add filename and figure number for the introduction section figures
 returned = kpi.add_filename_fignumber(kpi_dict=intro_config,
 	kpi_type='intro', short_name='', section_count=1, fig_count=1)
 intro_config = returned[0]
 
-# Remove info about parameters that will not be included in the report
-param_config = kpi.remove_false(d=param_config)
+# Remove info about measured parameters that will not be included in the report
+meas_param_config = kpi.remove_false(d=all_configs['meas_param_config'])
 
-# Remove info about parameter kpis that will not be included in the report, and
-# add filename and figure number for the parameter section figures
+# Remove info about measured parameter kpis that will not be included in the
+# report, and add filename and figure number for the parameter section figures
 fig_count = 1
-for param, config in param_config.items():
-	param_config[param]['kpis'] = kpi.remove_false(config['kpis'])
+for param, config in meas_param_config.items():
+	meas_param_config[param]['kpis'] = kpi.remove_false(config['kpis'])
 	returned = kpi.add_filename_fignumber(kpi_dict=config['kpis'],
 		kpi_type='parameter', short_name=config['short_name'],
 		section_count=2, fig_count=fig_count)
-	param_config[param]['kpis'] = returned[0]
+	meas_param_config[param]['kpis'] = returned[0]
 	fig_count = returned[1]
+
+# Remove info about measured parameters that will not be included in the report
+calc_param_config =  kpi.remove_false(d=all_configs['calc_param_config'])
+
+# !! add filenames, and fignumbers !! WAIT TILL HAVE CALC KPIS !!
+
 
 ## ---------
 # Add the intro and parameter configs to the render dictionary. This dictionary
 # will be filled with information thourghout this script, and finally be used
 # as input when the report is created.
-render_dict = {'intro_config': intro_config, 'param_config': param_config,
-	'kpi_config': kpi_config}
+render_dict = {'intro_config': intro_config,
+	'meas_param_config': meas_param_config,
+	'calc_param_config': calc_param_config,
+	'kpi_config': all_configs['kpi_config']}
 
 
 ###---------------------------------------------------------------------------
@@ -122,14 +125,14 @@ for file in data_files:
 ###----------------------------------------------------------------------------
 
 # Identify data level from filename
-for level in data_levels:
+for level in all_configs['data_levels']:
 	if level in data_files[0]:
 		data_level = level
 
 # Identify station name from filename
-for station_name, station_code in station_code.items():
-	if station_code in data_files[0]:
-		station = station_name
+for name, code in all_configs['station_code'].items():
+	if code in data_files[0]:
+		station = name
 
 # Set the timestamp column, and extract start and end date
 kpi.set_datetime(df)
@@ -150,13 +153,14 @@ render_dict.update({'data_filename': file, 'data_level':data_level,
 ###----------------------------------------------------------------------------
 
 # Create the KPI figures for the report introduction
-parameters = list(param_config.keys())
-kpi.intro_plots(intro_config=intro_config, parameters=parameters,
-	df=df, output_dir=output_dir)
+meas_parameters = list(meas_param_config.keys())
+calc_parameters = list(calc_param_config.keys())
+kpi.intro_plots(intro_config=intro_config,
+	parameters=meas_parameters+calc_parameters, df=df, output_dir=output_dir)
 
 # Create the KPI plots for the individual parameter sections in the report
-kpi.meas_param_plots(param_config=param_config, parameters=parameters, df=df,
-	output_dir=output_dir)
+kpi.meas_param_plots(meas_param_config=meas_param_config,
+	parameters=meas_parameters, df=df, output_dir=output_dir)
 
 print(render_dict)
 
@@ -177,5 +181,6 @@ html_string = template.render(render_dict)
 with open('output/report.html','w') as f:
 	f.write(html_string)
 options = {'margin-top': '0.75in', 'margin-right': '0.75in',
-	'margin-bottom': '0.75in', 'margin-left': '0.75in'}
+	'margin-bottom': '0.75in', 'margin-left': '0.75in',
+	'footer-right': '[page]'}
 pdfkit.from_file('output/report.html', 'output/report.pdf', options=options)

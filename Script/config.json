@@ -23,13 +23,13 @@
             "function_input": {}
         }
     },
-    "param_config": {
+    "meas_param_config": {
         "H2O Mole Fraction [umol mol-1]": {
-            "include": false,
-            "measured": true,
+            "include": true,
             "short_name": "H2O",
-            "chapter_title": "H2O Mole Fraction",
-            "chapter_text": "Some general text about H2O Mole Fraction...",
+            "fig_label_name": "xH&#8322O [umol/mol]",
+            "chapter_title": "H&#8322O Mole Fraction",
+            "chapter_text": "Some general text about H&#8322O Mole Fraction...",
             "kpis": {
                 "meas_param_flag_piechart": {
                     "include": true,
@@ -43,8 +43,8 @@
         },
         "Instrument Ambient Pressure [hPa]": {
             "include": false,
-            "measured": true,
             "short_name": "Pinst",
+            "fig_label_name": "P in inst [hPa]",
             "chapter_title": "Instrument Ambient Pressure",
             "chapter_text": "Some general text about Instrument Ambient Pressure...",
             "kpis": {
@@ -58,8 +58,8 @@
         },
         "Atmospheric Pressure [hPa]": {
             "include": false,
-            "measured": true,
             "short_name": "Patm",
+            "fig_label_name": "P in atm [hPa]",
             "chapter_title": "Atmospheric Pressure",
             "chapter_text": "Some general text about Atmospheric Pressure...",
             "kpis": {
@@ -73,23 +73,23 @@
         },
         "Temp [degC]": {
             "include": true,
-            "measured": true,
             "short_name": "SST",
+            "fig_label_name": "SST [degC]",
             "chapter_title": "Sea Surface Temperature",
             "chapter_text": "Some general text about Temperature...",
             "kpis": {
                 "meas_param_flag_piechart": {
-                    "include": false
+                    "include": true
                 },
                 "meas_param_line_plot": {
-                    "include": true
+                    "include": false
                 }
             }
         },
         "Equilibrator Pressure (relative) [hPa]": {
             "include": false,
-            "measured": true,
             "short_name": "Peq",
+            "fig_label_name": "P at eq [hPa]",
             "chapter_title": "Equilibrator Pressure",
             "chapter_text": "Some general text about Equilibrator Pressure...",
             "kpis": {
@@ -103,8 +103,8 @@
         },
         "Temperature of Equilibration [degC]": {
             "include": false,
-            "measured": true,
             "short_name": "Teq",
+            "fig_label_name": "Temp at eq [degC]",
             "chapter_title": "Temperatur of Equilibration",
             "chapter_text": "Some general text about Temperature of Equilibration...",
             "kpis": {
@@ -118,10 +118,10 @@
         },
         "CO2 Mole Fraction [umol mol-1]": {
             "include": true,
-            "measured": true,
             "short_name": "xCO2",
-            "chapter_title": "Mole Fraction of CO2 (xCO2)",
-            "chapter_text": "Some general text about CO2 Mole Fraction...",
+            "fig_label_name": "xCO&#8322 [umol/mol]",
+            "chapter_title": "Mole Fraction of CO&#8322",
+            "chapter_text": "Some general text about CO&#8322 Mole Fraction...",
             "kpis": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -133,8 +133,8 @@
         },
         "P_sal [psu]": {
             "include": true,
-            "measured": true,
             "short_name": "sal",
+            "fig_label_name": "sal",
             "chapter_title": "Salinity",
             "chapter_text": "Some general text about Salinity...",
             "kpis": {
@@ -148,10 +148,10 @@
         },
         "pCO2 in atmosphere [uatm]": {
             "include": false,
-            "measured": true,
             "short_name": "pCO2_atm",
-            "chapter_title": "Partial Pressure of CO2 (pCO2) in Atmosphere",
-            "chapter_text": "Some general text about pCO2 in Atmosphere...",
+            "fig_label_name": "pCO&#8322 in atm [uatm]",
+            "chapter_title": "Partial Pressure of CO&#8322 in Atmosphere",
+            "chapter_text": "Some general text about pCO&#8322 in Atmosphere...",
             "kpis": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -165,62 +165,38 @@
     "calc_param_config": {
         "pCO2 In Water - Equilibrator Temperature [uatm]": {
             "include": false,
-            "measured": false,
             "short_name": "pCO2_Teq",
-            "chapter_title": "Partial Pressure of CO2 (pCO2) at Equilibrator Temperature",
-            "chapter_text": "Some general text about pCO2 In Water...",
+            "fig_label_name": "pCO&#8322 at Teq [uatm]",
+            "chapter_title": "Partial Pressure of CO&#8322 at Equilibrator Temperature",
+            "chapter_text": "Some general text about pCO&#8322 In Water...",
             "kpis": {
-                "meas_param_flag_piechart": {
-                    "include": true
-                },
-                "meas_param_line_plot": {
-                    "include": true
-                }
             }
         },
         "pCO2 [uatm]": {
             "include": false,
-            "measured": false,
             "short_name": "pCO2",
-            "chapter_title": "Partial Pressure of CO2 (pCO2)",
-            "chapter_text": "Some general text about pCO2...",
+            "fig_label_name": "pCO&#8322 [uatm]",
+            "chapter_title": "Partial Pressure of CO&#8322",
+            "chapter_text": "Some general text about pCO&#8322...",
             "kpis": {
-                "meas_param_flag_piechart": {
-                    "include": true
-                },
-                "meas_param_line_plot": {
-                    "include": true
-                }
             }
         },
         "fCO2 in atmosphere [uatm]": {
-            "include": false,
-            "measured": false,
+            "include": true,
             "short_name": "fCO2_atm",
-            "chapter_title": "Fugacity of CO2 (fCO2) in Atmosphere",
-            "chapter_text": "Some general text about fCO2 in Atmosphere...",
+            "fig_label_name": "fCO&#8322 in atm [uatm]",
+            "chapter_title": "Fugacity of CO&#8322 in Atmosphere",
+            "chapter_text": "Some general text about fCO&#8322 in Atmosphere...",
             "kpis": {
-                "meas_param_flag_piechart": {
-                    "include": true
-                },
-                "meas_param_line_plot": {
-                    "include": true
-                }
             }
         },
         "fCO2 [uatm]": {
-            "include": false,
-            "measured": false,
+            "include": true,
             "short_name": "fCO2",
-            "chapter_title": "Fugacity of CO2 (fCO2)",
-            "chapter_text": "Some general text about fCO2...",
+            "fig_label_name": "fCO&#8322 [uatm]",
+            "chapter_title": "Fugacity of CO&#8322",
+            "chapter_text": "Some general text about fCO&#8322...",
             "kpis": {
-                "meas_param_flag_piechart": {
-                    "include": true
-                },
-                "meas_param_line_plot": {
-                    "include": true
-                }
             }
         }
     },
