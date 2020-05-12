@@ -45,15 +45,15 @@ color_dict = {'2':'green','3':'orange','4':'red', 'nan':'grey'}
 
 # Define the figure size. Width depends on number of parameters, however,
 # there is a minimum and maximum width to take into account.
-def get_figsize(parameters):
-	fig_width = sorted([min_fig_width, width_per_param*len(parameters),
+def get_figsize(parameter_dict):
+	fig_width = sorted([min_fig_width, width_per_param*len(parameter_dict),
 		max_fig_width])[1]
 	figsize = (fig_width, fig_height)
 	return figsize
 
 
 # Function creates a barplot, and saves the figure in the output directory.
-def intro_bar_plot(parameters, df, output_dir, **kwargs):
+def intro_bar_plot(parameter_dict, df, output_dir, **kwargs):
 
 	# In order to create the barplot we need to create a new data frame
 	# containing two columns: 'label' (containg the the parameter names), and
@@ -61,7 +61,7 @@ def intro_bar_plot(parameters, df, output_dir, **kwargs):
 	# First, create these columns as separate lists.
 	label = []
 	value = []
-	for parameter in parameters:
+	for parameter in parameter_dict.keys():
 		# Remove the unit-part from the parameter name
 		label_name = parameter.split(" [")[0].replace(' ','\n')
 		# The new label_name is added to the label list and needs to be
@@ -80,7 +80,7 @@ def intro_bar_plot(parameters, df, output_dir, **kwargs):
 	new_df = new_df.fillna(999)
 
 	# Get the figsize
-	figsize = get_figsize(parameters)
+	figsize = get_figsize(parameter_dict)
 
     # Create figure with barplot. ('estimator=len' means to plot the frequency
     # each flag occure; 'hue=value' means the value column is used for color
@@ -106,13 +106,13 @@ def intro_bar_plot(parameters, df, output_dir, **kwargs):
 
 # Function creates a stacked barplot, and saves the figure in the output
 # directory.
-def intro_stacked_bar_plot(parameters, df, output_dir, **kwargs):
+def intro_stacked_bar_plot(parameter_dict, df, output_dir, **kwargs):
 	#---------
 	# STRUCTURE DATA FOR PLOTTING
 	# Create a list of unique flags given to the selected data.
 	unique_flags = []
 	add_nan = False
-	for parameter in parameters:
+	for parameter in parameter_dict.keys():
 		flag_column = parameter + ' QC Flag'
 		unique_list = df[flag_column].unique()
 		for flag in unique_list:
@@ -128,7 +128,7 @@ def intro_stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	# Create a list of dictionaries where each dict shows the flag frequency for
 	# one parameter.
 	freq_list = []
-	for parameter in parameters:
+	for parameter in parameter_dict.keys():
 		# Count frequency of flags and store in a dictionary
 		flag_column = parameter + ' QC Flag'
 		flag_list = list(df[flag_column])
@@ -163,7 +163,7 @@ def intro_stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	#---------
 	# MAKE FIGURE:
 	# Position of the bars on the x-axis
-	r = list(range(len(parameters)))
+	r = list(range(len(parameter_dict)))
 
 	# Create a color list based on the color dictionary
 	color_list = []
@@ -173,7 +173,7 @@ def intro_stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	# Create 'bottom_list' indicating the height for plotting each flag.
 	# (Flag1 is plotted at height 0, flag2 is plotted at height of flag 1,
 	# flag 3 is plotted at height of flag1 + flag2, and so on...)
-	previous_heights = [0] * len(parameters)
+	previous_heights = [0] * len(parameter_dict)
 	bottom_list = [previous_heights]
 	for value_list in flag_dict.values():
 		next_heights = np.add(previous_heights, value_list).tolist()
@@ -181,7 +181,7 @@ def intro_stacked_bar_plot(parameters, df, output_dir, **kwargs):
 		previous_heights = next_heights
 
 	# Get the figsize
-	figsize = get_figsize(parameters)
+	figsize = get_figsize(parameter_dict)
 
 	# Create figure
 	f, ax = plt.subplots(figsize=figsize)
@@ -202,12 +202,13 @@ def intro_stacked_bar_plot(parameters, df, output_dir, **kwargs):
 	plt.legend(handles=patchList)
 
 	# Add axis labels (depends on number of parameters/bars)
-	if len(parameters) >= limit_nParameters:
-		param_labels = [parameter.split(' [')[0] for parameter in parameters]
+	if len(parameter_dict) >= limit_nParameters:
+		param_labels = [label.split(' [')[0]
+					for parameter, label in parameter_dict.items()]
 		plt.xticks(r, param_labels, rotation='vertical')
 	else:
-		param_labels = [parameter.split(' [')[0].replace(' ','\n')
-					for parameter in parameters]
+		param_labels = [label.split(' [')[0].replace(' ','\n')
+					for parameter, label in parameter_dict.items()]
 		plt.xticks(r, param_labels)
 
 	plt.ylabel('Frequency')

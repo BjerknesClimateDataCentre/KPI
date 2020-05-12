@@ -84,14 +84,14 @@ def make_subplot(parameter, df, cleaned, ax):
 
 # Function plots parameter(s) vs time, saves the figure in the output
 # directory, and returns the figures filename back to the main script.
-def intro_line_plot(parameters, df, output_dir, **kwargs):
+def intro_line_plot(parameter_dict, df, output_dir, **kwargs):
 
 	# Create variables from kwargs
 	# !!! Must be a different way to use kwargs to that this step is not needed
 	cleaned = kwargs['kwargs']['cleaned']
 
 	# Store number of plots to create
-	n_plot = len(parameters)
+	n_plot = len(parameter_dict)
 
 	# Get the number of rows and columns in figure
 	n_row, n_col = get_row_col(n_plot)
@@ -106,7 +106,7 @@ def intro_line_plot(parameters, df, output_dir, **kwargs):
 		for col in range(n_col):
 
 			# Specify which param to plot, and where.
-			parameter = parameters[count]
+			parameter = list(parameter_dict.keys())[count]
 			ax = plt.subplot2grid((n_row, n_col), (row,col))
 
 			# Make subplot
@@ -117,10 +117,10 @@ def intro_line_plot(parameters, df, output_dir, **kwargs):
 
 			# Add title (and letter if needed)
 			if n_plot == 1:
-				plt.title('     ' + parameters[0], fontsize=title_fontsize,
+				plt.title('     ' + list(parameter_dict.values())[count], fontsize=title_fontsize,
 					fontweight='bold')
 			else:
-				title = string.ascii_lowercase[count] + ')     ' + parameter
+				title = string.ascii_lowercase[count] + ')     ' + list(parameter_dict.values())[count]
 				ax.set_title(title, loc='left', fontsize=title_fontsize,
 					fontweight='bold')
 

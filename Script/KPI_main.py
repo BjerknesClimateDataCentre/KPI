@@ -152,15 +152,19 @@ render_dict.update({'data_filename': file, 'data_level':data_level,
 ### Create KPIs
 ###----------------------------------------------------------------------------
 
-# Create the KPI figures for the report introduction
-meas_parameters = list(meas_param_config.keys())
-calc_parameters = list(calc_param_config.keys())
+# Create the KPI figures for the introduction section
+parameter_dict = {param : config['fig_label_name']
+				for param, config in meas_param_config.items()}
+parameter_dict.update({param : config['fig_label_name']
+				for param, config in calc_param_config.items()})
 kpi.intro_plots(intro_config=intro_config,
-	parameters=meas_parameters+calc_parameters, df=df, output_dir=output_dir)
+	parameter_dict=parameter_dict, df=df, output_dir=output_dir)
 
-# Create the KPI plots for the individual parameter sections in the report
+# Create the KPI plots for the measured parameters section
 kpi.meas_param_plots(meas_param_config=meas_param_config,
-	parameters=meas_parameters, df=df, output_dir=output_dir)
+	parameters=list(meas_param_config.keys()), df=df, output_dir=output_dir)
+
+# !!! Create the KPI plots for the calculated parameters section
 
 print(render_dict)
 
