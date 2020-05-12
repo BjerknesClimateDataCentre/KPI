@@ -157,16 +157,15 @@ parameter_dict = {param : config['fig_label_name']
 				for param, config in meas_param_config.items()}
 parameter_dict.update({param : config['fig_label_name']
 				for param, config in calc_param_config.items()})
+print(meas_param_config)
 kpi.intro_plots(intro_config=intro_config,
 	parameter_dict=parameter_dict, df=df, output_dir=output_dir)
 
 # Create the KPI plots for the measured parameters section
-kpi.meas_param_plots(meas_param_config=meas_param_config,
-	parameters=list(meas_param_config.keys()), df=df, output_dir=output_dir)
+kpi.meas_param_plots(meas_param_config=meas_param_config, df=df,
+	output_dir=output_dir)
 
 # !!! Create the KPI plots for the calculated parameters section
-
-print(render_dict)
 
 
 ###----------------------------------------------------------------------------
