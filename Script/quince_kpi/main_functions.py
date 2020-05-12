@@ -16,9 +16,9 @@ import quince_kpi as kpi
 
 # This function creates the KPI plots for the report introduction, and store
 # them in the output directory
-def intro_plots(intro_config, parameters, df, output_dir):
+def intro_plots(intro_config, parameter_dict, df, output_dir):
 	for kpi_name, config in intro_config.items():
-		eval('kpi.'+ kpi_name)(parameters=parameters, df=df,
+		eval('kpi.'+ kpi_name)(parameter_dict=parameter_dict, df=df,
 			output_dir=output_dir, kwargs=config['function_input'])
 
 
