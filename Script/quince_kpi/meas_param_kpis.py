@@ -45,7 +45,8 @@ k = 1.5
 #------------------------------------------------------------------------------
 ### Functions
 
-def meas_param_flag_piechart(parameter, short_name, df, output_dir, **kwargs):
+def meas_param_flag_piechart(parameter, short_name, fig_label_name, df,
+	output_dir, **kwargs):
 
 	# Store the parameters QC flags in a list (remove '.0' if needed)
 	flag_list = list(df[parameter + ' QC Flag'])
@@ -93,7 +94,8 @@ def make_plot(df, parameter, ax):
 					marker='.')
 
 
-def meas_param_line_plot(parameter, short_name, df, output_dir, **kwargs):
+def meas_param_line_plot(parameter, short_name, fig_label_name, df, output_dir,
+	**kwargs):
 
 	# Remove rows with NaNs
 	df = df.dropna(subset=[parameter])
@@ -130,7 +132,7 @@ def meas_param_line_plot(parameter, short_name, df, output_dir, **kwargs):
 	# Add grid and labels etc.
 	ax.grid(True)
 	fig.autofmt_xdate()
-	plt.ylabel(parameter)
+	plt.ylabel(fig_label_name)
 	ax.set_title('a)', loc='left', fontsize=title_fontsize, fontweight='bold')
 
 	# Create the second plot removing values outside upper and lower range
@@ -142,7 +144,7 @@ def meas_param_line_plot(parameter, short_name, df, output_dir, **kwargs):
 	ax.legend()
 	ax.grid(True)
 	fig.autofmt_xdate()
-	plt.ylabel(parameter)
+	#plt.ylabel(fig_label_name)
 	ax.set_title('b)', loc='left', fontsize=title_fontsize, fontweight='bold')
 	#plt.xlabel('Time')
 

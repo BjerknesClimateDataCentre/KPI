@@ -214,11 +214,11 @@
             "figtext": "*description of stacked_bar_plot*."
         },
         "meas_param_flag_piechart": {
-            "figcaptions": "This is the figure caption for piechart!",
+            "figcaptions": "Piechart shows the fraction of measurements flagged as good (2), questionable (3), bad (4) and missing (nan) for parameter ",
             "figtext": "*description of flag_piechart*."
         },
         "meas_param_line_plot": {
-            "figcaptions": "This is the figure caption for single line plot.",
+            "figcaptions": "All measurements shown in a). Blue lines show axis cut-off in b) (defined as 1.5 times the IQR, see text). Colors represent the QC flag assigned by the automatic QC. Both plots are for parameter ",
             "figtext": "*description of single_line_plot*."
         }
     }
