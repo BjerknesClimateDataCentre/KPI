@@ -30,13 +30,15 @@
             "fig_label_name": "xH&#8322O [umol/mol]",
             "chapter_title": "H&#8322O Mole Fraction",
             "chapter_text": "Some general text about H&#8322O Mole Fraction...",
-            "kpis": {
+            "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
                 },
                 "meas_param_line_plot": {
                     "include": true
-                },
+                }
+            },
+            "kpi_tabels": {
                 "meas_qc_comment_table": {
                     "include": true
                 }
@@ -48,13 +50,15 @@
             "fig_label_name": "P in inst [hPa]",
             "chapter_title": "Instrument Ambient Pressure",
             "chapter_text": "Some general text about Instrument Ambient Pressure...",
-            "kpis": {
+            "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
                 },
                 "meas_param_line_plot": {
                     "include": true
-                },
+                }
+            },
+            "kpi_tabels": {
                 "meas_qc_comment_table": {
                     "include": true
                 }
@@ -66,7 +70,7 @@
             "fig_label_name": "P in atm [hPa]",
             "chapter_title": "Atmospheric Pressure",
             "chapter_text": "Some general text about Atmospheric Pressure...",
-            "kpis": {
+            "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
                 },
@@ -75,7 +79,9 @@
                 },
                 "meas_qc_comment_table": {
                     "include": true
-                },
+                }
+            },
+            "kpi_tabels": {
                 "meas_qc_comment_table": {
                     "include": true
                 }
@@ -87,13 +93,15 @@
             "fig_label_name": "SST [degC]",
             "chapter_title": "Sea Surface Temperature",
             "chapter_text": "Some general text about Temperature...",
-            "kpis": {
+            "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
                 },
                 "meas_param_line_plot": {
                     "include": false
-                },
+                }
+            },
+            "kpi_tabels": {
                 "meas_qc_comment_table": {
                     "include": true
                 }
@@ -105,13 +113,15 @@
             "fig_label_name": "P at eq [hPa]",
             "chapter_title": "Equilibrator Pressure",
             "chapter_text": "Some general text about Equilibrator Pressure...",
-            "kpis": {
+            "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
                 },
                 "meas_param_line_plot": {
                     "include": true
-                },
+                }
+            },
+            "kpi_tabels": {
                 "meas_qc_comment_table": {
                     "include": true
                 }
@@ -123,13 +133,15 @@
             "fig_label_name": "Temp at eq [degC]",
             "chapter_title": "Temperatur of Equilibration",
             "chapter_text": "Some general text about Temperature of Equilibration...",
-            "kpis": {
+            "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
                 },
                 "meas_param_line_plot": {
                     "include": true
-                },
+                }
+            },
+            "kpi_tabels": {
                 "meas_qc_comment_table": {
                     "include": true
                 }
@@ -141,13 +153,15 @@
             "fig_label_name": "xCO&#8322 [umol/mol]",
             "chapter_title": "Mole Fraction of CO&#8322",
             "chapter_text": "Some general text about CO&#8322 Mole Fraction...",
-            "kpis": {
+            "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
                 },
                 "meas_param_line_plot": {
                     "include": true
-                },
+                }
+            },
+            "kpi_tabels": {
                 "meas_qc_comment_table": {
                     "include": true
                 }
@@ -159,13 +173,15 @@
             "fig_label_name": "sal",
             "chapter_title": "Salinity",
             "chapter_text": "Some general text about Salinity...",
-            "kpis": {
+            "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
                 },
                 "meas_param_line_plot": {
                     "include": true
-                },
+                }
+            },
+            "kpi_tabels": {
                 "meas_qc_comment_table": {
                     "include": true
                 }
@@ -177,13 +193,15 @@
             "fig_label_name": "pCO&#8322 in atm [uatm]",
             "chapter_title": "Partial Pressure of CO&#8322 in Atmosphere",
             "chapter_text": "Some general text about pCO&#8322 in Atmosphere...",
-            "kpis": {
+            "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
                 },
                 "meas_param_line_plot": {
                     "include": true
-                },
+                }
+            },
+            "kpi_tabels": {
                 "meas_qc_comment_table": {
                     "include": true
                 }
@@ -197,7 +215,9 @@
             "fig_label_name": "pCO&#8322 at Teq [uatm]",
             "chapter_title": "Partial Pressure of CO&#8322 at Equilibrator Temperature",
             "chapter_text": "Some general text about pCO&#8322 In Water...",
-            "kpis": {
+            "kpi_figures": {
+            },
+            "kpi_tabels": {
             }
         },
         "pCO2 [uatm]": {
@@ -206,7 +226,9 @@
             "fig_label_name": "pCO&#8322 [uatm]",
             "chapter_title": "Partial Pressure of CO&#8322",
             "chapter_text": "Some general text about pCO&#8322...",
-            "kpis": {
+            "kpi_figures": {
+            },
+            "kpi_tabels": {
             }
         },
         "fCO2 in atmosphere [uatm]": {
@@ -215,7 +237,9 @@
             "fig_label_name": "fCO&#8322 in atm [uatm]",
             "chapter_title": "Fugacity of CO&#8322 in Atmosphere",
             "chapter_text": "Some general text about fCO&#8322 in Atmosphere...",
-            "kpis": {
+            "kpi_figures": {
+            },
+            "kpi_tabels": {
             }
         },
         "fCO2 [uatm]": {
@@ -224,7 +248,9 @@
             "fig_label_name": "fCO&#8322 [uatm]",
             "chapter_title": "Fugacity of CO&#8322",
             "chapter_text": "Some general text about fCO&#8322...",
-            "kpis": {
+            "kpi_figures": {
+            },
+            "kpi_tabels": {
             }
         }
     },

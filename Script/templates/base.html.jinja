@@ -69,13 +69,15 @@
     <p> {{config['chapter_text']}}
 
     <!-- Add sentences about each figure in this section -->
-    {% for kpi_name, kpi_dict in config['kpis'].items() %}
+    {% for kpi_name, kpi_dict in config['kpi_figures'].items() %}
       Figure {{kpi_dict['fignumber']}} shows {{kpi_config[kpi_name]['figtext']}}
     {% endfor %}
     </p>
 
-    <!-- Add all images in this section -->
-    {% for kpi_name, kpi_dict in config['kpis'].items() %}
+    <!-- !!! Add sentences about each table in this section -->
+
+    <!-- Add all figures in this section -->
+    {% for kpi_name, kpi_dict in config['kpi_figures'].items() %}
       <figure>
         <img src={{kpi_dict['filename']}} >
         <figcaption><strong>Figure {{kpi_dict['fignumber']}}</strong>:
@@ -83,6 +85,8 @@
         </figcaption>
       </figure>
     {% endfor %}
+
+    <!-- Add all tables in this section (if any) -->
 
   {% endfor %}
 
@@ -101,13 +105,13 @@
       <p> {{config['chapter_text']}}
 
       <!-- Add sentences about each figure in this section -->
-      {% for kpi_name, kpi_dict in config['kpis'].items() %}
+      {% for kpi_name, kpi_dict in config['kpi_figures'].items() %}
         Figure {{kpi_dict['fignumber']}} shows {{kpi_config[kpi_name]['figtext']}}
       {% endfor %}
       </p>
 
       <!-- Add all images in this section -->
-      {% for kpi_name, kpi_dict in config['kpis'].items() %}
+      {% for kpi_name, kpi_dict in config['kpi_figures'].items() %}
         <figure>
           <img src={{kpi_dict['filename']}} >
           <figcaption><strong>Figure {{kpi_dict['fignumber']}}</strong>:
