@@ -3,10 +3,10 @@
 ###############################################################################
 
 ### Description:
-# - Function for creating a pie chart for a single parameter
-# - Function for creating two line plots for a single paramter. One plot showing
-# all measurements, the other witout outliers (defined as ...)
-
+# - KPI function for creating a pie chart for a single parameter
+# - KPI function for creating two line plots for a single paramter. One plot
+# showing all measurements, the other scaled (only k times IQR)
+#
 # TODO:
 #  - in single_line_plot:
 #     - make one common y label
@@ -45,35 +45,35 @@ k = 1.5
 #------------------------------------------------------------------------------
 ### Functions
 
-def meas_param_flag_piechart(parameter, short_name, fig_label_name, df,
-	output_dir, **kwargs):
+def meas_param_flag_piechart(parameter, meas_param_config, df,
+	output_dir):
 
 	# Store the parameters QC flags in a list (remove '.0' if needed)
 	flag_list = list(df[parameter + ' QC Flag'])
 	flag_list_cleaned = [str(item).split('.')[0] for item in flag_list]
 
-	# Get the unique flags and their frequencies
-	flag_freq = np.unique(flag_list_cleaned, return_counts=True)
-	unique_flags = list(flag_freq[0])
-	freq = flag_freq[1]
+	# Get the unique flags and their frequencies (as arrays)
+	unique_flags, freq = np.unique(flag_list_cleaned, return_counts=True)
 
 	# Create color list:
 	color_list = []
-	for flag in unique_flags:
+	for flag in list(unique_flags):
 		if flag == 'nan':
 			color_list.append('grey')
 		else:
 			color_list.append(color_dict[flag])
-
 	# Create pie chart
 	plt.subplots(figsize=(pie_fig_size,pie_fig_size))
-	patches, texts = plt.pie(freq, colors=color_list, startangle=90)
-	plt.legend(patches, unique_flags, loc="best")
+	patches, text, autotexts = plt.pie(freq, colors=color_list, startangle=90,
+		autopct='%1.0f%%')
+	for autotext in autotexts:
+		autotext.set_color('white')
+	plt.legend(patches, list(unique_flags), loc="best")
 	plt.axis('equal')
 	plt.tight_layout()
 
 	# Save the plot to file
-	filename = short_name + '_meas_param_flag_piechart.png'
+	filename = meas_param_config[parameter]['short_name'] + '_meas_param_flag_piechart.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 
@@ -94,8 +94,7 @@ def make_plot(df, parameter, ax):
 					marker='.')
 
 
-def meas_param_line_plot(parameter, short_name, fig_label_name, df, output_dir,
-	**kwargs):
+def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 
 	# Remove rows with NaNs
 	df = df.dropna(subset=[parameter])
@@ -132,7 +131,7 @@ def meas_param_line_plot(parameter, short_name, fig_label_name, df, output_dir,
 	# Add grid and labels etc.
 	ax.grid(True)
 	fig.autofmt_xdate()
-	plt.ylabel(fig_label_name)
+	plt.ylabel(meas_param_config[parameter]['fig_label_name'])
 	ax.set_title('a)', loc='left', fontsize=title_fontsize, fontweight='bold')
 
 	# Create the second plot removing values outside upper and lower range
@@ -144,11 +143,24 @@ def meas_param_line_plot(parameter, short_name, fig_label_name, df, output_dir,
 	ax.legend()
 	ax.grid(True)
 	fig.autofmt_xdate()
-	#plt.ylabel(fig_label_name)
+	#plt.ylabel(meas_param_config[parameter]['fig_label_name'])
 	ax.set_title('b)', loc='left', fontsize=title_fontsize, fontweight='bold')
 	#plt.xlabel('Time')
 
 	# Save the plot to file
-	filename = short_name + '_meas_param_line_plot.png'
+	filename = meas_param_config[parameter]['short_name'] + '_meas_param_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
+
+
+def meas_qc_comment_table(parameter, meas_param_config, df, output_dir):
+
+	# Store the parameters QC comments in a list, extract unique comments and
+	# their frequency.
+	comment_list = list(df[parameter + ' QC Comment'])
+	unique_comments, freq = np.unique(comment_list, return_counts=True)
+
+
+
+
+

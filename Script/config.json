@@ -32,12 +32,13 @@
             "chapter_text": "Some general text about H&#8322O Mole Fraction...",
             "kpis": {
                 "meas_param_flag_piechart": {
-                    "include": true,
-                    "figcaption": "This is the piechart figcaption."
+                    "include": true
                 },
                 "meas_param_line_plot": {
-                    "include": true,
-                    "figcaption": "This is the single line plot figurecaption."
+                    "include": true
+                },
+                "meas_qc_comment_table": {
+                    "include": true
                 }
             }
         },
@@ -52,6 +53,9 @@
                     "include": true
                 },
                 "meas_param_line_plot": {
+                    "include": true
+                },
+                "meas_qc_comment_table": {
                     "include": true
                 }
             }
@@ -68,6 +72,12 @@
                 },
                 "meas_param_line_plot": {
                     "include": true
+                },
+                "meas_qc_comment_table": {
+                    "include": true
+                },
+                "meas_qc_comment_table": {
+                    "include": true
                 }
             }
         },
@@ -83,6 +93,9 @@
                 },
                 "meas_param_line_plot": {
                     "include": false
+                },
+                "meas_qc_comment_table": {
+                    "include": true
                 }
             }
         },
@@ -97,6 +110,9 @@
                     "include": true
                 },
                 "meas_param_line_plot": {
+                    "include": true
+                },
+                "meas_qc_comment_table": {
                     "include": true
                 }
             }
@@ -113,6 +129,9 @@
                 },
                 "meas_param_line_plot": {
                     "include": true
+                },
+                "meas_qc_comment_table": {
+                    "include": true
                 }
             }
         },
@@ -127,6 +146,9 @@
                     "include": true
                 },
                 "meas_param_line_plot": {
+                    "include": true
+                },
+                "meas_qc_comment_table": {
                     "include": true
                 }
             }
@@ -143,6 +165,9 @@
                 },
                 "meas_param_line_plot": {
                     "include": true
+                },
+                "meas_qc_comment_table": {
+                    "include": true
                 }
             }
         },
@@ -157,6 +182,9 @@
                     "include": true
                 },
                 "meas_param_line_plot": {
+                    "include": true
+                },
+                "meas_qc_comment_table": {
                     "include": true
                 }
             }
@@ -220,6 +248,11 @@
         "meas_param_line_plot": {
             "figcaptions": "All measurements shown in a). Blue lines show axis cut-off in b) (defined as 1.5 times the IQR, see text). Colors represent the QC flag assigned by the automatic QC. Both plots are for parameter ",
             "figtext": "*description of single_line_plot*."
+        },
+        "meas_qc_comment_table":
+        {
+            "figcaptions": "This is the caption for qc comments",
+            "figtext": "*description of qc comments table*."
         }
     }
 }
