@@ -26,6 +26,6 @@ def intro_plots(intro_config, parameter_dict, df, output_dir):
 # them in the output directory
 def meas_param_plots(meas_param_config, df, output_dir):
 	for parameter, config in meas_param_config.items():
-		for kpi_name in config['kpis']:
+		for kpi_name in config['kpi_figures']:
 			eval('kpi.' + kpi_name)(parameter=parameter, df=df,
 				meas_param_config=meas_param_config, output_dir=output_dir)
