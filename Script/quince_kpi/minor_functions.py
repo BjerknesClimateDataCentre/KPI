@@ -30,14 +30,19 @@ def remove_false(d):
 	d = {k : v for k, v in d.items() if v['include']}
 	return d
 
-# Run through a kpi dictionary and add filename and figurenumber
-def add_filename_fignumber(kpi_dict, kpi_type, short_name, section_count, fig_count=1):
+# Go through a kpi dictionary and add filename
+def add_filename(kpi_dict, kpi_type, short_name):
 	for kpi_name, kpi_config in kpi_dict.items():
 		if kpi_type == 'intro':
 			filename = kpi_name + '.png'
 		else:
 			filename = short_name + '_' + kpi_name + '.png'
 		kpi_dict[kpi_name]['filename'] = filename
-		kpi_dict[kpi_name]['fignumber'] = str(section_count) + '.' +  str(fig_count)
-		fig_count += 1
-	return [kpi_dict, fig_count]
+	return kpi_dict
+
+# Go through a kpi dictionary and add figure/table number
+def add_number(kpi_dict, section_count, count):
+	for kpi_name, kpi_config in kpi_dict.items():
+		kpi_dict[kpi_name]['number'] = str(section_count) + '.' +  str(count)
+		count += 1
+	return [kpi_dict, count]

@@ -152,13 +152,23 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 
-
-def meas_qc_comment_table(parameter, meas_param_config, df, output_dir):
+def meas_qc_comment_table(parameter, meas_param_config, df):
 
 	# Store the parameters QC comments in a list, extract unique comments and
 	# their frequency.
 	comment_list = list(df[parameter + ' QC Comment'])
 	unique_comments, freq = np.unique(comment_list, return_counts=True)
+
+	# Create the tabel dictinary by defining the table headers.
+	tabel_dict = {'QC Comment': 'Frequencies'}
+
+	# Add the unique comments and their frequencies into a the tabel dict
+	freq_as_string_list = [str(number) for number in list(freq)]
+	tabel_dict.update(dict(zip(list(unique_comments), freq_as_string_list)))
+
+
+
+	return tabel_dict
 
 
 
