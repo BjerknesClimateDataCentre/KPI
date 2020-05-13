@@ -25,7 +25,7 @@
     },
     "meas_param_config": {
         "H2O Mole Fraction [umol mol-1]": {
-            "include": true,
+            "include": false,
             "short_name": "H2O",
             "fig_label_name": "xH&#8322O [umol/mol]",
             "chapter_title": "H&#8322O Mole Fraction",
@@ -163,12 +163,12 @@
             },
             "kpi_tabels": {
                 "meas_qc_comment_table": {
-                    "include": true
+                    "include": false
                 }
             }
         },
         "P_sal [psu]": {
-            "include": true,
+            "include": false,
             "short_name": "sal",
             "fig_label_name": "sal",
             "chapter_title": "Salinity",
@@ -232,7 +232,7 @@
             }
         },
         "fCO2 in atmosphere [uatm]": {
-            "include": true,
+            "include": false,
             "short_name": "fCO2_atm",
             "fig_label_name": "fCO&#8322 in atm [uatm]",
             "chapter_title": "Fugacity of CO&#8322 in Atmosphere",
@@ -256,29 +256,28 @@
     },
     "kpi_config": {
         "intro_line_plot": {
-            "figcaptions": "This is the line plot figure caption.",
-            "figtext": "*description of line_plot*."
+            "caption": "This is the line plot figure caption.",
+            "description": "*description of line_plot*."
         },
         "intro_bar_plot": {
-            "figcaptions": "This is the figure caption for bar plot.",
-            "fig_text": "*description of bar_plot*."
+            "caption": "This is the figure caption for bar plot.",
+            "description": "*description of bar_plot*."
         },
         "intro_stacked_bar_plot": {
-            "figcaptions": "This is the stacked bar plot figure caption",
-            "figtext": "*description of stacked_bar_plot*."
+            "caption": "This is the stacked bar plot figure caption",
+            "description": "*description of stacked_bar_plot*."
         },
         "meas_param_flag_piechart": {
-            "figcaptions": "Piechart shows the fraction of measurements flagged as good (2), questionable (3), bad (4) and missing (nan) for parameter ",
-            "figtext": "*description of flag_piechart*."
+            "caption": "Piechart shows the fraction of measurements flagged as good (2), questionable (3), bad (4) and missing (nan) for parameter ",
+            "description": "*description of flag_piechart*."
         },
         "meas_param_line_plot": {
-            "figcaptions": "All measurements shown in a). Blue lines show axis cut-off in b) (defined as 1.5 times the IQR, see text). Colors represent the QC flag assigned by the automatic QC. Both plots are for parameter ",
-            "figtext": "*description of single_line_plot*."
+            "caption": "All measurements shown in a). Blue lines show axis cut-off in b) (defined as 1.5 times the IQR, see text). Colors represent the QC flag assigned by the automatic QC. Both plots are for parameter ",
+            "description": "*description of single_line_plot*."
         },
-        "meas_qc_comment_table":
-        {
-            "figcaptions": "This is the caption for qc comments",
-            "figtext": "*description of qc comments table*."
+        "meas_qc_comment_table": {
+            "caption": "The number of measurements (percentage) with QC comments for parameter ",
+            "description": "*description of qc comments table*."
         }
     }
 }

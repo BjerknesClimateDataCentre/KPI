@@ -39,7 +39,7 @@
 
     <p>
     {% for kpi_name, config in intro_config.items() %}
-      Figure {{config['number']}} shows {{kpi_config[kpi_name]['figtext']}}
+      Figure {{config['number']}} shows {{kpi_config[kpi_name]['description']}}
     {% endfor %}
     </p>
 
@@ -51,7 +51,7 @@
       <figure>
         <img src={{config['filename']}} >
         <figcaption><strong>Figure {{config['number']}}</strong>:
-          {{kpi_config[kpi_name]['figcaptions']}} </figcaption>
+          {{kpi_config[kpi_name]['caption']}} </figcaption>
       </figure>
     {% endfor %}
 
@@ -70,35 +70,45 @@
 
     <!-- Add sentences about each figure in this section -->
     {% for kpi_name, kpi_dict in config['kpi_figures'].items() %}
-      Figure {{kpi_dict['number']}} shows {{kpi_config[kpi_name]['figtext']}}
+      Figure {{kpi_dict['number']}} shows {{kpi_config[kpi_name]['description']}}
     {% endfor %}
-    </p>
 
     <!-- !!! Add sentences about each table in this section -->
+    {% for kpi_name, kpi_dict in config['kpi_tabels'].items() %}
+      Tabel {{kpi_dict['number']}} shows {{kpi_config[kpi_name]['description']}}
+    {% endfor %}
+    </p>
 
     <!-- Add all figures in this section -->
     {% for kpi_name, kpi_dict in config['kpi_figures'].items() %}
       <figure>
         <img src={{kpi_dict['filename']}} >
         <figcaption><strong>Figure {{kpi_dict['number']}}</strong>:
-          {{kpi_config[kpi_name]['figcaptions']}} {{config['fig_label_name']}}.
+          {{kpi_config[kpi_name]['caption']}} {{config['fig_label_name']}}.
         </figcaption>
       </figure>
     {% endfor %}
 
     <!-- Add all tables in this section (if any) -->
     {% for kpi_name, kpi_dict in config['kpi_tabels'].items() %}
-
+      <!-- !!! What if more than two columns in tabel??? -->
       <table>
         {% for key, value in meas_param_tabels_dict[kpi_dict['number']].items() %}
+          <caption><strong>Tabel {{kpi_dict['number']}}</strong>:
+            {{kpi_config[kpi_name]['caption']}}
+            {{config['fig_label_name']}}.</caption>
           <tr>
+          {% if loop.index == 1 %}
+            <th> {{ key }} </th>
+            <th id='center'> {{ value }} </th>
+          {% else %}
             <td> {{ key }} </td>
-            <td> {{ value }} </td>
+            <td id='center'> {{ value }} </td>
+          {% endif %}
           </tr>
         {% endfor %}
       </table>
     {% endfor %}
-
   {% endfor %}
 
 
@@ -117,7 +127,8 @@
 
       <!-- Add sentences about each figure in this section -->
       {% for kpi_name, kpi_dict in config['kpi_figures'].items() %}
-        Figure {{kpi_dict['number']}} shows {{kpi_config[kpi_name]['figtext']}}
+        Figure {{kpi_dict['number']}} shows
+        {{kpi_config[kpi_name]['description']}}
       {% endfor %}
       </p>
 
@@ -126,7 +137,7 @@
         <figure>
           <img src={{kpi_dict['filename']}} >
           <figcaption><strong>Figure {{kpi_dict['number']}}</strong>:
-            {{kpi_config[kpi_name]['figcaptions']}}
+            {{kpi_config[kpi_name]['caption']}}
           </figcaption>
         </figure>
       {% endfor %}
