@@ -157,7 +157,6 @@ parameter_dict = {param : config['fig_label_name']
 				for param, config in meas_param_config.items()}
 parameter_dict.update({param : config['fig_label_name']
 				for param, config in calc_param_config.items()})
-print(meas_param_config)
 kpi.intro_plots(intro_config=intro_config,
 	parameter_dict=parameter_dict, df=df, output_dir=output_dir)
 
@@ -165,8 +164,14 @@ kpi.intro_plots(intro_config=intro_config,
 kpi.meas_param_plots(meas_param_config=meas_param_config, df=df,
 	output_dir=output_dir)
 
-# !!! Create the KPI plots for the calculated parameters section
+# !!! Create the KPI plots for the calculated parameters section !!!
 
+
+#!!! While working on this script, export the render dict to a json file
+# for easy reading !!!
+with open('output/render_dict.json', 'w') as file:
+	json.dump(render_dict, file, sort_keys=True, indent=4,
+		separators=(',', ': '))
 
 ###----------------------------------------------------------------------------
 ### Create report
