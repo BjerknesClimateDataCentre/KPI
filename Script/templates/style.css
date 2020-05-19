@@ -60,10 +60,11 @@ table {
 	font-family: Calibri;
 	font-size: 10;
 	border-collapse: collapse;
+	width: 60%;
 }
 
 th, td, tr {
-  padding: 7px 12px 7px 12px;
+  padding: 8px;
 }
 
 caption {
