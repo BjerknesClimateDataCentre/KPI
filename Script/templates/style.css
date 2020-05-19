@@ -30,17 +30,9 @@ h4 {
 	font-family: Calibri;
 	font-size: 18;
 	margin-top:40px;
+	margin-left: 40px;
 	color: black;
 	font-style: bold;
-}
-
-figure, table {
-	margin: 50px 0px 50px 0px;
-}
-
-figcaption {
-    font-family: Calibri;
-	font-size: 8;
 }
 
 ul {
@@ -48,12 +40,18 @@ ul {
 	font-size: 11;
 }
 
-table, th, td {
-	border: 1px solid black;
+figure, table {
+	margin: 50px 0px 50px 0px;
 }
 
-#center {
-	text-align: center;
+figure{
+	display: table;
+	width: 1px;
+}
+
+figcaption {
+    font-family: Calibri;
+	font-size: 8;
 }
 
 table {
@@ -63,6 +61,10 @@ table {
 	width: 60%;
 }
 
+table, th, td {
+	border: 1px solid black;
+}
+
 th, td, tr {
   padding: 8px;
 }
@@ -70,4 +72,8 @@ th, td, tr {
 caption {
 	text-align: left;
 	font-size: 8;
+}
+
+#center {
+	text-align: center;
 }
