@@ -37,7 +37,7 @@ barWidth = 0.75
 # Number of parameters which change a-axis label to vertical to avoid overlap
 limit_nParameters = 8
 
-color_dict = {'2':'green','3':'orange','4':'red', 'nan':'grey'}
+color_dict = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A', 'nan':'grey'}
 
 
 #------------------------------------------------------------------------------
