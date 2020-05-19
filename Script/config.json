@@ -15,7 +15,7 @@
             }
         },
         "intro_bar_plot": {
-            "include": true,
+            "include": false,
             "function_input": {}
         },
         "intro_stacked_bar_plot": {
@@ -25,7 +25,7 @@
     },
     "meas_param_config": {
         "H2O Mole Fraction [umol mol-1]": {
-            "include": true,
+            "include": false,
             "short_name": "H2O",
             "fig_label_name": "xH&#8322O [umol/mol]",
             "chapter_title": "H&#8322O Mole Fraction",
@@ -45,7 +45,7 @@
             }
         },
         "Instrument Ambient Pressure [hPa]": {
-            "include": true,
+            "include": false,
             "short_name": "Pinst",
             "fig_label_name": "P in inst [hPa]",
             "chapter_title": "Instrument Ambient Pressure",
@@ -65,7 +65,7 @@
             }
         },
         "Atmospheric Pressure [hPa]": {
-            "include": true,
+            "include": false,
             "short_name": "Patm",
             "fig_label_name": "P in atm [hPa]",
             "chapter_title": "Atmospheric Pressure",
@@ -105,7 +105,7 @@
             }
         },
         "Equilibrator Pressure (relative) [hPa]": {
-            "include": true,
+            "include": false,
             "short_name": "Peq",
             "fig_label_name": "P at eq [hPa]",
             "chapter_title": "Equilibrator Pressure",
@@ -125,7 +125,7 @@
             }
         },
         "Temperature of Equilibration [degC]": {
-            "include": true,
+            "include": false,
             "short_name": "Teq",
             "fig_label_name": "Temp at eq [degC]",
             "chapter_title": "Temperatur of Equilibration",
@@ -185,7 +185,7 @@
             }
         },
         "pCO2 in atmosphere [uatm]": {
-            "include": true,
+            "include": false,
             "short_name": "pCO2_atm",
             "fig_label_name": "pCO&#8322 in atm [uatm]",
             "chapter_title": "Partial Pressure of CO&#8322 in Atmosphere",
@@ -269,7 +269,7 @@
             "description": "*description of flag_piechart*."
         },
         "meas_param_line_plot": {
-            "caption": "All measurements shown in a). Blue lines show axis cut-off in b) (defined as 1.5 times the IQR, see text). Colors represent the QC flag assigned by the automatic QC. Both plots are for parameter ",
+            "caption": "All measurements shown in a). Dark blue lines show axis cut-off in b) (defined as 1.5 times the IQR, see text). Colors represent the QC flag assigned by the automatic QC. Both plots are for parameter ",
             "description": "*description of single_line_plot*."
         },
         "meas_qc_comment_table": {

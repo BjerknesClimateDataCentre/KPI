@@ -39,6 +39,10 @@ alpha = 0.7
 # Title fontsize:
 title_fontsize = 9
 
+# QC Flag color dictionary
+color_dict = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A'}
+
+
 #------------------------------------------------------------------------------
 ### Functions
 
@@ -60,19 +64,18 @@ def make_subplot(parameter, df, cleaned, ax):
 	df = df.dropna(subset=[parameter])
 
 	# Identify the parameters QC flag columns
-	color_column = parameter + ' QC Flag'
+	flag_column = parameter + ' QC Flag'
 
 	# If cleaned is false, plot all data. Else, plot data with QC flag 2.
 	if cleaned is False:
 		# Set plot color for the QC flags and plot one flag at the time
-		color_code = {2:'green',3:'orange',4:'red'}
-		for flag, col in color_code.items():
-				limited_df = df[df[color_column]==flag]
+		for flag, col in color_dict.items():
+				limited_df = df[df[flag_column]==int(flag)]
 				ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
-					c=col, label=flag, alpha=alpha, edgecolors='none',
+					c=col, label=int(flag), alpha=alpha, edgecolors='none',
 					marker='.')
 	else:
-		limited_df = df[df[color_column]==2]
+		limited_df = df[df[flag_column]==2]
 		ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
 			c='green', alpha=alpha, edgecolors='none', marker='.')
 

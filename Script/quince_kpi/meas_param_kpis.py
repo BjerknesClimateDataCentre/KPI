@@ -30,10 +30,11 @@ line_fig_width = 9
 line_fig_height = 4.5
 
 # Plot symbol alpha
-alpha = 0.7
+alpha = 1
 
 # QC Flag color dictionary
-color_dict = {'2':'green','3':'orange','4':'red', 'nan':'grey'}
+color_dict = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A', 'nan':'grey'}
+contrast_color = '#0F2080'
 
 # Title fontsize:
 title_fontsize = 9
@@ -126,8 +127,8 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	make_plot(df=df, parameter=parameter, ax=ax)
 
 	# Add the lower and upper values to plot
-	plt.axhline(y=upper, color='blue', linestyle='-')
-	plt.axhline(y=lower, color='blue', linestyle='-')
+	plt.axhline(y=upper, color=contrast_color, linestyle='-')
+	plt.axhline(y=lower, color=contrast_color, linestyle='-')
 
 	# Add grid and labels etc.
 	ax.grid(True)
