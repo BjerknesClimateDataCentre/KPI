@@ -72,10 +72,11 @@ def meas_param_flag_piechart(parameter, meas_param_config, df,
 	plt.axis('equal')
 	plt.tight_layout()
 
-	# Save the plot to file
+	# Save the plot to file and close figure
 	filename = meas_param_config[parameter]['short_name'] + '_meas_param_flag_piechart.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
+	plt.close()
 
 
 def make_plot(df, parameter, ax):
@@ -147,10 +148,11 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	ax.set_title('b)', loc='left', fontsize=title_fontsize, fontweight='bold')
 	#plt.xlabel('Time')
 
-	# Save the plot to file
+	# Save the plot to file and close figure
 	filename = meas_param_config[parameter]['short_name'] + '_meas_param_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
+	plt.close()
 
 
 def meas_qc_comment_table(parameter, meas_param_config, df):

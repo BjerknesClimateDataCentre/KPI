@@ -17,7 +17,6 @@ import pandas as pd
 from jinja2 import FileSystemLoader, Environment
 import pdfkit
 
-
 ###----------------------------------------------------------------------------
 ### Handling directories
 ###----------------------------------------------------------------------------
@@ -199,7 +198,6 @@ render_dict['meas_param_tabels_dict'] = kpi.meas_param_tabels(
 # CALCULATED PARAMETER SECTION
 
 # !!! Create the KPI plots for the calculated parameters section !!!
-
 
 ###----------------------------------------------------------------------------
 ### Create report

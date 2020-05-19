@@ -19,9 +19,11 @@
       '{{data_filename}}'. Data was collected on ICOS station
       <i>{{station}}</i> between {{df_start}} and {{df_end}}. Processing and
       automatic QC are performed in <i>QuinCe</i> (an online tool for data
-      reduction and quality control of surface ocean <i>f</i>CO<sub>2</sub> data). The
-      figures in this section gives an overview of the data and quality of the
-      measured parameters:</p>
+      reduction and quality control of surface ocean <i>f</i>CO<sub>2</sub>
+      data). The figures in this section gives an overview of the data and
+      quality of the measured parameters:</p>
+
+      <!-- Add list of parameters in report -->
       <ul>
       {% for param, config in meas_param_config.items() %}
         <li>{{config['chapter_title']}} ({{config['fig_label_name']}})</li>
@@ -37,6 +39,7 @@
         </ul>
       {% endif %}
 
+    <!-- Add sentence about each figure in the intro section -->
     <p>
     {% for kpi_name, config in intro_config.items() %}
       Figure {{config['number']}} shows {{kpi_config[kpi_name]['description']}}
@@ -46,7 +49,7 @@
     <p>The following sections look closer into the quality of each
     parameter.</p>
 
-
+    <!-- Add all figures to intro section -->
     {% for kpi_name, config in intro_config.items() %}
       <figure>
         <img src={{config['filename']}} >
@@ -73,7 +76,7 @@
       Figure {{kpi_dict['number']}} shows {{kpi_config[kpi_name]['description']}}
     {% endfor %}
 
-    <!-- !!! Add sentences about each table in this section -->
+    <!-- Add sentences about each table in this section -->
     {% for kpi_name, kpi_dict in config['kpi_tabels'].items() %}
       Tabel {{kpi_dict['number']}} shows {{kpi_config[kpi_name]['description']}}
     {% endfor %}

@@ -98,10 +98,11 @@ def intro_bar_plot(parameter_dict, df, output_dir, **kwargs):
 	# Add axis labels
 	plt.ylabel('Frequency')
 
-	# Save file
+	# Save file abd close figure
 	filename = 'intro_bar_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
+	plt.close()
 
 
 # Function creates a stacked barplot, and saves the figure in the output
@@ -213,7 +214,8 @@ def intro_stacked_bar_plot(parameter_dict, df, output_dir, **kwargs):
 
 	plt.ylabel('Frequency')
 
-	# Save file
+	# Save file and close figure
 	filename = 'intro_stacked_bar_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
+	plt.close()
