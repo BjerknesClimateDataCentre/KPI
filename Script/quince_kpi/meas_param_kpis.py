@@ -152,13 +152,14 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 
+
 def meas_qc_comment_table(parameter, meas_param_config, df):
 
-	# Store the parameters QC comments in a list  and remove nan's.
+	# Store the parameters QC comments in a list and remove nan's.
 	comment_list = list(df[parameter + ' QC Comment'])
 	comment_list = [x for x in comment_list if x == x]
 
-	# Split comments if they contain ';' (-> more than one comment in one row)
+	# Split comments if they contain ';' (means more than one comment in a row)
 	comment_list_cleaned = []
 	for comment in comment_list:
 		if ';' in comment:
@@ -167,21 +168,18 @@ def meas_qc_comment_table(parameter, meas_param_config, df):
 		else:
 			comment_list_cleaned.append(comment)
 
-	# Extract unique comments and their frequency.
+	# Extract unique comments and their frequency and store in a dictonary
 	unique_comments, freq = np.unique(comment_list_cleaned, return_counts=True)
+	tabel_dict = dict(zip(list(unique_comments), list(freq)))
 
-	# Create the tabel dictinary by defining the table headers.
-	tabel_dict = {'QC Comment': 'Frequencies'}
+	# Sort dictionary by the frequency, high to low.
+	tabel_dict_sorted = {k: v for k, v in sorted(tabel_dict.items(),
+		key=lambda item: item[1], reverse=True)}
 
-	# Add the unique comments and their frequencies into a the tabel dict
-	freq_as_string_list = [str(number) for number in list(freq)]
-	tabel_dict.update(dict(zip(list(unique_comments), freq_as_string_list)))
+	# Add header and percentages to each frequency
+	tabel_dict_percent = {'QC Comment': 'Frequencies'}
+	for key, value in tabel_dict_sorted.items():
+		percent = round((value/df.shape[0])*100,2)
+		tabel_dict_percent[key] = str(value) + ' (' + str(percent) + '%)'
 
-
-
-	return tabel_dict
-
-
-
-
-
+	return tabel_dict_percent
