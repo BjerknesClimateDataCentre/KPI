@@ -132,10 +132,11 @@ def intro_line_plot(parameter_dict, df, output_dir, **kwargs):
 	# Add x-axis sideways
 	fig.autofmt_xdate()
 
-	# Save plot to file
+	# Save plot to file and close figure
 	if cleaned is True:
 		filename = 'intro_line_plot.png'
 	else:
 		filename = 'intro_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
+	plt.close()
