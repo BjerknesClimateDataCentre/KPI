@@ -23,24 +23,24 @@ import math
 
 
 #------------------------------------------------------------------------------
-### Set variables
+### Declair constants etc.
 
 # Maximum number of plots to allow with 1 column and 2 columns
-limit_1col = 3
-limit_2col = 8
+LIMIT_1COL = 3
+LIMIT_2COL = 8
 
 # Figure sizes
-fig_width = 9.5
-fig_height = 3
+FIG_WIDTH = 9.5
+FIG_HEIGHT = 3
 
-# Plot symbol alpha
-alpha = 0.7
+# Plot symbol alpha (related to transparency)
+ALPHA = 0.7
 
 # Title fontsize:
-title_fontsize = 9
+TITLE_FONTSIZE = 9
 
 # QC Flag color dictionary
-color_dict = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A'}
+COLOR_DICT = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A'}
 
 
 #------------------------------------------------------------------------------
@@ -48,9 +48,9 @@ color_dict = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A'}
 
 # Returns how many rows and columns of subplots in the resulting figure
 def get_row_col(n_plot):
-	if n_plot <= limit_1col:
+	if n_plot <= LIMIT_1COL:
 		n_col = 1
-	elif n_plot > limit_1col and n_plot <= limit_2col:
+	elif n_plot > LIMIT_1COL and n_plot <= LIMIT_2COL:
 		n_col = 2
 	else:
 		n_col = 3
@@ -69,15 +69,15 @@ def make_subplot(parameter, df, cleaned, ax):
 	# If cleaned is false, plot all data. Else, plot data with QC flag 2.
 	if cleaned is False:
 		# Set plot color for the QC flags and plot one flag at the time
-		for flag, col in color_dict.items():
+		for flag, col in COLOR_DICT.items():
 				limited_df = df[df[flag_column]==int(flag)]
 				ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
-					c=col, label=int(flag), alpha=alpha, edgecolors='none',
+					c=col, label=int(flag), alpha=ALPHA, edgecolors='none',
 					marker='.')
 	else:
 		limited_df = df[df[flag_column]==2]
 		ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
-			c='green', alpha=alpha, edgecolors='none', marker='.')
+			c='green', alpha=ALPHA, edgecolors='none', marker='.')
 
 	ax.grid(True)
 	# !!! To adjust the suplots- Try this:
@@ -100,7 +100,7 @@ def intro_line_plot(parameter_dict, df, output_dir, **kwargs):
 	n_row, n_col = get_row_col(n_plot)
 
 	# Set up the plot
-	figsize = (fig_width, fig_height*n_row)
+	figsize = (FIG_WIDTH, FIG_HEIGHT*n_row)
 	fig, ax = plt.subplots(sharex=True, figsize=figsize)
 
 	# Loop through all row and column positions and make their subplots
@@ -120,11 +120,11 @@ def intro_line_plot(parameter_dict, df, output_dir, **kwargs):
 
 			# Add title (and letter if needed)
 			if n_plot == 1:
-				plt.title('     ' + list(parameter_dict.values())[count], fontsize=title_fontsize,
+				plt.title('     ' + list(parameter_dict.values())[count], fontsize=TITLE_FONTSIZE,
 					fontweight='bold')
 			else:
 				title = string.ascii_lowercase[count] + ')     ' + list(parameter_dict.values())[count]
-				ax.set_title(title, loc='left', fontsize=title_fontsize,
+				ax.set_title(title, loc='left', fontsize=TITLE_FONTSIZE,
 					fontweight='bold')
 
 			# Increase counter (stop when exceeds number of params)
