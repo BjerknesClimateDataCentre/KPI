@@ -175,9 +175,9 @@ render_dict.update({'data_filename': file, 'data_level':data_level,
 # Create the KPI figures (create a parameter
 # dictionary which gives the intro_figures function the information about
 # the figure label names to use for each paraemters)
-parameter_dict = {param : config['fig_label_name']
+parameter_dict = {param : config['fig_label_name_python']
 				for param, config in meas_param_config.items()}
-parameter_dict.update({param : config['fig_label_name']
+parameter_dict.update({param : config['fig_label_name_python']
 				for param, config in calc_param_config.items()})
 kpi.intro_figures(intro_config=intro_config,
 	parameter_dict=parameter_dict, df=df, output_dir=output_dir)
@@ -218,8 +218,6 @@ options = {'margin-top': '0.75in', 'margin-right': '0.75in',
 	'margin-bottom': '0.75in', 'margin-left': '0.75in',
 	'footer-right': '[page]'}
 pdfkit.from_file('output/report.html', 'output/report.pdf', options=options)
-
-
 
 
 
