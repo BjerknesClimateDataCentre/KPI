@@ -23,21 +23,21 @@ import pandas as pd
 
 
 #------------------------------------------------------------------------------
-### Set variables
+### Declair constants etc.
 
 # Figure sizes
-max_fig_width = 9.5
-min_fig_width = 3
-width_per_param = 1.5
-fig_height = 4
+MAX_FIG_WIDTH = 9.5
+MIN_FIG_WIDTH = 3
+WIDTH_PER_PARAM = 1.5
+FIG_HEIGHT = 4
 
 # Width of bars in stacked bar plot
-barWidth = 0.75
+BAR_WIDTH = 0.75
 
 # Number of parameters which change a-axis label to vertical to avoid overlap
-limit_nParameters = 8
+LIMIT_N_PARAMS = 8
 
-color_dict = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A', 'nan':'grey'}
+COLOR_DICT = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A', 'nan':'grey'}
 
 
 #------------------------------------------------------------------------------
@@ -46,9 +46,9 @@ color_dict = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A', 'nan':'grey'}
 # Define the figure size. Width depends on number of parameters, however,
 # there is a minimum and maximum width to take into account.
 def get_figsize(parameter_dict):
-	fig_width = sorted([min_fig_width, width_per_param*len(parameter_dict),
-		max_fig_width])[1]
-	figsize = (fig_width, fig_height)
+	fig_width = sorted([MIN_FIG_WIDTH, WIDTH_PER_PARAM*len(parameter_dict),
+		MAX_FIG_WIDTH])[1]
+	figsize = (fig_width, FIG_HEIGHT)
 	return figsize
 
 
@@ -169,7 +169,7 @@ def intro_stacked_bar_plot(parameter_dict, df, output_dir, **kwargs):
 	# Create a color list based on the color dictionary
 	color_list = []
 	for flag in flag_dict.keys():
-		color_list.append(color_dict[flag])
+		color_list.append(COLOR_DICT[flag])
 
 	# Create 'bottom_list' indicating the height for plotting each flag.
 	# (Flag1 is plotted at height 0, flag2 is plotted at height of flag 1,
@@ -192,7 +192,7 @@ def intro_stacked_bar_plot(parameter_dict, df, output_dir, **kwargs):
 	for i in range(len(flag_dict)):
 		bars = list(flag_dict.values())[i]
 		bottom = bottom_list[i]
-		ax = plt.bar(r, bars, bottom=bottom, color=color_list[i], width=barWidth)
+		ax = plt.bar(r, bars, bottom=bottom, color=color_list[i], width=BAR_WIDTH)
 		legend_dict[list(flag_dict.keys())[i]] = color_list[i]
 
 	# Add legend
@@ -203,7 +203,7 @@ def intro_stacked_bar_plot(parameter_dict, df, output_dir, **kwargs):
 	plt.legend(handles=patchList)
 
 	# Add axis labels (depends on number of parameters/bars)
-	if len(parameter_dict) >= limit_nParameters:
+	if len(parameter_dict) >= LIMIT_N_PARAMS:
 		param_labels = [label.split(' [')[0]
 					for parameter, label in parameter_dict.items()]
 		plt.xticks(r, param_labels, rotation='vertical')

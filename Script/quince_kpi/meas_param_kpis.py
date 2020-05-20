@@ -22,25 +22,25 @@ import numpy as np
 
 
 #------------------------------------------------------------------------------
-### Set variables
+### Declair constants etc.
 
 # Figure sizes
-pie_fig_size = 2.5
-line_fig_width = 9
-line_fig_height = 4.5
+PIE_FIG_SIZE = 2.5
+LINE_FIG_WIDTH = 9
+LINE_FIG_HEIGHT = 4.5
 
-# Plot symbol alpha
-alpha = 1
+# Plot symbol alpha (related to transparency)
+ALPHA = 1
 
 # QC Flag color dictionary
-color_dict = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A', 'nan':'grey'}
-contrast_color = '#0F2080'
+COLOR_DICT = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A', 'nan':'grey'}
+CONTRAST_COLOR = '#0F2080'
 
 # Title fontsize:
-title_fontsize = 9
+TITLE_FONTSIZE = 9
 
 # Factor used to define upper and lower plot range
-k = 1.5
+K = 1.5
 
 
 #------------------------------------------------------------------------------
@@ -62,9 +62,9 @@ def meas_param_flag_piechart(parameter, meas_param_config, df,
 		if flag == 'nan':
 			color_list.append('grey')
 		else:
-			color_list.append(color_dict[flag])
+			color_list.append(COLOR_DICT[flag])
 	# Create pie chart
-	plt.subplots(figsize=(pie_fig_size,pie_fig_size))
+	plt.subplots(figsize=(PIE_FIG_SIZE,PIE_FIG_SIZE))
 	patches, text, autotexts = plt.pie(freq, colors=color_list, startangle=90,
 		autopct='%1.0f%%')
 	for autotext in autotexts:
@@ -85,14 +85,14 @@ def make_plot(df, parameter, ax):
 	color_column = parameter + ' QC Flag'
 
 	# Remove NaNs from color_dict since missing values are not plotted
-	color_dict_noNan = color_dict
-	if 'nan' in color_dict:
+	color_dict_noNan = COLOR_DICT
+	if 'nan' in COLOR_DICT:
 		color_dict_noNan.pop('nan')
 
 	for flag, col in color_dict_noNan.items():
 		limited_df = df[df[color_column]==int(flag)]
 		ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
-					c=col, label=flag, alpha=alpha, edgecolors='none',
+					c=col, label=flag, alpha=ALPHA, edgecolors='none',
 					marker='.')
 
 
@@ -115,26 +115,26 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	q25 = np.percentile(df.loc[:,parameter], 25)
 	q75 = np.percentile(df.loc[:,parameter], 75)
 	iqr = q75 - q25
-	cut_off = iqr * k
+	cut_off = iqr * K
 	lower = q25 - cut_off
 	upper = q75 + cut_off
 
 	# Set up the figure
-	fig, ax = plt.subplots(figsize=(line_fig_width,line_fig_height))
+	fig, ax = plt.subplots(figsize=(LINE_FIG_WIDTH,LINE_FIG_HEIGHT))
 
 	# Create the first plot with all values (colored by QC flag)
 	ax = plt.subplot2grid((2, 1), (0,0))
 	make_plot(df=df, parameter=parameter, ax=ax)
 
 	# Add the lower and upper values to plot
-	plt.axhline(y=upper, color=contrast_color, linestyle='-')
-	plt.axhline(y=lower, color=contrast_color, linestyle='-')
+	plt.axhline(y=upper, color=CONTRAST_COLOR, linestyle='-')
+	plt.axhline(y=lower, color=CONTRAST_COLOR, linestyle='-')
 
 	# Add grid and labels etc.
 	ax.grid(True)
 	fig.autofmt_xdate()
 	plt.ylabel(meas_param_config[parameter]['fig_label_name'])
-	ax.set_title('a)', loc='left', fontsize=title_fontsize, fontweight='bold')
+	ax.set_title('a)', loc='left', fontsize=TITLE_FONTSIZE, fontweight='bold')
 
 	# Create the second plot removing values outside upper and lower range
 	ax = plt.subplot2grid((2, 1), (1,0))
@@ -146,7 +146,7 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	ax.grid(True)
 	fig.autofmt_xdate()
 	#plt.ylabel(meas_param_config[parameter]['fig_label_name'])
-	ax.set_title('b)', loc='left', fontsize=title_fontsize, fontweight='bold')
+	ax.set_title('b)', loc='left', fontsize=TITLE_FONTSIZE, fontweight='bold')
 	#plt.xlabel('Time')
 
 	# Save the plot to file and close figure
