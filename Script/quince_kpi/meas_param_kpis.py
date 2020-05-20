@@ -133,7 +133,7 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	# Add grid and labels etc.
 	ax.grid(True)
 	fig.autofmt_xdate()
-	plt.ylabel(meas_param_config[parameter]['fig_label_name'])
+	plt.ylabel(meas_param_config[parameter]['fig_label_name_python'])
 	ax.set_title('a)', loc='left', fontsize=TITLE_FONTSIZE, fontweight='bold')
 
 	# Create the second plot removing values outside upper and lower range
@@ -145,7 +145,7 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	ax.legend()
 	ax.grid(True)
 	fig.autofmt_xdate()
-	#plt.ylabel(meas_param_config[parameter]['fig_label_name'])
+	#plt.ylabel(meas_param_config[parameter]['fig_label_name_python'])
 	ax.set_title('b)', loc='left', fontsize=TITLE_FONTSIZE, fontweight='bold')
 	#plt.xlabel('Time')
 

@@ -27,7 +27,8 @@
         "H2O Mole Fraction [umol mol-1]": {
             "include": false,
             "short_name": "H2O",
-            "fig_label_name": "xH&#8322O [umol/mol]",
+            "fig_label_name_python": "xH\u2082O [umol/mol]",
+            "fig_label_name_html": "xH&#8322O [umol/mol]",
             "chapter_title": "H&#8322O Mole Fraction",
             "chapter_text": "Some general text about H&#8322O Mole Fraction...",
             "kpi_figures": {
@@ -47,7 +48,8 @@
         "Instrument Ambient Pressure [hPa]": {
             "include": false,
             "short_name": "Pinst",
-            "fig_label_name": "P in inst [hPa]",
+            "fig_label_name_python": "P in inst [hPa]",
+            "fig_label_name_html": "P in inst [hPa]",
             "chapter_title": "Instrument Ambient Pressure",
             "chapter_text": "Some general text about Instrument Ambient Pressure...",
             "kpi_figures": {
@@ -67,7 +69,8 @@
         "Atmospheric Pressure [hPa]": {
             "include": false,
             "short_name": "Patm",
-            "fig_label_name": "P in atm [hPa]",
+            "fig_label_name_python": "P in atm [hPa]",
+            "fig_label_name_html": "P in atm [hPa]",
             "chapter_title": "Atmospheric Pressure",
             "chapter_text": "Some general text about Atmospheric Pressure...",
             "kpi_figures": {
@@ -87,7 +90,8 @@
         "Temp [degC]": {
             "include": true,
             "short_name": "SST",
-            "fig_label_name": "SST [degC]",
+            "fig_label_name_python": "SST [degC]",
+            "fig_label_name_html": "SST [degC]",
             "chapter_title": "Sea Surface Temperature",
             "chapter_text": "Some general text about Temperature...",
             "kpi_figures": {
@@ -107,7 +111,8 @@
         "Equilibrator Pressure (relative) [hPa]": {
             "include": false,
             "short_name": "Peq",
-            "fig_label_name": "P at eq [hPa]",
+            "fig_label_name_python": "P at eq [hPa]",
+            "fig_label_name_html": "P at eq [hPa]",
             "chapter_title": "Equilibrator Pressure",
             "chapter_text": "Some general text about Equilibrator Pressure...",
             "kpi_figures": {
@@ -127,7 +132,8 @@
         "Temperature of Equilibration [degC]": {
             "include": false,
             "short_name": "Teq",
-            "fig_label_name": "Temp at eq [degC]",
+            "fig_label_name_python": "Temp at eq [degC]",
+            "fig_label_name_html": "Temp at eq [degC]",
             "chapter_title": "Temperatur of Equilibration",
             "chapter_text": "Some general text about Temperature of Equilibration...",
             "kpi_figures": {
@@ -147,7 +153,8 @@
         "CO2 Mole Fraction [umol mol-1]": {
             "include": true,
             "short_name": "xCO2",
-            "fig_label_name": "xCO&#8322 [umol/mol]",
+            "fig_label_name_python": "xCO\u2082 [umol/mol]",
+            "fig_label_name_html": "xCO&#8322 [umol/mol]",
             "chapter_title": "Mole Fraction of CO&#8322",
             "chapter_text": "Some general text about CO&#8322 Mole Fraction...",
             "kpi_figures": {
@@ -167,7 +174,8 @@
         "P_sal [psu]": {
             "include": true,
             "short_name": "sal",
-            "fig_label_name": "sal",
+            "fig_label_name_python": "sal",
+            "fig_label_name_html": "sal",
             "chapter_title": "Salinity",
             "chapter_text": "Some general text about Salinity...",
             "kpi_figures": {
@@ -187,7 +195,8 @@
         "pCO2 in atmosphere [uatm]": {
             "include": false,
             "short_name": "pCO2_atm",
-            "fig_label_name": "pCO&#8322 in atm [uatm]",
+            "fig_label_name_python": "pCO\u2082 in atm [uatm]",
+            "fig_label_name_html": "pCO&#8322 in atm [uatm]",
             "chapter_title": "Partial Pressure of CO&#8322 in Atmosphere",
             "chapter_text": "Some general text about pCO&#8322 in Atmosphere...",
             "kpi_figures": {
@@ -209,7 +218,8 @@
         "pCO2 In Water - Equilibrator Temperature [uatm]": {
             "include": false,
             "short_name": "pCO2_Teq",
-            "fig_label_name": "pCO&#8322 at Teq [uatm]",
+            "fig_label_name_python": "pCO\u2082 at Teq [uatm]",
+            "fig_label_name_html": "pCO&#8322 at Teq [uatm]",
             "chapter_title": "Partial Pressure of CO&#8322 at Equilibrator Temperature",
             "chapter_text": "Some general text about pCO&#8322 In Water...",
             "kpi_figures": {
@@ -220,7 +230,8 @@
         "pCO2 [uatm]": {
             "include": false,
             "short_name": "pCO2",
-            "fig_label_name": "pCO&#8322 [uatm]",
+            "fig_label_name_python": "pCO\u2082 [uatm]",
+            "fig_label_name_html": "pCO&#8322 [uatm]",
             "chapter_title": "Partial Pressure of CO&#8322",
             "chapter_text": "Some general text about pCO&#8322...",
             "kpi_figures": {
@@ -231,7 +242,8 @@
         "fCO2 in atmosphere [uatm]": {
             "include": false,
             "short_name": "fCO2_atm",
-            "fig_label_name": "fCO&#8322 in atm [uatm]",
+            "fig_label_name_python": "fCO\u2082 in atm [uatm]",
+            "fig_label_name_html": "fCO&#8322 in atm [uatm]",
             "chapter_title": "Fugacity of CO&#8322 in Atmosphere",
             "chapter_text": "Some general text about fCO&#8322 in Atmosphere...",
             "kpi_figures": {
@@ -242,7 +254,8 @@
         "fCO2 [uatm]": {
             "include": true,
             "short_name": "fCO2",
-            "fig_label_name": "fCO&#8322 [uatm]",
+            "fig_label_name_python": "fCO\u2082 [uatm]",
+            "fig_label_name_html": "fCO&#8322 [uatm]",
             "chapter_title": "Fugacity of CO&#8322",
             "chapter_text": "Some general text about fCO&#8322...",
             "kpi_figures": {

@@ -35,10 +35,10 @@
       parameters:
       <ul>
       {% for param, config in meas_param_config.items() %}
-        <li>{{config['chapter_title']}} ({{config['fig_label_name']}})</li>
+        <li>{{config['chapter_title']}} ({{config['fig_label_name_html']}})</li>
       {% endfor %}
       {% for param, config in calc_param_config.items() %}
-          <li>{{config['chapter_title']}} ({{config['fig_label_name']}})</li>
+          <li>{{config['chapter_title']}} ({{config['fig_label_name_html']}})</li>
       {% endfor %}
       </ul>
     </p>
@@ -82,7 +82,7 @@
       <figure>
         <img src={{kpi_dict['filename']}} >
         <figcaption><strong>Figure {{kpi_dict['number']}}</strong>:
-          {{kpi_config[kpi_name]['caption']}} {{config['fig_label_name']}}.
+          {{kpi_config[kpi_name]['caption']}} {{config['fig_label_name_html']}}.
         </figcaption>
       </figure>
     {% endfor %}
@@ -94,7 +94,7 @@
         {% for key, value in meas_param_tabels_dict[kpi_dict['number']].items() %}
           <caption><strong>Tabel {{kpi_dict['number']}}</strong>:
             {{kpi_config[kpi_name]['caption']}}
-            {{config['fig_label_name']}}.</caption>
+            {{config['fig_label_name_html']}}.</caption>
           <tr>
           {% if loop.index == 1 %}
             <th> {{ key }} </th>
