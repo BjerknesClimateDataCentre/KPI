@@ -253,23 +253,23 @@
     },
     "kpi_config": {
         "intro_line_plot": {
-            "caption": "This is the line plot figure caption.",
+            "caption": "This figure shows all measurements of each parameter. The color indicate whether the data is flagged as good (2), questionable (3), or bad (4), by the automatic QC.",
             "description": "*description of line_plot*."
         },
         "intro_bar_plot": {
-            "caption": "This is the figure caption for bar plot.",
+            "caption": "Fraction of measurements missing (nan) or flagged as as good (2), questionable (3), or bad (4) by the automatic QC.",
             "description": "*description of bar_plot*."
         },
         "intro_stacked_bar_plot": {
-            "caption": "This is the stacked bar plot figure caption",
+            "caption": "Fraction of measurements missing (nan) or flagged as as good (2), questionable (3), or bad (4) by the automatic QC.",
             "description": "*description of stacked_bar_plot*."
         },
         "meas_param_flag_piechart": {
-            "caption": "Piechart shows the fraction of measurements flagged as good (2), questionable (3), bad (4) and missing (nan) for parameter ",
+            "caption": "The fraction of measurements flagged as good (2), questionable (3), bad (4) and missing (nan) for parameter ",
             "description": "*description of flag_piechart*."
         },
         "meas_param_line_plot": {
-            "caption": "All measurements shown in a). Dark blue lines show axis cut-off in b) (defined as 1.5 times the IQR, see text). Colors represent the QC flag assigned by the automatic QC. Both plots are for parameter ",
+            "caption": "All measurements shown in a).  Dark blue lines in a) show axis cut-off in b) (defined as 1.5 times the IQR, see text). Colors indicate the QC flag assigned by the automatic QC: 2 (good), 3 (questionable), and 4 (bad). Both plots are for parameter ",
             "description": "*description of single_line_plot*."
         },
         "meas_qc_comment_table": {
