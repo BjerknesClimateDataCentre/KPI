@@ -25,13 +25,16 @@ import math
 #------------------------------------------------------------------------------
 ### Declair constants etc.
 
-# Maximum number of plots to allow with 1 column and 2 columns
+# Layout adjustments related to the number of plots in figure
 LIMIT_1COL = 3
-LIMIT_2COL = 8
+LIMIT_HEIGHT_2 = 8
+LIMIT_HEIGHT_3 = 12
 
 # Figure sizes
 FIG_WIDTH = 9.5
-FIG_HEIGHT = 3
+PLOT_HEIGHT_1 = 3
+PLOT_HEIGHT_2 = 2.5
+PLOT_HEIGHT_3 = 2
 
 # Plot symbol alpha (related to transparency)
 ALPHA = 0.7
@@ -50,10 +53,8 @@ COLOR_DICT = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A'}
 def get_row_col(n_plot):
 	if n_plot <= LIMIT_1COL:
 		n_col = 1
-	elif n_plot > LIMIT_1COL and n_plot <= LIMIT_2COL:
+	elif n_plot > LIMIT_1COL:
 		n_col = 2
-	else:
-		n_col = 3
 	n_row = math.ceil(n_plot/n_col)
 
 	return n_row, n_col
@@ -99,8 +100,15 @@ def intro_line_plot(parameter_dict, df, output_dir, **kwargs):
 	# Get the number of rows and columns in figure
 	n_row, n_col = get_row_col(n_plot)
 
-	# Set up the plot
-	figsize = (FIG_WIDTH, FIG_HEIGHT*n_row)
+	# Set up the figure
+	if n_plot > LIMIT_HEIGHT_3:
+		plot_height = PLOT_HEIGHT_3
+	elif n_plot > LIMIT_HEIGHT_2:
+		plot_height = PLOT_HEIGHT_2
+	else:
+		plot_height = PLOT_HEIGHT_1
+
+	figsize = (FIG_WIDTH, plot_height*n_row)
 	fig, ax = plt.subplots(sharex=True, figsize=figsize)
 
 	# Loop through all row and column positions and make their subplots
@@ -131,6 +139,11 @@ def intro_line_plot(parameter_dict, df, output_dir, **kwargs):
 			count += 1
 			if count >= n_plot:
 				break
+
+	# If odd number of plots, add an empty plot in the last position so
+	# that the x-axis get included on the second row of plots
+	#ax = plt.subplot2grid((n_row, n_col), (n_row-1,n_col-1))
+	#ax.scatter(x=df['Date/Time'], y=df[parameter])
 
 	# Add x-axis sideways
 	fig.autofmt_xdate()
