@@ -25,10 +25,10 @@
     },
     "meas_param_config": {
         "H2O Mole Fraction [umol mol-1]": {
-            "include": false,
+            "include": true,
             "short_name": "H2O",
-            "fig_label_name_python": "xH\u2082O [umol/mol]",
-            "fig_label_name_html": "xH&#8322O [umol/mol]",
+            "fig_label_name_python": "xH\u2082O [\u03BCmol/mol]",
+            "fig_label_name_html": "xH&#8322O [&#956;mol/mol]",
             "chapter_title": "H&#8322O Mole Fraction",
             "chapter_text": "Some general text about H&#8322O Mole Fraction...",
             "kpi_figures": {
@@ -90,8 +90,8 @@
         "Temp [degC]": {
             "include": true,
             "short_name": "SST",
-            "fig_label_name_python": "SST [degC]",
-            "fig_label_name_html": "SST [degC]",
+            "fig_label_name_python": "SST [\u00B0C]",
+            "fig_label_name_html": "SST [&#176;C]",
             "chapter_title": "Sea Surface Temperature",
             "chapter_text": "Some general text about Temperature...",
             "kpi_figures": {
@@ -132,8 +132,8 @@
         "Temperature of Equilibration [degC]": {
             "include": false,
             "short_name": "Teq",
-            "fig_label_name_python": "Temp at eq [degC]",
-            "fig_label_name_html": "Temp at eq [degC]",
+            "fig_label_name_python": "Temp at eq [\u00B0C]",
+            "fig_label_name_html": "Temp at eq [&#176;C]",
             "chapter_title": "Temperatur of Equilibration",
             "chapter_text": "Some general text about Temperature of Equilibration...",
             "kpi_figures": {
@@ -153,8 +153,8 @@
         "CO2 Mole Fraction [umol mol-1]": {
             "include": true,
             "short_name": "xCO2",
-            "fig_label_name_python": "xCO\u2082 [umol/mol]",
-            "fig_label_name_html": "xCO&#8322 [umol/mol]",
+            "fig_label_name_python": "xCO\u2082 [\u03BCmol/mol]",
+            "fig_label_name_html": "xCO&#8322 [&#956;mol/mol]",
             "chapter_title": "Mole Fraction of CO&#8322",
             "chapter_text": "Some general text about CO&#8322 Mole Fraction...",
             "kpi_figures": {
@@ -195,8 +195,8 @@
         "pCO2 in atmosphere [uatm]": {
             "include": false,
             "short_name": "pCO2_atm",
-            "fig_label_name_python": "pCO\u2082 in atm [uatm]",
-            "fig_label_name_html": "pCO&#8322 in atm [uatm]",
+            "fig_label_name_python": "pCO\u2082 in atm [\u03BCatm]",
+            "fig_label_name_html": "pCO&#8322 in atm [&#956;atm]",
             "chapter_title": "Partial Pressure of CO&#8322 in Atmosphere",
             "chapter_text": "Some general text about pCO&#8322 in Atmosphere...",
             "kpi_figures": {
@@ -218,8 +218,8 @@
         "pCO2 In Water - Equilibrator Temperature [uatm]": {
             "include": false,
             "short_name": "pCO2_Teq",
-            "fig_label_name_python": "pCO\u2082 at Teq [uatm]",
-            "fig_label_name_html": "pCO&#8322 at Teq [uatm]",
+            "fig_label_name_python": "pCO\u2082 at Teq [\u03BCatm]",
+            "fig_label_name_html": "pCO&#8322 at Teq [&#956;atm]",
             "chapter_title": "Partial Pressure of CO&#8322 at Equilibrator Temperature",
             "chapter_text": "Some general text about pCO&#8322 In Water...",
             "kpi_figures": {
@@ -230,8 +230,8 @@
         "pCO2 [uatm]": {
             "include": false,
             "short_name": "pCO2",
-            "fig_label_name_python": "pCO\u2082 [uatm]",
-            "fig_label_name_html": "pCO&#8322 [uatm]",
+            "fig_label_name_python": "pCO\u2082 [\u03BCatm]",
+            "fig_label_name_html": "pCO&#8322 [&#956;atm]",
             "chapter_title": "Partial Pressure of CO&#8322",
             "chapter_text": "Some general text about pCO&#8322...",
             "kpi_figures": {
@@ -242,8 +242,8 @@
         "fCO2 in atmosphere [uatm]": {
             "include": false,
             "short_name": "fCO2_atm",
-            "fig_label_name_python": "fCO\u2082 in atm [uatm]",
-            "fig_label_name_html": "fCO&#8322 in atm [uatm]",
+            "fig_label_name_python": "fCO\u2082 in atm [\u03BCatm]",
+            "fig_label_name_html": "fCO&#8322 in atm [&#956;atm]",
             "chapter_title": "Fugacity of CO&#8322 in Atmosphere",
             "chapter_text": "Some general text about fCO&#8322 in Atmosphere...",
             "kpi_figures": {
@@ -254,8 +254,8 @@
         "fCO2 [uatm]": {
             "include": true,
             "short_name": "fCO2",
-            "fig_label_name_python": "fCO\u2082 [uatm]",
-            "fig_label_name_html": "fCO&#8322 [uatm]",
+            "fig_label_name_python": "fCO\u2082 [\u03BCatm]",
+            "fig_label_name_html": "fCO&#8322 [&#956;atm]",
             "chapter_title": "Fugacity of CO&#8322",
             "chapter_text": "Some general text about fCO&#8322...",
             "kpi_figures": {
