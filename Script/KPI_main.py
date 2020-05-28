@@ -16,6 +16,8 @@ import json
 import pandas as pd
 from jinja2 import FileSystemLoader, Environment
 import pdfkit
+import sys
+
 
 ###----------------------------------------------------------------------------
 ### Handling directories
@@ -109,7 +111,7 @@ calc_param_config =  kpi.remove_false(d=all_configs['calc_param_config'])
 render_dict = {'intro_config': intro_config,
 	'meas_param_config': meas_param_config,
 	'calc_param_config': calc_param_config,
-	'kpi_config': all_configs['kpi_config']}
+	'report_type': sys.argv[1]}
 
 
 ###---------------------------------------------------------------------------
@@ -197,7 +199,8 @@ render_dict['meas_param_tabels_dict'] = kpi.meas_param_tabels(
 #--------------------------
 # CALCULATED PARAMETER SECTION
 
-# !!! Create the KPI plots for the calculated parameters section !!!
+# !!! Create the KPI figures and tables for the calculated parameters section !!!
+
 
 ###----------------------------------------------------------------------------
 ### Create report
@@ -206,7 +209,7 @@ render_dict['meas_param_tabels_dict'] = kpi.meas_param_tabels(
 # Load the html template
 templateLoader = FileSystemLoader("templates")
 templateEnv = Environment(loader=templateLoader)
-template = templateEnv.get_template("base.html.jinja")
+template = templateEnv.get_template("base.html")
 
 # Create the html string
 html_string = template.render(render_dict)

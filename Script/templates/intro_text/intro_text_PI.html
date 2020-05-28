@@ -1,0 +1,19 @@
+<p>This is a quality assesment of {{data_level}} dataset
+      '{{data_filename}}'. The data was collected on ICOS station
+      <i>{{station}}</i> between {{df_start}} and {{df_end}}. Processing and
+      automatic QC were performed in <i>QuinCe</i> - an online tool for data
+      reduction and quality control of surface ocean <i>f</i>CO<sub>2</sub>
+      data.
+    </p>
+    <p>
+      This section gives an overview of the data and its quality. The following sections look closer into the quality of each of the
+      parameters:
+      <ul>
+      {% for param, config in meas_param_config.items() %}
+        <li>{{config['chapter_title']}} ({{config['fig_label_name_html']}})</li>
+      {% endfor %}
+      {% for param, config in calc_param_config.items() %}
+          <li>{{config['chapter_title']}} ({{config['fig_label_name_html']}})</li>
+      {% endfor %}
+      </ul>
+    </p>
