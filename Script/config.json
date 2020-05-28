@@ -25,12 +25,11 @@
     },
     "meas_param_config": {
         "H2O Mole Fraction [umol mol-1]": {
-            "include": true,
+            "include": false,
             "short_name": "H2O",
             "fig_label_name_python": "xH\u2082O [\u03BCmol/mol]",
             "fig_label_name_html": "xH&#8322O [&#956;mol/mol]",
             "chapter_title": "H&#8322O Mole Fraction",
-            "chapter_text": "Some general text about H&#8322O Mole Fraction...",
             "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -51,7 +50,6 @@
             "fig_label_name_python": "P in inst [hPa]",
             "fig_label_name_html": "P in inst [hPa]",
             "chapter_title": "Instrument Ambient Pressure",
-            "chapter_text": "Some general text about Instrument Ambient Pressure...",
             "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -72,7 +70,6 @@
             "fig_label_name_python": "P in atm [hPa]",
             "fig_label_name_html": "P in atm [hPa]",
             "chapter_title": "Atmospheric Pressure",
-            "chapter_text": "Some general text about Atmospheric Pressure...",
             "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -93,7 +90,6 @@
             "fig_label_name_python": "SST [\u00B0C]",
             "fig_label_name_html": "SST [&#176;C]",
             "chapter_title": "Sea Surface Temperature",
-            "chapter_text": "Some general text about Temperature...",
             "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -114,7 +110,6 @@
             "fig_label_name_python": "P at eq [hPa]",
             "fig_label_name_html": "P at eq [hPa]",
             "chapter_title": "Equilibrator Pressure",
-            "chapter_text": "Some general text about Equilibrator Pressure...",
             "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -135,7 +130,6 @@
             "fig_label_name_python": "Temp at eq [\u00B0C]",
             "fig_label_name_html": "Temp at eq [&#176;C]",
             "chapter_title": "Temperatur of Equilibration",
-            "chapter_text": "Some general text about Temperature of Equilibration...",
             "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -156,7 +150,6 @@
             "fig_label_name_python": "xCO\u2082 [\u03BCmol/mol]",
             "fig_label_name_html": "xCO&#8322 [&#956;mol/mol]",
             "chapter_title": "Mole Fraction of CO&#8322",
-            "chapter_text": "Some general text about CO&#8322 Mole Fraction...",
             "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -177,7 +170,6 @@
             "fig_label_name_python": "sal",
             "fig_label_name_html": "sal",
             "chapter_title": "Salinity",
-            "chapter_text": "Some general text about Salinity...",
             "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -198,7 +190,6 @@
             "fig_label_name_python": "pCO\u2082 in atm [\u03BCatm]",
             "fig_label_name_html": "pCO&#8322 in atm [&#956;atm]",
             "chapter_title": "Partial Pressure of CO&#8322 in Atmosphere",
-            "chapter_text": "Some general text about pCO&#8322 in Atmosphere...",
             "kpi_figures": {
                 "meas_param_flag_piechart": {
                     "include": true
@@ -221,7 +212,6 @@
             "fig_label_name_python": "pCO\u2082 at Teq [\u03BCatm]",
             "fig_label_name_html": "pCO&#8322 at Teq [&#956;atm]",
             "chapter_title": "Partial Pressure of CO&#8322 at Equilibrator Temperature",
-            "chapter_text": "Some general text about pCO&#8322 In Water...",
             "kpi_figures": {
             },
             "kpi_tabels": {
@@ -233,7 +223,6 @@
             "fig_label_name_python": "pCO\u2082 [\u03BCatm]",
             "fig_label_name_html": "pCO&#8322 [&#956;atm]",
             "chapter_title": "Partial Pressure of CO&#8322",
-            "chapter_text": "Some general text about pCO&#8322...",
             "kpi_figures": {
             },
             "kpi_tabels": {
@@ -245,7 +234,6 @@
             "fig_label_name_python": "fCO\u2082 in atm [\u03BCatm]",
             "fig_label_name_html": "fCO&#8322 in atm [&#956;atm]",
             "chapter_title": "Fugacity of CO&#8322 in Atmosphere",
-            "chapter_text": "Some general text about fCO&#8322 in Atmosphere...",
             "kpi_figures": {
             },
             "kpi_tabels": {
@@ -257,37 +245,10 @@
             "fig_label_name_python": "fCO\u2082 [\u03BCatm]",
             "fig_label_name_html": "fCO&#8322 [&#956;atm]",
             "chapter_title": "Fugacity of CO&#8322",
-            "chapter_text": "Some general text about fCO&#8322...",
             "kpi_figures": {
             },
             "kpi_tabels": {
             }
-        }
-    },
-    "kpi_config": {
-        "intro_line_plot": {
-            "caption": "This figure shows all measurements of each parameter. The color indicate whether the data is flagged as good (2), questionable (3), or bad (4), by the automatic QC.",
-            "description": "*description of line_plot*."
-        },
-        "intro_bar_plot": {
-            "caption": "Fraction of measurements missing (nan) or flagged as as good (2), questionable (3), or bad (4) by the automatic QC.",
-            "description": "*description of bar_plot*."
-        },
-        "intro_stacked_bar_plot": {
-            "caption": "Fraction of measurements missing (nan) or flagged as as good (2), questionable (3), or bad (4) by the automatic QC.",
-            "description": "*description of stacked_bar_plot*."
-        },
-        "meas_param_flag_piechart": {
-            "caption": "The fraction of measurements flagged as good (2), questionable (3), bad (4) and missing (nan) for parameter ",
-            "description": "*description of flag_piechart*."
-        },
-        "meas_param_line_plot": {
-            "caption": "All measurements shown in a).  Dark blue lines in a) show axis cut-off in b) (defined as 1.5 times the IQR, see text). Colors indicate the QC flag assigned by the automatic QC: 2 (good), 3 (questionable), and 4 (bad). Both plots are for parameter ",
-            "description": "*description of single_line_plot*."
-        },
-        "meas_qc_comment_table": {
-            "caption": "The number of measurements (percentage) with QC comments for parameter ",
-            "description": "*description of qc comments table*."
         }
     }
 }

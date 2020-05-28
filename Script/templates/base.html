@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href='..\templates\style.css' type="text/css">
+</head>
+<body>
+
+  {#-------------------------------------------------------------------------#}
+  <!-- REPORT TITLE -->
+  <h1>Data Quality Report</h1>
+  <h2> For ICOS station <i>{{station}}</i> - {{df_start}} to {{df_end}}</h2>
+
+  {#-------------------------------------------------------------------------#}
+  <!-- INTRODUCTION SECTION -->
+  <h3>1.&emsp;Introduction</h3>
+
+    <!-- Introduction text (depends on the report type) -->
+    {% if report_type == 'HO' %}
+      {% set intro_text_filename = 'intro_text/intro_text_HO.html' %}
+    {% elif report_type == 'PI' %}
+      {% set intro_text_filename = 'intro_text/intro_text_PI.html' %}
+    {% endif %}
+    {% include intro_text_filename %}
+
+    <!-- Text about each figure in this section -->
+    <p>
+      {% for kpi_name, config in intro_config.items() %}
+        Figure {{config['number']}} shows
+        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
+        {% include text %}
+      {% endfor %}
+    </p>
+
+    <!-- Text about each table in this section (none yet) -->
+
+    <!-- Figures with captions -->
+    {% for kpi_name, config in intro_config.items() %}
+      <figure>
+        {% set filename = config['filename'] %}
+        <img src={{filename}} >
+        <figcaption><strong>Figure {{config['number']}}</strong>:
+          {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+          {% include caption %}
+        </figcaption>
+      </figure>
+    {% endfor %}
+
+    <!-- Tabels with captions (none yet) -->
+
+  {#-------------------------------------------------------------------------#}
+  <!-- MEASURED PARAMETER SECTION -->
+  <h3>2.&emsp;Measured parameters</h3>
+
+  {% for parameter, config in meas_param_config.items() %}
+
+    <!-- Subsection number and title -->
+    <h4> 2.{{loop.index}}&emsp;{{config['chapter_title']}} </h4>
+
+    <!-- If report is for HO: Description about the parameter -->
+    {% if report_type == 'HO' %}
+      <p>
+        {% set description =
+          'param_descriptions/'+ config['short_name'] + '.html' %}
+        {% include description %}
+      </p>
+    {% endif %}
+
+    <!-- Text about each figure in this section -->
+    <p>
+      {% for kpi_name, kpi_dict in config['kpi_figures'].items() %}
+        Figure {{kpi_dict['number']}} shows
+        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
+        {% include text %}
+      {% endfor %}
+
+    <!-- Text about each table in this section -->
+      {% for kpi_name, kpi_dict in config['kpi_tabels'].items() %}
+        Tabel {{kpi_dict['number']}} shows
+        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
+        {% include text %}
+      {% endfor %}
+    </p>
+
+    <!-- Figures with captions -->
+    {% for kpi_name, kpi_dict in config['kpi_figures'].items() %}
+      <figure>
+        {% set filename = kpi_dict['filename'] %}
+        <img src={{filename}} >
+        <figcaption><strong>Figure {{kpi_dict['number']}}</strong>:
+          {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+          {% include caption %}
+          {{config['fig_label_name_html']}}.
+        </figcaption>
+      </figure>
+    {% endfor %}
+
+    <!-- Tabels with captions -->
+    <!-- !!! Allow for more than two columns in the table !!! -->
+    {% for kpi_name, kpi_dict in config['kpi_tabels'].items() %}
+      <table>
+        <caption><strong>Tabel {{kpi_dict['number']}}</strong>:
+            {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+            {% include caption %}
+            {{config['fig_label_name_html']}}.
+        </caption>
+        {% for key, value in meas_param_tabels_dict[kpi_dict['number']].items() %}
+          <tr>
+          {% if loop.index == 1 %}
+            <th> {{ key }} </th>
+            <th id='center'> {{ value }} </th>
+          {% else %}
+            <td> {{ key }} </td>
+            <td id='center'> {{ value }} </td>
+          {% endif %}
+          </tr>
+        {% endfor %}
+      </table>
+    {% endfor %}
+  {% endfor %}
+
+  {#-------------------------------------------------------------------------#}
+  <!-- CALCULATED PARAMETER SECTION -->
+
+  {% if calc_param_config != {} %}
+    <h3>3.&emsp;Calculated parameters</h3>
+    {% for parameter, config in calc_param_config.items() %}
+
+      <!-- Add section title with numbering -->
+      <h4> 3.{{loop.index}}&emsp;{{config['chapter_title']}} </h4>
+
+      <!-- !!! Same content as for measured parameters. Somehow create loop?-->
+
+    {% endfor %}
+  {% endif %}
+
+</body>
+</html>
