@@ -53,7 +53,7 @@ def get_figsize(parameter_dict):
 
 
 # Function creates a barplot, and saves the figure in the output directory.
-def intro_bar_plot(parameter_dict, df, output_dir, **kwargs):
+def intro_bar_plot(parameter_dict, df, output_dir):
 
 	# In order to create the barplot we need to create a new data frame
 	# containing two columns: 'label' (containg the the parameter names), and
@@ -107,7 +107,7 @@ def intro_bar_plot(parameter_dict, df, output_dir, **kwargs):
 
 # Function creates a stacked barplot, and saves the figure in the output
 # directory.
-def intro_stacked_bar_plot(parameter_dict, df, output_dir, **kwargs):
+def intro_stacked_bar_plot(parameter_dict, df, output_dir):
 	#---------
 	# STRUCTURE DATA FOR PLOTTING
 	# Create a list of unique flags given to the selected data.

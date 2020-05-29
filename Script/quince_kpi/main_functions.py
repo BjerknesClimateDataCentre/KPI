@@ -19,7 +19,7 @@ import quince_kpi as kpi
 def intro_figures(intro_config, parameter_dict, df, output_dir):
 	for kpi_name, config in intro_config.items():
 		eval('kpi.'+ kpi_name)(parameter_dict=parameter_dict, df=df,
-			output_dir=output_dir, kwargs=config['function_input'])
+			output_dir=output_dir)
 
 
 # This function creates the KPI figures for parameter sections, and store
