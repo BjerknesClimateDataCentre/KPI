@@ -50,17 +50,17 @@ for plot in old_plots:
 with open ('./config.json') as file:
 	all_configs = json.load(file)
 
+with open ('./new_config.json') as new_file:
+	all_new_configs = json.load(new_file)
+
 ## ---------
 # Config cleanup
 #-----------
 
 # INTRO CONFIG
-# Removes info about intro kpi's that will not be included in the report
-intro_config = kpi.remove_false(d=all_configs['intro_config'])
-
 # Add filenames to the introduction section figures
-intro_config = kpi.add_filename(kpi_dict=intro_config, kpi_type='intro',
-	short_name='')
+intro_config = kpi.add_filename(kpi_dict=all_configs['intro_config'],
+	kpi_type='intro', short_name='')
 
 # Add figure numbers to the introduction section
 returned = kpi.add_number(kpi_dict=intro_config, section_count=1, count=1)
@@ -103,7 +103,6 @@ calc_param_config =  kpi.remove_false(d=all_configs['calc_param_config'])
 
 # !! add filenames, and fignumbers !! WAIT TILL HAVE CALC KPIS !!
 
-
 ## ---------
 # Add the intro and parameter configs to the render dictionary. This dictionary
 # will be filled with information thourghout this script, and finally be used
@@ -118,8 +117,8 @@ render_dict = {'intro_config': intro_config,
 ### Identify / extract / import (???) datasets
 ###----------------------------------------------------------------------------
 
-# !!! Need input in config file about for which station(s) and time period!!!
-# To be added later.
+# !!! Need input in config file about for which instrument/station and
+# time period!!! To be added later.
 
 # !!! This section cannot be completed before we know how the script will
 # extract/receive data from QuinCe.
@@ -137,7 +136,7 @@ data_files = os.listdir(data_dir)
 
 # Loop through all files in data directory and read data into 'df'
 # !!! Currenlty this only works with one file!
-# !!! If more than one file (from the same station): add the df's together
+# !!! If more than one file (from the same instrument): add the df's together
 # (NaN's if some cols missing).
 for file in data_files:
 	data_path = os.path.join(data_dir, file)
@@ -153,10 +152,11 @@ for level in all_configs['data_levels']:
 	if level in data_files[0]:
 		data_level = level
 
-# Identify station name from filename
-for name, code in all_configs['station_code'].items():
-	if code in data_files[0]:
-		station = name
+# Identify instrument name (full and short) from filename
+for instrument, config in all_configs['instruments'].items():
+	if config['code'] in data_files[0]:
+		inst_name_full = instrument
+		inst_name_short = config['short_name']
 
 # Set the timestamp column, and extract start and end date
 kpi.set_datetime(df)
@@ -164,8 +164,9 @@ df_start = str(df['Date/Time'][0].date())
 df_end = str(df['Date/Time'][len(df)-1].date())
 
 # Store the basic information extracted above in a dictionary.
-render_dict.update({'data_filename': file, 'data_level':data_level,
-			'station':station, 'df_start':df_start, 'df_end':df_end})
+render_dict.update({'data_filename': file, 'data_level': data_level,
+	'inst_name_full': inst_name_full, 'inst_name_short': inst_name_short,
+	'df_start': df_start, 'df_end': df_end})
 
 
 ###----------------------------------------------------------------------------
