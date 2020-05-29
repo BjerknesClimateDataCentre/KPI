@@ -1,7 +1,15 @@
 {
-    "station_code": {
-        "Nuka Arctica": "26NA",
-        "G.O. Sars": "58GS"
+    "instruments": {
+        "Nuka Arctica": {
+            "code": "26NA",
+            "short_name": "Nuka",
+            "measures": ["underway_pco2"]
+        },
+        "G.O. Sars": {
+            "code": "58GS",
+            "short_name": "GOSars",
+            "measures": ["underway_pco2"]
+        }
     },
     "data_levels" : [
         "NRT",
@@ -9,16 +17,8 @@
     ],
     "intro_config": {
         "intro_line_plot": {
-            "include": true,
-            "function_input": {}
-        },
-        "intro_bar_plot": {
-            "include": false,
-            "function_input": {}
         },
         "intro_stacked_bar_plot": {
-            "include": true,
-            "function_input": {}
         }
     },
     "meas_param_config": {
