@@ -10,9 +10,7 @@
     "intro_config": {
         "intro_line_plot": {
             "include": true,
-            "function_input": {
-                "cleaned": false
-            }
+            "function_input": {}
         },
         "intro_bar_plot": {
             "include": false,

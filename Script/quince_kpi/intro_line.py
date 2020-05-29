@@ -60,25 +60,19 @@ def get_row_col(n_plot):
 	return n_row, n_col
 
 
-def make_subplot(parameter, df, cleaned, ax):
+def make_subplot(parameter, df, ax):
 	# Remove rows with NaNs
 	df = df.dropna(subset=[parameter])
 
 	# Identify the parameters QC flag columns
 	flag_column = parameter + ' QC Flag'
 
-	# If cleaned is false, plot all data. Else, plot data with QC flag 2.
-	if cleaned is False:
-		# Set plot color for the QC flags and plot one flag at the time
-		for flag, col in COLOR_DICT.items():
-				limited_df = df[df[flag_column]==int(flag)]
-				ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
-					c=col, label=int(flag), alpha=ALPHA, edgecolors='none',
-					marker='.')
-	else:
-		limited_df = df[df[flag_column]==2]
-		ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
-			c='green', alpha=ALPHA, edgecolors='none', marker='.')
+	# Set plot color for the QC flags and plot one flag at the time
+	for flag, col in COLOR_DICT.items():
+			limited_df = df[df[flag_column]==int(flag)]
+			ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
+				c=col, label=int(flag), alpha=ALPHA, edgecolors='none',
+				marker='.')
 
 	ax.grid(True)
 	# !!! To adjust the suplots- Try this:
@@ -88,11 +82,7 @@ def make_subplot(parameter, df, cleaned, ax):
 
 # Function plots parameter(s) vs time, saves the figure in the output
 # directory, and returns the figures filename back to the main script.
-def intro_line_plot(parameter_dict, df, output_dir, **kwargs):
-
-	# Create variables from kwargs
-	# !!! Must be a different way to use kwargs to that this step is not needed
-	cleaned = kwargs['kwargs']['cleaned']
+def intro_line_plot(parameter_dict, df, output_dir):
 
 	# Store number of plots to create
 	n_plot = len(parameter_dict)
@@ -121,7 +111,7 @@ def intro_line_plot(parameter_dict, df, output_dir, **kwargs):
 			ax = plt.subplot2grid((n_row, n_col), (row,col))
 
 			# Make subplot
-			make_subplot(parameter, df, cleaned, ax)
+			make_subplot(parameter, df, ax)
 			ax.legend()
 			# !!! HOW TO ADD ONLY ONCE??
 			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1)) ???
@@ -149,10 +139,7 @@ def intro_line_plot(parameter_dict, df, output_dir, **kwargs):
 	fig.autofmt_xdate()
 
 	# Save plot to file and close figure
-	if cleaned is True:
-		filename = 'intro_line_plot.png'
-	else:
-		filename = 'intro_line_plot.png'
+	filename = 'intro_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()
