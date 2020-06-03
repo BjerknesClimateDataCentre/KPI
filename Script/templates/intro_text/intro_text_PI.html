@@ -10,10 +10,10 @@
       parameters:
       <ul>
       {% for param, config in meas_param_config.items() %}
-        <li>{{config['chapter_title']}} ({{config['fig_label_name_html']}})</li>
+        <li>{{config['subsection_title']}} ({{config['fig_label_name_html']}})</li>
       {% endfor %}
       {% for param, config in calc_param_config.items() %}
-          <li>{{config['chapter_title']}} ({{config['fig_label_name_html']}})</li>
+          <li>{{config['subsection_title']}} ({{config['fig_label_name_html']}})</li>
       {% endfor %}
       </ul>
     </p>
