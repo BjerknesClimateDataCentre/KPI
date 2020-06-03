@@ -55,7 +55,7 @@ with open ('./config.json') as file:
 ### Identify / extract / import (???) datasets
 ###----------------------------------------------------------------------------
 
-# !!! Need input in config file about for which instrument/station and
+# !!! Need input when run script about for which instrument/station and
 # time period!!! To be added later.
 
 # !!! This section cannot be completed before we know how the script will
@@ -114,22 +114,23 @@ render_dict = {'report_type': sys.argv[1], 'data_filename': file,
 ### Create report section configs
 ###---------------------------------------------------------------------------
 
+#-----------
 # INTRO CONFIG
-# Add filenames to the introduction section figures
-intro_config = {}
-intro_config['kpis'] = kpi.add_filename(kpi_dict=all_configs['kpi_config']['intro_figures'],
-	kpi_type='intro', short_name='')
 
-# Add figure numbers to the introduction section
-returned = kpi.add_number(kpi_dict=intro_config['kpis'], section_count=1, count=1)
-intro_config['kpis'] = returned[0]
+# Create an introduction section configuration dictionary and fill with
+# filenames and figure numbers
+intro_section_config = {}
+intro_section_config['kpis'] = kpi.add_filename(kpi_dict=all_configs['kpi_config']['intro_figures'],
+	kpi_type='intro', short_name='')
+returned = kpi.add_number(kpi_dict=intro_section_config['kpis'], section_count=1, count=1)
+intro_section_config['kpis'] = returned[0]
 
 #-----------
 # MEASURED AND CALCULATED CONFIG
 
 # Create config dictionaries for the measured (sensor) and calculated values
-meas_param_config = {}
-calc_param_config = {}
+meas_section_config = {}
+calc_section_config = {}
 
 # For each variable measured by the instrument add all sensors and calc values
 # to the dictionaries
@@ -137,17 +138,17 @@ for variable in inst_variables:
 	variable_dict = all_configs['variable_config'][variable]
 
 	for sensor in variable_dict['sensors']:
-		if sensor not in meas_param_config:
-			meas_param_config[sensor] = all_configs['vocab_config'][sensor]
+		if sensor not in meas_section_config:
+			meas_section_config[sensor] = all_configs['vocab_config'][sensor]
 
 	for calc_value in variable_dict['calc_values']:
-		if calc_value not in calc_param_config:
-			calc_param_config[calc_value] = all_configs['vocab_config'][calc_value]
+		if calc_value not in calc_section_config:
+			calc_section_config[calc_value] = all_configs['vocab_config'][calc_value]
 
 # For measured variables, add all kpi figure/tabels with filenames and number
 fig_count = 1
 tab_count = 1
-for variable, var_config in meas_param_config.items():
+for variable, var_config in meas_section_config.items():
 
 	kpi_figures = {}
 	for kpi_name in all_configs['kpi_config']['meas_param_figures'].keys():
@@ -166,7 +167,7 @@ for variable, var_config in meas_param_config.items():
 # For calculated values, add all kpi figure/tabels with filenames and number
 fig_count = 1
 tab_count = 1
-for value, value_config in calc_param_config.items():
+for value, value_config in calc_section_config.items():
 
 	kpi_figures = {}
 	for kpi_name in all_configs['kpi_config']['calc_param_figures'].keys():
@@ -184,16 +185,16 @@ for value, value_config in calc_param_config.items():
 
 #-----------
 # Add parameters (header name in df and the fig label name) to the intro config
-intro_config['parameters'] = {config['col_header_name'] : config['fig_label_name_python']
-				for param, config in meas_param_config.items()}
-intro_config['parameters'].update({config['col_header_name'] : config['fig_label_name_python']
-				for param, config in calc_param_config.items()})
+intro_section_config['parameters'] = {config['col_header_name'] : config['fig_label_name_python']
+				for param, config in meas_section_config.items()}
+intro_section_config['parameters'].update({config['col_header_name'] : config['fig_label_name_python']
+				for param, config in calc_section_config.items()})
 
 ## ---------
 # Add the section configs to the render dictionary
-render_dict.update({'intro_config': intro_config,
-	'meas_param_config': meas_param_config,
-	'calc_param_config': calc_param_config})
+render_dict.update({'intro_section_config': intro_section_config,
+	'meas_section_config': meas_section_config,
+	'calc_section_config': calc_section_config})
 
 
 ###----------------------------------------------------------------------------
@@ -201,15 +202,15 @@ render_dict.update({'intro_config': intro_config,
 ###----------------------------------------------------------------------------
 
 # Create introduction section figures, stored in the output directort
-kpi.intro_figures(intro_config=intro_config, df=df, output_dir=output_dir)
+kpi.intro_figures(intro_section_config=intro_section_config, df=df, output_dir=output_dir)
 
 # Create the measured section figures, stored in output directory
-kpi.meas_param_figures(meas_param_config=meas_param_config, df=df,
+kpi.meas_param_figures(meas_section_config=meas_section_config, df=df,
 	output_dir=output_dir)
 
 # Create the measyred section tabels and store them in the render dictionary
 render_dict['meas_param_tabels_dict'] = kpi.meas_param_tabels(
-	meas_param_config=meas_param_config, df=df)
+	meas_section_config=meas_section_config, df=df)
 
 # !!! Create the fgures and tables for the calculated parameters section !!!
 
