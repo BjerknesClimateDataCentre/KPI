@@ -43,74 +43,12 @@ for plot in old_plots:
 
 
 ###----------------------------------------------------------------------------
-### Extract configurations and create render dictionary
+### Extract configurations
 ###----------------------------------------------------------------------------
 
 # Store configuration variables
 with open ('./config.json') as file:
 	all_configs = json.load(file)
-
-with open ('./new_config.json') as new_file:
-	all_new_configs = json.load(new_file)
-
-## ---------
-# Config cleanup
-#-----------
-
-# INTRO CONFIG
-# Add filenames to the introduction section figures
-intro_config = kpi.add_filename(kpi_dict=all_configs['intro_config'],
-	kpi_type='intro', short_name='')
-
-# Add figure numbers to the introduction section
-returned = kpi.add_number(kpi_dict=intro_config, section_count=1, count=1)
-intro_config = returned[0]
-
-#-----------
-# MEASURED PARAMETER CONFIG
-# Remove info about measured parameters that will not be included in the report
-meas_param_config = kpi.remove_false(d=all_configs['meas_param_config'])
-
-fig_count = 1
-tab_count = 1
-for param, config in meas_param_config.items():
-	# Remove info on figure and tabel kpi's that will not be used in report
-	meas_param_config[param]['kpi_figures'] = kpi.remove_false(config['kpi_figures'])
-	meas_param_config[param]['kpi_tabels'] = kpi.remove_false(config['kpi_tabels'])
-
-	# Add filenames for figures
-	meas_param_config[param]['kpi_figures'] = kpi.add_filename(
-		kpi_dict=config['kpi_figures'], kpi_type='parameter',
-		short_name=config['short_name'])
-
-	# Add figure numbers
-	returned = kpi.add_number(kpi_dict=config['kpi_figures'], section_count=2,
-		count=fig_count)
-	meas_param_config[param]['kpi_figures'] = returned[0]
-	fig_count = returned[1]
-
-	# Add tabel numbers
-	returned = kpi.add_number(kpi_dict=config['kpi_tabels'], section_count=2,
-		count=tab_count)
-	meas_param_config[param]['kpi_tabels'] = returned[0]
-	tab_count = returned[1]
-
-
-#-----------
-# CALCULATED PARAMETER CONFIG
-# Remove info about calculated parameters that will not be included in the report
-calc_param_config =  kpi.remove_false(d=all_configs['calc_param_config'])
-
-# !! add filenames, and fignumbers !! WAIT TILL HAVE CALC KPIS !!
-
-## ---------
-# Add the intro and parameter configs to the render dictionary. This dictionary
-# will be filled with information thourghout this script, and finally be used
-# as input when the report is created.
-render_dict = {'intro_config': intro_config,
-	'meas_param_config': meas_param_config,
-	'calc_param_config': calc_param_config,
-	'report_type': sys.argv[1]}
 
 
 ###---------------------------------------------------------------------------
@@ -157,6 +95,7 @@ for instrument, config in all_configs['instruments'].items():
 	if config['code'] in data_files[0]:
 		inst_name_full = instrument
 		inst_name_short = config['short_name']
+		inst_variables = config['variables']
 
 # Set the timestamp column, and extract start and end date
 kpi.set_datetime(df)
@@ -164,9 +103,78 @@ df_start = str(df['Date/Time'][0].date())
 df_end = str(df['Date/Time'][len(df)-1].date())
 
 # Store the basic information extracted above in a dictionary.
-render_dict.update({'data_filename': file, 'data_level': data_level,
-	'inst_name_full': inst_name_full, 'inst_name_short': inst_name_short,
-	'df_start': df_start, 'df_end': df_end})
+render_dict = {'report_type': sys.argv[1], 'data_filename': file,
+	'data_level': data_level, 'inst_name_full': inst_name_full,
+	'inst_name_short': inst_name_short, 'df_start': df_start, 'df_end': df_end}
+
+
+###---------------------------------------------------------------------------
+### Config cleanup
+###---------------------------------------------------------------------------
+
+# INTRO CONFIG
+# Add filenames to the introduction section figures
+intro_config = kpi.add_filename(kpi_dict=all_configs['all_kpis']['intro_figures'],
+	kpi_type='intro', short_name='')
+
+# Add figure numbers to the introduction section
+returned = kpi.add_number(kpi_dict=intro_config, section_count=1, count=1)
+intro_config = returned[0]
+
+#-----------
+# MEASURED PARAMETER CONFIG
+
+# Create config dictionaries for the measured (sensor) and calculated values
+meas_param_config = {}
+calc_section_dict = {}
+
+# For each variable measured by the instrument add all sensors and calc values
+# to the dictionaries
+for variable in inst_variables:
+	variable_dict = all_configs['variable_config'][variable]
+
+	for sensor in variable_dict['sensors']:
+		if sensor not in meas_param_config:
+			meas_param_config[sensor] = all_configs['data_vocabulary_config'][sensor]
+
+	for calc_value in variable_dict['calc_values']:
+		if calc_value not in calc_section_dict:
+			calc_section_dict[calc_value] = all_configs['data_vocabulary_config'][calc_value]
+
+# For measured variables, add all kpi figures with filenames and figure number
+fig_count = 1
+tab_count = 1
+for variable, var_config in meas_param_config.items():
+
+	kpi_figures = {}
+	for kpi_name in all_configs['all_kpis']['meas_param_figures'].keys():
+		kpi_figures[kpi_name] = {'filename': variable + '_' + kpi_name + '.png'}
+		kpi_figures[kpi_name].update({'number': '2.' + str(fig_count)})
+		fig_count += 1
+	var_config['kpi_figures'] = kpi_figures
+
+	kpi_tabels = {}
+	for kpi_name in all_configs['all_kpis']['meas_param_tabels'].keys():
+		kpi_tabels[kpi_name] = {'number': '2.' + str(tab_count)}
+		tab_count += 1
+	var_config['kpi_tabels'] = kpi_tabels
+
+
+#-----------
+# CALCULATED PARAMETER CONFIG
+# Remove info about calculated parameters that will not be included in the report
+calc_param_config =  kpi.remove_false(d=all_configs['calc_param_config'])
+
+# !! add filenames, and fignumbers !! WAIT TILL HAVE CALC KPIS !!
+
+## ---------
+# Add the intro and parameter configs to the render dictionary. This dictionary
+# will be filled with information thourghout this script, and finally be used
+# as input when the report is created.
+render_dict.update({'intro_config': intro_config,
+	'meas_param_config': meas_param_config,
+	'calc_param_config': calc_param_config})
+
 
 
 ###----------------------------------------------------------------------------
@@ -178,10 +186,11 @@ render_dict.update({'data_filename': file, 'data_level': data_level,
 # Create the KPI figures (create a parameter
 # dictionary which gives the intro_figures function the information about
 # the figure label names to use for each paraemters)
-parameter_dict = {param : config['fig_label_name_python']
+parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
 				for param, config in meas_param_config.items()}
 parameter_dict.update({param : config['fig_label_name_python']
 				for param, config in calc_param_config.items()})
+print(parameter_dict)
 kpi.intro_figures(intro_config=intro_config,
 	parameter_dict=parameter_dict, df=df, output_dir=output_dir)
 

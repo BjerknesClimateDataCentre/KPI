@@ -3,22 +3,139 @@
         "Nuka Arctica": {
             "code": "26NA",
             "short_name": "Nuka",
-            "measures": ["underway_pco2"]
+            "variables": [
+                "underway_pco2"
+            ]
         },
         "G.O. Sars": {
             "code": "58GS",
             "short_name": "GOSars",
-            "measures": ["underway_pco2"]
+            "variables": [
+                "underway_pco2"
+            ]
+        }
+    },
+    "variable_config": {
+        "underway_pco2": {
+            "sensors": [
+                "SST",
+                "xCO2",
+                "sal"
+            ],
+            "calc_values": [
+                "fCO2"
+            ]
+        },
+        "ph": {
+            "sensors": [],
+            "calc_values": []
+        },
+        "diagnostics": {
+            "sensors": [],
+            "calc_values": []
+        }
+    },
+    "data_vocabulary_config":{
+        "H2O": {
+            "col_header_name": "H2O Mole Fraction [umol mol-1]",
+            "fig_label_name_python": "xH\u2082O [\u03BCmol/mol]",
+            "fig_label_name_html": "xH&#8322O [&#956;mol/mol]",
+            "subsection_title": "H&#8322O Mole Fraction"
+        },
+        "Pinst": {
+            "col_header_name": "Instrument Ambient Pressure [hPa]",
+            "fig_label_name_python": "P in inst [hPa]",
+            "fig_label_name_html": "P in inst [hPa]",
+            "subsection_title": "Instrument Ambient Pressure"
+        },
+        "Patm": {
+            "col_header_name": "Atmospheric Pressure [hPa]",
+            "fig_label_name_python": "P in atm [hPa]",
+            "fig_label_name_html": "P in atm [hPa]",
+            "subsection_title": "Atmospheric Pressure"
+        },
+        "SST": {
+            "col_header_name": "Temp [degC]",
+            "fig_label_name_python": "SST [\u00B0C]",
+            "fig_label_name_html": "SST [&#176;C]",
+            "subsection_title": "Sea Surface Temperature"
+        },
+        "Peq": {
+            "col_header_name": "Equilibrator Pressure (relative) [hPa]",
+            "fig_label_name_python": "P at eq [hPa]",
+            "fig_label_name_html": "P at eq [hPa]",
+            "subsection_title": "Equilibrator Pressure"
+        },
+        "Teq": {
+            "col_header_name": "Temperature of Equilibration [degC]",
+            "fig_label_name_python": "Temp at eq [\u00B0C]",
+            "fig_label_name_html": "Temp at eq [&#176;C]",
+            "subsection_title": "Temperatur of Equilibration"
+        },
+        "xCO2": {
+            "col_header_name": "CO2 Mole Fraction [umol mol-1]",
+            "fig_label_name_python": "xCO\u2082 [\u03BCmol/mol]",
+            "fig_label_name_html": "xCO&#8322 [&#956;mol/mol]",
+            "subsection_title": "Mole Fraction of CO&#8322"
+        },
+        "sal": {
+            "col_header_name": "P_sal [psu]",
+            "fig_label_name_python": "sal",
+            "fig_label_name_html": "sal",
+            "subsection_title": "Salinity"
+        },
+        "pCO2_atm": {
+            "col_header_name": "pCO2 in atmosphere [uatm]",
+            "fig_label_name_python": "pCO\u2082 in atm [\u03BCatm]",
+            "fig_label_name_html": "pCO&#8322 in atm [&#956;atm]",
+            "subsection_title": "Partial Pressure of CO&#8322 in Atmosphere"
+        },
+        "pCO2_Teq": {
+            "col_header_name": "pCO2 In Water - Equilibrator Temperature [uatm]",
+            "fig_label_name_python": "pCO\u2082 at Teq [\u03BCatm]",
+            "fig_label_name_html": "pCO&#8322 at Teq [&#956;atm]",
+            "subsection_title": "Partial Pressure of CO&#8322 at Equilibrator Temperature"
+        },
+        "pCO2": {
+            "col_header_name": "pCO2 [uatm]",
+            "fig_label_name_python": "pCO\u2082 [\u03BCatm]",
+            "fig_label_name_html": "pCO&#8322 [&#956;atm]",
+            "subsection_title": "Partial Pressure of CO&#8322"
+        },
+        "fCO2_atm": {
+            "col_header_name": "fCO2 in atmosphere [uatm]",
+            "fig_label_name_python": "fCO\u2082 in atm [\u03BCatm]",
+            "fig_label_name_html": "fCO&#8322 in atm [&#956;atm]",
+            "subsection_title": "Fugacity of CO&#8322 in Atmosphere"
+        },
+        "fCO2": {
+            "col_header_name": "fCO2 [uatm]",
+            "fig_label_name_python": "fCO\u2082 [\u03BCatm]",
+            "fig_label_name_html": "fCO&#8322 [&#956;atm]",
+            "subsection_title": "Fugacity of CO&#8322"
         }
     },
     "data_levels" : [
         "NRT",
         "L2"
     ],
-    "intro_config": {
-        "intro_line_plot": {
+    "all_kpis": {
+        "intro_figures": {
+            "intro_line_plot": {},
+            "intro_stacked_bar_plot": {}
         },
-        "intro_stacked_bar_plot": {
+        "intro_tabels": {
+        },
+        "meas_param_figures": {
+            "meas_param_flag_piechart": {},
+            "meas_param_line_plot": {}
+        },
+        "meas_param_tabels": {
+            "meas_qc_comment_table": {}
+        },
+        "calc_param_figures": {
+        },
+        "calc_param_tabels": {
         }
     },
     "meas_param_config": {

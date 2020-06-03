@@ -49,8 +49,10 @@ K = 1.5
 def meas_param_flag_piechart(parameter, meas_param_config, df,
 	output_dir):
 
+	col_header_name = meas_param_config[parameter]['col_header_name']
+
 	# Store the parameters QC flags in a list (remove '.0' if needed)
-	flag_list = list(df[parameter + ' QC Flag'])
+	flag_list = list(df[col_header_name + ' QC Flag'])
 	flag_list_cleaned = [str(item).split('.')[0] for item in flag_list]
 
 	# Get the unique flags and their frequencies (as arrays)
@@ -74,15 +76,15 @@ def meas_param_flag_piechart(parameter, meas_param_config, df,
 	plt.tight_layout()
 
 	# Save the plot to file and close figure
-	filename = meas_param_config[parameter]['short_name'] + '_meas_param_flag_piechart.png'
+	filename = parameter + '_meas_param_flag_piechart.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()
 
 
-def make_plot(df, parameter, ax):
+def make_plot(df, col_header_name, ax):
 	# Identify the parameters QC flag columns
-	color_column = parameter + ' QC Flag'
+	color_column = col_header_name + ' QC Flag'
 
 	# Remove NaNs from color_dict since missing values are not plotted
 	color_dict_noNan = COLOR_DICT
@@ -91,7 +93,7 @@ def make_plot(df, parameter, ax):
 
 	for flag, col in color_dict_noNan.items():
 		limited_df = df[df[color_column]==int(flag)]
-		ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
+		ax.scatter(x=limited_df['Date/Time'], y=limited_df[col_header_name],
 					c=col, label=flag, alpha=ALPHA, edgecolors='none',
 					marker='.')
 
@@ -99,7 +101,8 @@ def make_plot(df, parameter, ax):
 def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 
 	# Remove rows with NaNs
-	df = df.dropna(subset=[parameter])
+	col_header_name = meas_param_config[parameter]['col_header_name']
+	df = df.dropna(subset=[col_header_name])
 
 	# The figure created will contain two plots: a) show all measurements, b)
 	# show measurements where the highest and lowest values are removed
@@ -112,8 +115,8 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	# whisker plots (https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/)
 
 	# Calculate the IQR, cutoffs, and the lower and upper ranges
-	q25 = np.percentile(df.loc[:,parameter], 25)
-	q75 = np.percentile(df.loc[:,parameter], 75)
+	q25 = np.percentile(df.loc[:,col_header_name], 25)
+	q75 = np.percentile(df.loc[:,col_header_name], 75)
 	iqr = q75 - q25
 	cut_off = iqr * K
 	lower = q25 - cut_off
@@ -124,7 +127,7 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 
 	# Create the first plot with all values (colored by QC flag)
 	ax = plt.subplot2grid((2, 1), (0,0))
-	make_plot(df=df, parameter=parameter, ax=ax)
+	make_plot(df=df, col_header_name=col_header_name, ax=ax)
 
 	# Add the lower and upper values to plot
 	plt.axhline(y=upper, color=CONTRAST_COLOR, linestyle='-')
@@ -138,8 +141,8 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 
 	# Create the second plot removing values outside upper and lower range
 	ax = plt.subplot2grid((2, 1), (1,0))
-	df_scaled = df[(df[parameter] > lower) & (df[parameter] < upper)]
-	make_plot(df=df_scaled, parameter=parameter, ax=ax)
+	df_scaled = df[(df[col_header_name] > lower) & (df[col_header_name] < upper)]
+	make_plot(df=df_scaled, col_header_name=col_header_name, ax=ax)
 
 	# Add grid, labels etc.
 	ax.legend()
@@ -150,7 +153,7 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	#plt.xlabel('Time')
 
 	# Save the plot to file and close figure
-	filename = meas_param_config[parameter]['short_name'] + '_meas_param_line_plot.png'
+	filename = parameter + '_meas_param_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()
@@ -159,7 +162,8 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 def meas_qc_comment_table(parameter, meas_param_config, df):
 
 	# Store the parameters QC comments in a list and remove nan's.
-	comment_list = list(df[parameter + ' QC Comment'])
+	col_header_name = meas_param_config[parameter]['col_header_name']
+	comment_list = list(df[col_header_name + ' QC Comment'])
 	comment_list = [x for x in comment_list if x == x]
 
 	# Split comments if they contain ';' (means more than one comment in a row)
