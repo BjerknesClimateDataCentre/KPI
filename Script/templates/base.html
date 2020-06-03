@@ -24,7 +24,7 @@
 
     <!-- Text about each figure in this section -->
     <p>
-      {% for kpi_name, config in intro_config['kpis'].items() %}
+      {% for kpi_name, config in intro_section_config['kpis'].items() %}
         Figure {{config['number']}} shows
         {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
         {% include text %}
@@ -34,7 +34,7 @@
     <!-- Text about each table in this section (none yet) -->
 
     <!-- Figures with captions -->
-    {% for kpi_name, config in intro_config['kpis'].items() %}
+    {% for kpi_name, config in intro_section_config['kpis'].items() %}
       <figure>
         {% set filename = config['filename'] %}
         <img src={{filename}} >
@@ -51,7 +51,7 @@
   <!-- MEASURED PARAMETER SECTION -->
   <h3>2.&emsp;Measured parameters</h3>
 
-  {% for parameter, config in meas_param_config.items() %}
+  {% for parameter, config in meas_section_config.items() %}
 
     <!-- Subsection number and title -->
     <h4> 2.{{loop.index}}&emsp;{{config['subsection_title']}} </h4>
@@ -121,9 +121,9 @@
   {#-------------------------------------------------------------------------#}
   <!-- CALCULATED PARAMETER SECTION -->
 
-  {% if calc_param_config != {} %}
+  {% if calc_section_config != {} %}
     <h3>3.&emsp;Calculated parameters</h3>
-    {% for parameter, config in calc_param_config.items() %}
+    {% for parameter, config in calc_section_config.items() %}
 
       <!-- Add section title with numbering -->
       <h4> 3.{{loop.index}}&emsp;{{config['chapter_title']}} </h4>

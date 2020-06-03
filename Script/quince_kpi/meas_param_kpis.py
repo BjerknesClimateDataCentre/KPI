@@ -46,10 +46,10 @@ K = 1.5
 #------------------------------------------------------------------------------
 ### Functions
 
-def meas_param_flag_piechart(parameter, meas_param_config, df,
+def meas_param_flag_piechart(parameter, meas_section_config, df,
 	output_dir):
 
-	col_header_name = meas_param_config[parameter]['col_header_name']
+	col_header_name = meas_section_config[parameter]['col_header_name']
 
 	# Store the parameters QC flags in a list (remove '.0' if needed)
 	flag_list = list(df[col_header_name + ' QC Flag'])
@@ -98,10 +98,10 @@ def make_plot(df, col_header_name, ax):
 					marker='.')
 
 
-def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
+def meas_param_line_plot(parameter, meas_section_config, df, output_dir):
 
 	# Remove rows with NaNs
-	col_header_name = meas_param_config[parameter]['col_header_name']
+	col_header_name = meas_section_config[parameter]['col_header_name']
 	df = df.dropna(subset=[col_header_name])
 
 	# The figure created will contain two plots: a) show all measurements, b)
@@ -136,7 +136,7 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	# Add grid and labels etc.
 	ax.grid(True)
 	fig.autofmt_xdate()
-	plt.ylabel(meas_param_config[parameter]['fig_label_name_python'])
+	plt.ylabel(meas_section_config[parameter]['fig_label_name_python'])
 	ax.set_title('a)', loc='left', fontsize=TITLE_FONTSIZE, fontweight='bold')
 
 	# Create the second plot removing values outside upper and lower range
@@ -148,7 +148,7 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	ax.legend()
 	ax.grid(True)
 	fig.autofmt_xdate()
-	#plt.ylabel(meas_param_config[parameter]['fig_label_name_python'])
+	#plt.ylabel(meas_section_config[parameter]['fig_label_name_python'])
 	ax.set_title('b)', loc='left', fontsize=TITLE_FONTSIZE, fontweight='bold')
 	#plt.xlabel('Time')
 
@@ -159,10 +159,10 @@ def meas_param_line_plot(parameter, meas_param_config, df, output_dir):
 	plt.close()
 
 
-def meas_qc_comment_table(parameter, meas_param_config, df):
+def meas_qc_comment_table(parameter, meas_section_config, df):
 
 	# Store the parameters QC comments in a list and remove nan's.
-	col_header_name = meas_param_config[parameter]['col_header_name']
+	col_header_name = meas_section_config[parameter]['col_header_name']
 	comment_list = list(df[col_header_name + ' QC Comment'])
 	comment_list = [x for x in comment_list if x == x]
 

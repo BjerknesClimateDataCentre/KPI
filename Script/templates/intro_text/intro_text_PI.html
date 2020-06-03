@@ -9,10 +9,10 @@
       This section gives an overview of the data and its quality. The following sections look closer into the quality of each of the
       parameters:
       <ul>
-      {% for param, config in meas_param_config.items() %}
+      {% for param, config in meas_section_config.items() %}
         <li>{{config['subsection_title']}} ({{config['fig_label_name_html']}})</li>
       {% endfor %}
-      {% for param, config in calc_param_config.items() %}
+      {% for param, config in calc_section_config.items() %}
           <li>{{config['subsection_title']}} ({{config['fig_label_name_html']}})</li>
       {% endfor %}
       </ul>
