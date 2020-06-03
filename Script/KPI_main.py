@@ -116,12 +116,13 @@ render_dict = {'report_type': sys.argv[1], 'data_filename': file,
 
 # INTRO CONFIG
 # Add filenames to the introduction section figures
-intro_config = kpi.add_filename(kpi_dict=all_configs['kpi_config']['intro_figures'],
+intro_config = {}
+intro_config['kpis'] = kpi.add_filename(kpi_dict=all_configs['kpi_config']['intro_figures'],
 	kpi_type='intro', short_name='')
 
 # Add figure numbers to the introduction section
-returned = kpi.add_number(kpi_dict=intro_config, section_count=1, count=1)
-intro_config = returned[0]
+returned = kpi.add_number(kpi_dict=intro_config['kpis'], section_count=1, count=1)
+intro_config['kpis'] = returned[0]
 
 #-----------
 # MEASURED AND CALCULATED CONFIG
@@ -180,6 +181,14 @@ for value, value_config in calc_param_config.items():
 		tab_count += 1
 	value_config['kpi_tabels'] = kpi_tabels
 
+
+#-----------
+# Add parameters (header name in df and the fig label name) to the intro config
+intro_config['parameters'] = {config['col_header_name'] : config['fig_label_name_python']
+				for param, config in meas_param_config.items()}
+intro_config['parameters'].update({config['col_header_name'] : config['fig_label_name_python']
+				for param, config in calc_param_config.items()})
+
 ## ---------
 # Add the section configs to the render dictionary
 render_dict.update({'intro_config': intro_config,
@@ -191,32 +200,18 @@ render_dict.update({'intro_config': intro_config,
 ### Create KPIs
 ###----------------------------------------------------------------------------
 
-#--------------------------
-# INTRODUCTION SECTION
-# Create the KPI figures (create a parameter
-# dictionary which gives the intro_figures function the information about
-# the figure label names to use for each paraemters)
-parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
-				for param, config in meas_param_config.items()}
-parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
-				for param, config in calc_param_config.items()})
-kpi.intro_figures(intro_config=intro_config,
-	parameter_dict=parameter_dict, df=df, output_dir=output_dir)
+# Create introduction section figures, stored in the output directort
+kpi.intro_figures(intro_config=intro_config, df=df, output_dir=output_dir)
 
-#--------------------------
-# MEASURED PARAMETER SECTION
-# Create the KPI figures, stored in output directory
+# Create the measured section figures, stored in output directory
 kpi.meas_param_figures(meas_param_config=meas_param_config, df=df,
 	output_dir=output_dir)
 
-# Create the KPI tabels and store them in the render dictionary
+# Create the measyred section tabels and store them in the render dictionary
 render_dict['meas_param_tabels_dict'] = kpi.meas_param_tabels(
 	meas_param_config=meas_param_config, df=df)
 
-#--------------------------
-# CALCULATED PARAMETER SECTION
-
-# !!! Create the KPI figures and tables for the calculated parameters section !!!
+# !!! Create the fgures and tables for the calculated parameters section !!!
 
 
 ###----------------------------------------------------------------------------
