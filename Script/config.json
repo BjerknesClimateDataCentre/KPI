@@ -1,5 +1,5 @@
 {
-    "instruments": {
+    "instrument_config": {
         "Nuka Arctica": {
             "code": "26NA",
             "short_name": "Nuka",
@@ -35,7 +35,7 @@
             "calc_values": []
         }
     },
-    "data_vocabulary_config":{
+    "vocab_config":{
         "H2O": {
             "col_header_name": "H2O Mole Fraction [umol mol-1]",
             "fig_label_name_python": "xH\u2082O [\u03BCmol/mol]",
@@ -115,11 +115,11 @@
             "subsection_title": "Fugacity of CO&#8322"
         }
     },
-    "data_levels" : [
+    "data_level_config" : [
         "NRT",
         "L2"
     ],
-    "all_kpis": {
+    "kpi_config": {
         "intro_figures": {
             "intro_line_plot": {},
             "intro_stacked_bar_plot": {}

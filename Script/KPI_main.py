@@ -86,12 +86,12 @@ for file in data_files:
 ###----------------------------------------------------------------------------
 
 # Identify data level from filename
-for level in all_configs['data_levels']:
+for level in all_configs['data_level_config']:
 	if level in data_files[0]:
 		data_level = level
 
 # Identify instrument name (full and short) from filename
-for instrument, config in all_configs['instruments'].items():
+for instrument, config in all_configs['instrument_config'].items():
 	if config['code'] in data_files[0]:
 		inst_name_full = instrument
 		inst_name_short = config['short_name']
@@ -102,19 +102,21 @@ kpi.set_datetime(df)
 df_start = str(df['Date/Time'][0].date())
 df_end = str(df['Date/Time'][len(df)-1].date())
 
-# Store the basic information extracted above in a dictionary.
+# Store the basic information extracted above in the render dictionary. This
+# dictionary will be filled with information thourghout this script, and
+# finally be used as input when the report is created.
 render_dict = {'report_type': sys.argv[1], 'data_filename': file,
 	'data_level': data_level, 'inst_name_full': inst_name_full,
 	'inst_name_short': inst_name_short, 'df_start': df_start, 'df_end': df_end}
 
 
 ###---------------------------------------------------------------------------
-### Config cleanup
+### Create report section configs
 ###---------------------------------------------------------------------------
 
 # INTRO CONFIG
 # Add filenames to the introduction section figures
-intro_config = kpi.add_filename(kpi_dict=all_configs['all_kpis']['intro_figures'],
+intro_config = kpi.add_filename(kpi_dict=all_configs['kpi_config']['intro_figures'],
 	kpi_type='intro', short_name='')
 
 # Add figure numbers to the introduction section
@@ -122,7 +124,7 @@ returned = kpi.add_number(kpi_dict=intro_config, section_count=1, count=1)
 intro_config = returned[0]
 
 #-----------
-# MEASURED PARAMETER CONFIG
+# MEASURED AND CALCULATED CONFIG
 
 # Create config dictionaries for the measured (sensor) and calculated values
 meas_param_config = {}
@@ -135,11 +137,11 @@ for variable in inst_variables:
 
 	for sensor in variable_dict['sensors']:
 		if sensor not in meas_param_config:
-			meas_param_config[sensor] = all_configs['data_vocabulary_config'][sensor]
+			meas_param_config[sensor] = all_configs['vocab_config'][sensor]
 
 	for calc_value in variable_dict['calc_values']:
 		if calc_value not in calc_param_config:
-			calc_param_config[calc_value] = all_configs['data_vocabulary_config'][calc_value]
+			calc_param_config[calc_value] = all_configs['vocab_config'][calc_value]
 
 # For measured variables, add all kpi figure/tabels with filenames and number
 fig_count = 1
@@ -147,14 +149,14 @@ tab_count = 1
 for variable, var_config in meas_param_config.items():
 
 	kpi_figures = {}
-	for kpi_name in all_configs['all_kpis']['meas_param_figures'].keys():
+	for kpi_name in all_configs['kpi_config']['meas_param_figures'].keys():
 		kpi_figures[kpi_name] = {'filename': variable + '_' + kpi_name + '.png'}
 		kpi_figures[kpi_name].update({'number': '2.' + str(fig_count)})
 		fig_count += 1
 	var_config['kpi_figures'] = kpi_figures
 
 	kpi_tabels = {}
-	for kpi_name in all_configs['all_kpis']['meas_param_tabels'].keys():
+	for kpi_name in all_configs['kpi_config']['meas_param_tabels'].keys():
 		kpi_tabels[kpi_name] = {'number': '2.' + str(tab_count)}
 		tab_count += 1
 	var_config['kpi_tabels'] = kpi_tabels
@@ -166,22 +168,20 @@ tab_count = 1
 for value, value_config in calc_param_config.items():
 
 	kpi_figures = {}
-	for kpi_name in all_configs['all_kpis']['calc_param_figures'].keys():
+	for kpi_name in all_configs['kpi_config']['calc_param_figures'].keys():
 		kpi_figures[kpi_name] = {'filename': value + '_' + kpi_name + '.png'}
 		kpi_figures[kpi_name].update({'number': '3.' + str(fig_count)})
 		fig_count += 1
 	value_config['kpi_figures'] = kpi_figures
 
 	kpi_tabels = {}
-	for kpi_name in all_configs['all_kpis']['calc_param_tabels'].keys():
+	for kpi_name in all_configs['kpi_config']['calc_param_tabels'].keys():
 		kpi_tabels[kpi_name] = {'number': '3.' + str(tab_count)}
 		tab_count += 1
 	value_config['kpi_tabels'] = kpi_tabels
 
 ## ---------
-# Add the intro and parameter configs to the render dictionary. This dictionary
-# will be filled with information thourghout this script, and finally be used
-# as input when the report is created.
+# Add the section configs to the render dictionary
 render_dict.update({'intro_config': intro_config,
 	'meas_param_config': meas_param_config,
 	'calc_param_config': calc_param_config})
