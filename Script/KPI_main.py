@@ -126,7 +126,7 @@ intro_config = returned[0]
 
 # Create config dictionaries for the measured (sensor) and calculated values
 meas_param_config = {}
-calc_section_dict = {}
+calc_param_config = {}
 
 # For each variable measured by the instrument add all sensors and calc values
 # to the dictionaries
@@ -138,10 +138,10 @@ for variable in inst_variables:
 			meas_param_config[sensor] = all_configs['data_vocabulary_config'][sensor]
 
 	for calc_value in variable_dict['calc_values']:
-		if calc_value not in calc_section_dict:
-			calc_section_dict[calc_value] = all_configs['data_vocabulary_config'][calc_value]
+		if calc_value not in calc_param_config:
+			calc_param_config[calc_value] = all_configs['data_vocabulary_config'][calc_value]
 
-# For measured variables, add all kpi figures with filenames and figure number
+# For measured variables, add all kpi figure/tabels with filenames and number
 fig_count = 1
 tab_count = 1
 for variable, var_config in meas_param_config.items():
@@ -160,12 +160,23 @@ for variable, var_config in meas_param_config.items():
 	var_config['kpi_tabels'] = kpi_tabels
 
 
-#-----------
-# CALCULATED PARAMETER CONFIG
-# Remove info about calculated parameters that will not be included in the report
-calc_param_config =  kpi.remove_false(d=all_configs['calc_param_config'])
+# For calculated values, add all kpi figure/tabels with filenames and number
+fig_count = 1
+tab_count = 1
+for value, value_config in calc_param_config.items():
 
-# !! add filenames, and fignumbers !! WAIT TILL HAVE CALC KPIS !!
+	kpi_figures = {}
+	for kpi_name in all_configs['all_kpis']['calc_param_figures'].keys():
+		kpi_figures[kpi_name] = {'filename': value + '_' + kpi_name + '.png'}
+		kpi_figures[kpi_name].update({'number': '3.' + str(fig_count)})
+		fig_count += 1
+	value_config['kpi_figures'] = kpi_figures
+
+	kpi_tabels = {}
+	for kpi_name in all_configs['all_kpis']['calc_param_tabels'].keys():
+		kpi_tabels[kpi_name] = {'number': '3.' + str(tab_count)}
+		tab_count += 1
+	value_config['kpi_tabels'] = kpi_tabels
 
 ## ---------
 # Add the intro and parameter configs to the render dictionary. This dictionary
@@ -174,7 +185,6 @@ calc_param_config =  kpi.remove_false(d=all_configs['calc_param_config'])
 render_dict.update({'intro_config': intro_config,
 	'meas_param_config': meas_param_config,
 	'calc_param_config': calc_param_config})
-
 
 
 ###----------------------------------------------------------------------------
@@ -188,9 +198,8 @@ render_dict.update({'intro_config': intro_config,
 # the figure label names to use for each paraemters)
 parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
 				for param, config in meas_param_config.items()}
-parameter_dict.update({param : config['fig_label_name_python']
+parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
 				for param, config in calc_param_config.items()})
-print(parameter_dict)
 kpi.intro_figures(intro_config=intro_config,
 	parameter_dict=parameter_dict, df=df, output_dir=output_dir)
 
@@ -201,11 +210,9 @@ kpi.meas_param_figures(meas_param_config=meas_param_config, df=df,
 	output_dir=output_dir)
 
 # Create the KPI tabels and store them in the render dictionary
-#render_dict['meas_param_tabels_dict'] = kpi.meas_param_tabels(
-#	meas_param_config=meas_param_config, df=df)
 render_dict['meas_param_tabels_dict'] = kpi.meas_param_tabels(
 	meas_param_config=meas_param_config, df=df)
-#render_dict['meas_param_tabels_dict'] = meas_param_tabels_dict
+
 #--------------------------
 # CALCULATED PARAMETER SECTION
 

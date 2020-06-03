@@ -25,11 +25,6 @@ def get_parameters(df):
 			parameters.append(column)
 	return parameters
 
-# Remove key-value pairs from dict where the value 'include' is set to false
-def remove_false(d):
-	d = {k : v for k, v in d.items() if v['include']}
-	return d
-
 # Go through a kpi dictionary and add filename
 def add_filename(kpi_dict, kpi_type, short_name):
 	for kpi_name, kpi_config in kpi_dict.items():
