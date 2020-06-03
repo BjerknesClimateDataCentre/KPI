@@ -24,7 +24,7 @@
 
     <!-- Text about each figure in this section -->
     <p>
-      {% for kpi_name, config in intro_config.items() %}
+      {% for kpi_name, config in intro_config['kpis'].items() %}
         Figure {{config['number']}} shows
         {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
         {% include text %}
@@ -34,7 +34,7 @@
     <!-- Text about each table in this section (none yet) -->
 
     <!-- Figures with captions -->
-    {% for kpi_name, config in intro_config.items() %}
+    {% for kpi_name, config in intro_config['kpis'].items() %}
       <figure>
         {% set filename = config['filename'] %}
         <img src={{filename}} >
@@ -60,7 +60,7 @@
     {% if report_type == 'HO' %}
       <p>
         {% set description =
-          'param_descriptions/'+ config['short_name'] + '.html' %}
+          'param_descriptions/'+ parameter + '.html' %}
         {% include description %}
       </p>
     {% endif %}
