@@ -184,7 +184,7 @@ def meas_qc_comment_table(parameter, meas_section_config, df):
 		key=lambda item: item[1], reverse=True)}
 
 	# Add header and percentages to each frequency
-	tabel_dict_percent = {'QC Comment': 'Frequencies'}
+	tabel_dict_percent = {'QC Comment': 'Counts'}
 	for key, value in tabel_dict_sorted.items():
 		percent = round((value/df.shape[0])*100,2)
 		tabel_dict_percent[key] = str(value) + ' (' + str(percent) + '%)'
