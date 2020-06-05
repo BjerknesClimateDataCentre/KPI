@@ -1,10 +1,12 @@
 from .minor_functions import set_datetime, get_parameters, add_filename, add_number
 from .intro_line import intro_line_plot
 from .intro_bar import intro_bar_plot, intro_stacked_bar_plot
-from .main_functions import intro_figures, meas_param_figures, meas_param_tabels
-from .meas_param_kpis import meas_param_flag_piechart, meas_param_line_plot, meas_qc_comment_table
+from .main_functions import intro_figures, intro_tabels, meas_figures, meas_tabels
+from .meas_section_kpis import meas_flag_piechart, meas_line_plot, meas_qc_comment_table
+from .intro_tabel import intro_count_tabel
 
 __all__=['set_datetime', 'get_parameters', 'intro_line_plot', 'intro_bar_plot',
-'intro_stacked_bar_plot', 'intro_figures', 'meas_param_flag_piechart',
-'meas_param_line_plot', 'meas_param_figures',
-'meas_qc_comment_table', 'add_filename', 'add_number', 'meas_param_tabels']
+'intro_stacked_bar_plot', 'intro_figures', 'meas_flag_piechart',
+'meas_line_plot', 'meas_figures',
+'meas_qc_comment_table', 'add_filename', 'add_number', 'meas_tabels',
+'intro_count_tabel', 'intro_tabels']

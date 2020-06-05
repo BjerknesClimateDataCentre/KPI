@@ -118,12 +118,17 @@ render_dict = {'report_type': sys.argv[1], 'data_filename': file,
 # INTRO CONFIG
 
 # Create an introduction section configuration dictionary and fill with
-# filenames and figure numbers
+# figure filenames and fig/tab numbers
 intro_section_config = {}
-intro_section_config['kpis'] = kpi.add_filename(kpi_dict=all_configs['kpi_config']['intro_figures'],
+intro_section_config['kpi_figures'] = kpi.add_filename(kpi_dict=all_configs['kpi_config']['intro_figures'],
 	kpi_type='intro', short_name='')
-returned = kpi.add_number(kpi_dict=intro_section_config['kpis'], section_count=1, count=1)
-intro_section_config['kpis'] = returned[0]
+returned = kpi.add_number(kpi_dict=intro_section_config['kpi_figures'], section_count=1, count=1)
+intro_section_config['kpi_figures'] = returned[0]
+
+
+returned = kpi.add_number(kpi_dict=all_configs['kpi_config']['intro_tabels'],
+	section_count=1, count=1)
+intro_section_config['kpi_tabels'] = returned[0]
 
 #-----------
 # MEASURED AND CALCULATED CONFIG
@@ -151,14 +156,14 @@ tab_count = 1
 for variable, var_config in meas_section_config.items():
 
 	kpi_figures = {}
-	for kpi_name in all_configs['kpi_config']['meas_param_figures'].keys():
+	for kpi_name in all_configs['kpi_config']['meas_figures'].keys():
 		kpi_figures[kpi_name] = {'filename': variable + '_' + kpi_name + '.png'}
 		kpi_figures[kpi_name].update({'number': '2.' + str(fig_count)})
 		fig_count += 1
 	var_config['kpi_figures'] = kpi_figures
 
 	kpi_tabels = {}
-	for kpi_name in all_configs['kpi_config']['meas_param_tabels'].keys():
+	for kpi_name in all_configs['kpi_config']['meas_tabels'].keys():
 		kpi_tabels[kpi_name] = {'number': '2.' + str(tab_count)}
 		tab_count += 1
 	var_config['kpi_tabels'] = kpi_tabels
@@ -202,14 +207,19 @@ render_dict.update({'intro_section_config': intro_section_config,
 ###----------------------------------------------------------------------------
 
 # Create introduction section figures, stored in the output directort
-kpi.intro_figures(intro_section_config=intro_section_config, df=df, output_dir=output_dir)
-
-# Create the measured section figures, stored in output directory
-kpi.meas_param_figures(meas_section_config=meas_section_config, df=df,
+kpi.intro_figures(intro_section_config=intro_section_config, df=df,
 	output_dir=output_dir)
 
-# Create the measyred section tabels and store them in the render dictionary
-render_dict['meas_param_tabels_dict'] = kpi.meas_param_tabels(
+# Create introduction section tabels and store them in the render dictionary
+render_dict['intro_tabels'] = kpi.intro_tabels(
+	intro_section_config=intro_section_config, df=df)
+
+# Create the measured section figures, stored in output directory
+kpi.meas_figures(meas_section_config=meas_section_config, df=df,
+	output_dir=output_dir)
+
+# Create the measured section tabels and store them in the render dictionary
+render_dict['meas_tabels'] = kpi.meas_tabels(
 	meas_section_config=meas_section_config, df=df)
 
 # !!! Create the fgures and tables for the calculated parameters section !!!
