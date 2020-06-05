@@ -24,17 +24,22 @@
 
     <!-- Text about each figure in this section -->
     <p>
-      {% for kpi_name, config in intro_section_config['kpis'].items() %}
+      {% for kpi_name, config in intro_section_config['kpi_figures'].items() %}
         Figure {{config['number']}} shows
+        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
+        {% include text %}
+      {% endfor %}
+
+    <!-- Text about each table in this section -->
+      {% for kpi_name, config in intro_section_config['kpi_tabels'].items() %}
+        Tabel {{config['number']}} shows
         {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
         {% include text %}
       {% endfor %}
     </p>
 
-    <!-- Text about each table in this section (none yet) -->
-
     <!-- Figures with captions -->
-    {% for kpi_name, config in intro_section_config['kpis'].items() %}
+    {% for kpi_name, config in intro_section_config['kpi_figures'].items() %}
       <figure>
         {% set filename = config['filename'] %}
         <img src={{filename}} >
@@ -45,7 +50,28 @@
       </figure>
     {% endfor %}
 
-    <!-- Tabels with captions (none yet) -->
+    <!-- Tabels with captions -->
+    <!-- !!! Allow for more than two columns in the table !!! -->
+    {% for kpi_name, kpi_dict in intro_section_config['kpi_tabels'].items() %}
+      <table>
+        <caption><strong>Tabel {{kpi_dict['number']}}</strong>:
+            {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+            {% include caption %}
+        </caption>
+        {% for key, value in intro_tabels[kpi_dict['number']].items() %}
+          <tr>
+          {% if loop.index == 1 %}
+            <th> {{ key }} </th>
+            <th id='center'> {{ value }} </th>
+          {% else %}
+            <td> {{ key }} </td>
+            <td id='center'> {{ value }} </td>
+          {% endif %}
+          </tr>
+        {% endfor %}
+      </table>
+    {% endfor %}
+
 
   {#-------------------------------------------------------------------------#}
   <!-- MEASURED PARAMETER SECTION -->
@@ -103,7 +129,7 @@
             {% include caption %}
             {{config['fig_label_name_html']}}.
         </caption>
-        {% for key, value in meas_param_tabels_dict[kpi_dict['number']].items() %}
+        {% for key, value in meas_tabels[kpi_dict['number']].items() %}
           <tr>
           {% if loop.index == 1 %}
             <th> {{ key }} </th>

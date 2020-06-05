@@ -1,5 +1,5 @@
 ###############################################################################
-### KPI plots/tables for individual measured parameters
+### KPI figures/tables for measured section
 ###############################################################################
 
 ### Description:
@@ -46,7 +46,7 @@ K = 1.5
 #------------------------------------------------------------------------------
 ### Functions
 
-def meas_param_flag_piechart(parameter, meas_section_config, df,
+def meas_flag_piechart(parameter, meas_section_config, df,
 	output_dir):
 
 	col_header_name = meas_section_config[parameter]['col_header_name']
@@ -76,7 +76,7 @@ def meas_param_flag_piechart(parameter, meas_section_config, df,
 	plt.tight_layout()
 
 	# Save the plot to file and close figure
-	filename = parameter + '_meas_param_flag_piechart.png'
+	filename = parameter + '_meas_flag_piechart.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()
@@ -98,7 +98,7 @@ def make_plot(df, col_header_name, ax):
 					marker='.')
 
 
-def meas_param_line_plot(parameter, meas_section_config, df, output_dir):
+def meas_line_plot(parameter, meas_section_config, df, output_dir):
 
 	# Remove rows with NaNs
 	col_header_name = meas_section_config[parameter]['col_header_name']
@@ -153,7 +153,7 @@ def meas_param_line_plot(parameter, meas_section_config, df, output_dir):
 	#plt.xlabel('Time')
 
 	# Save the plot to file and close figure
-	filename = parameter + '_meas_param_line_plot.png'
+	filename = parameter + '_meas_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()
