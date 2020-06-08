@@ -51,27 +51,29 @@
     {% endfor %}
 
     <!-- Tabels with captions -->
-    <!-- !!! Allow for more than two columns in the table !!! -->
     {% for kpi_name, kpi_dict in intro_section_config['kpi_tabels'].items() %}
       <table>
         <caption><strong>Tabel {{kpi_dict['number']}}</strong>:
-            {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
-            {% include caption %}
+          {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+          {% include caption %}
         </caption>
-        {% for key, value in intro_tabels[kpi_dict['number']].items() %}
-          <tr>
+        {% for row_number, row_dict in intro_tabels[kpi_dict['number']].items() %}
           {% if loop.index == 1 %}
-            <th> {{ key }} </th>
-            <th id='center'> {{ value }} </th>
+            <tr>
+              {% for col_key in row_dict.keys() %}
+                <th id='center'> {{ col_key }} </th>
+              {% endfor %}
+            </tr>
           {% else %}
-            <td> {{ key }} </td>
-            <td id='center'> {{ value }} </td>
+            <tr>
+              {% for col_value in row_dict.values() %}
+                <td id='center'> {{ col_value }} </td>
+              {% endfor %}
+            </tr>
           {% endif %}
-          </tr>
         {% endfor %}
       </table>
     {% endfor %}
-
 
   {#-------------------------------------------------------------------------#}
   <!-- MEASURED PARAMETER SECTION -->
@@ -121,7 +123,7 @@
     {% endfor %}
 
     <!-- Tabels with captions -->
-    <!-- !!! Allow for more than two columns in the table !!! -->
+    <!-- !!! Replace with equivalent code from introduction -->
     {% for kpi_name, kpi_dict in config['kpi_tabels'].items() %}
       <table>
         <caption><strong>Tabel {{kpi_dict['number']}}</strong>:
