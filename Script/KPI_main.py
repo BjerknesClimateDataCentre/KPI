@@ -230,9 +230,9 @@ render_dict['meas_tabels'] = kpi.meas_tabels(
 ###----------------------------------------------------------------------------
 
 # Load the html template
-templateLoader = FileSystemLoader("templates")
-templateEnv = Environment(loader=templateLoader)
-template = templateEnv.get_template("base.html")
+template_loader = FileSystemLoader("templates")
+template_env = Environment(loader=template_loader)
+template = template_env.get_template("base.html")
 
 # Create the html string
 html_string = template.render(render_dict)
