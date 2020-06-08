@@ -5,14 +5,16 @@
             "short_name": "Nuka",
             "variables": [
                 "underway_pco2"
-            ]
+            ],
+            "diagnostics": []
         },
         "G.O. Sars": {
             "code": "58GS",
             "short_name": "GOSars",
             "variables": [
                 "underway_pco2"
-            ]
+            ],
+            "diagnostics": []
         }
     },
     "variable_config": {
@@ -27,10 +29,6 @@
             ]
         },
         "ph": {
-            "sensors": [],
-            "calc_values": []
-        },
-        "diagnostics": {
             "sensors": [],
             "calc_values": []
         }
