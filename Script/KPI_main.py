@@ -254,16 +254,19 @@ template_env = Environment(loader=template_loader)
 #template_env.globals['intro_figures'] = kpi.intro_figures
 template = template_env.get_template("base.html")
 
-# Create the html string
+# Create the html string and write to file
 html_string = template.render(render_dict)
-
-# Write the html string to file and convert to pdf
-with open('output/report.html','w') as f:
+report_path = """output/Data_Quality_Report_{inst}_{start}-{end}""".format(
+	inst=inst_name_short, start=str(df_start.replace('-', '')),
+	end=str(df_end.replace('-', '')))
+with open(report_path + '.html','w') as f:
 	f.write(html_string)
+
+# Convert html string to pdf
 options = {'margin-top': '0.75in', 'margin-right': '0.75in',
 	'margin-bottom': '0.75in', 'margin-left': '0.75in',
 	'footer-right': '[page]'}
-pdfkit.from_file('output/report.html', 'output/report.pdf', options=options)
+pdfkit.from_file(report_path + '.html', report_path + '.pdf', options=options)
 
 
 
