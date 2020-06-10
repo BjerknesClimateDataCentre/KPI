@@ -37,9 +37,9 @@ data_dir = os.path.join(script_dir,'data_files')
 output_dir = os.path.join(script_dir,'output')
 
 # Cleanup old content in output directory
-old_plots = os.listdir(output_dir)
-for plot in old_plots:
-	os.remove(os.path.join(output_dir, plot))
+old_content = os.listdir(output_dir)
+for content in old_content:
+	os.remove(os.path.join(output_dir, content))
 
 
 ###----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ render_dict = {'report_type': sys.argv[1], 'data_filename': file,
 
 
 ###---------------------------------------------------------------------------
-### Create report section configs
+### Create report section configuration dictionaries
 ###---------------------------------------------------------------------------
 
 #-----------
@@ -120,9 +120,11 @@ render_dict = {'report_type': sys.argv[1], 'data_filename': file,
 # Create an introduction section configuration dictionary and fill with
 # figure filenames and fig/tab numbers
 intro_section_config = {}
-intro_section_config['kpi_figures'] = kpi.add_filename(kpi_dict=all_configs['kpi_config']['intro_figures'],
-	kpi_type='intro', short_name='')
-returned = kpi.add_number(kpi_dict=intro_section_config['kpi_figures'], section_count=1, count=1)
+intro_section_config['kpi_figures'] = kpi.add_filename(
+	kpi_dict=all_configs['kpi_config']['intro_figures'], kpi_type='intro',
+	short_name='')
+returned = kpi.add_number(kpi_dict=intro_section_config['kpi_figures'],
+	section_count=1, count=1)
 intro_section_config['kpi_figures'] = returned[0]
 
 
@@ -189,11 +191,15 @@ for value, value_config in calc_section_config.items():
 
 
 #-----------
-# Add parameters (header name in df and the fig label name) to the intro config
-intro_section_config['parameters'] = {config['col_header_name'] : config['fig_label_name_python']
-				for param, config in meas_section_config.items()}
-intro_section_config['parameters'].update({config['col_header_name'] : config['fig_label_name_python']
-				for param, config in calc_section_config.items()})
+# Add all parameters ('parameters' are use when there is a mix of sensor and
+# calculated values) with their col header name in df and the fig label name
+# to the intro config dictionray
+intro_section_config['parameters'] = {
+	config['col_header_name'] : config['fig_label_name_python']
+	for param, config in meas_section_config.items()}
+intro_section_config['parameters'].update(
+	{config['col_header_name'] : config['fig_label_name_python']
+	for param, config in calc_section_config.items()})
 
 ## ---------
 # Add the section configs to the render dictionary
@@ -229,9 +235,23 @@ render_dict['meas_tabels'] = kpi.meas_tabels(
 ### Create report
 ###----------------------------------------------------------------------------
 
+
+#def clever_function(a, b):
+#	sum = a + b
+#	return sum
+
+#def clever_function2(a, b):
+#	difference = a - b
+#	return difference
+
+#render_dict.update({'test_a': 2, 'test_b': 3})
+
 # Load the html template
 template_loader = FileSystemLoader("templates")
 template_env = Environment(loader=template_loader)
+#template_env.globals['clever_function'] = clever_function
+#template_env.globals['clever_function2'] = clever_function2
+#template_env.globals['intro_figures'] = kpi.intro_figures
 template = template_env.get_template("base.html")
 
 # Create the html string

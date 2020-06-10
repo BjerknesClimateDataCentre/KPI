@@ -76,10 +76,10 @@
     {% endfor %}
 
   {#-------------------------------------------------------------------------#}
-  <!-- MEASURED PARAMETER SECTION -->
-  <h3>2.&emsp;Measured parameters</h3>
+  <!-- MEASURED VALUES SECTION -->
+  <h3>2.&emsp;Measured values</h3>
 
-  {% for parameter, config in meas_section_config.items() %}
+  {% for sensor, config in meas_section_config.items() %}
 
     <!-- Subsection number and title -->
     <h4> 2.{{loop.index}}&emsp;{{config['subsection_title']}} </h4>
@@ -151,16 +151,16 @@
   {% endfor %}
 
   {#-------------------------------------------------------------------------#}
-  <!-- CALCULATED PARAMETER SECTION -->
+  <!-- CALCULATED VALUES SECTION -->
 
   {% if calc_section_config != {} %}
-    <h3>3.&emsp;Calculated parameters</h3>
-    {% for parameter, config in calc_section_config.items() %}
+    <h3>3.&emsp;Calculated values</h3>
+    {% for calc_value, config in calc_section_config.items() %}
 
       <!-- Add section title with numbering -->
       <h4> 3.{{loop.index}}&emsp;{{config['chapter_title']}} </h4>
 
-      <!-- !!! Same content as for measured parameters. Somehow create loop?-->
+      <!-- !!! Same content as for measured values. Somehow create loop?-->
 
     {% endfor %}
   {% endif %}
