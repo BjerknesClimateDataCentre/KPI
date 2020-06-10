@@ -123,7 +123,6 @@
     {% endfor %}
 
     <!-- Tabels with captions -->
-    <!-- !!! Replace with equivalent code from introduction -->
     {% for kpi_name, kpi_dict in config['kpi_tabels'].items() %}
       <table>
         <caption><strong>Tabel {{kpi_dict['number']}}</strong>:
@@ -131,19 +130,24 @@
             {% include caption %}
             {{config['fig_label_name_html']}}.
         </caption>
-        {% for key, value in meas_tabels[kpi_dict['number']].items() %}
-          <tr>
+        {% for row_number, row_dict in meas_tabels[kpi_dict['number']].items() %}
           {% if loop.index == 1 %}
-            <th> {{ key }} </th>
-            <th id='center'> {{ value }} </th>
+            <tr>
+              {% for col_key in row_dict.keys() %}
+                <th id='center'> {{ col_key }} </th>
+              {% endfor %}
+            </tr>
           {% else %}
-            <td> {{ key }} </td>
-            <td id='center'> {{ value }} </td>
+            <tr>
+              {% for col_value in row_dict.values() %}
+                <td id='center'> {{ col_value }} </td>
+              {% endfor %}
+            </tr>
           {% endif %}
-          </tr>
         {% endfor %}
       </table>
     {% endfor %}
+
   {% endfor %}
 
   {#-------------------------------------------------------------------------#}
@@ -165,6 +169,12 @@
   <!-- PROP-PROP SECTION -->
   <h3>4.&emsp;Property-property plots</h3>
 
+  {#-------------------------------------------------------------------------#}
+  <!-- DIAGNOSTICS SECTION -->
+  <h3>5.&emsp;Diagnostics</h3>
+
+  <!-- !! On hold until KPI scripts communicate directly with QuinCe, and until
+  the diagnostic data also has got QC flags from QuinCe -->
 
 </body>
 </html>
