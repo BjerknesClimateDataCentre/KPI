@@ -31,8 +31,8 @@
       {% endfor %}
 
     <!-- Text about each table in this section -->
-      {% for kpi_name, config in intro_section_config['kpi_tabels'].items() %}
-        Tabel {{config['number']}} shows
+      {% for kpi_name, config in intro_section_config['kpi_tables'].items() %}
+        Table {{config['number']}} shows
         {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
         {% include text %}
       {% endfor %}
@@ -50,14 +50,14 @@
       </figure>
     {% endfor %}
 
-    <!-- Tabels with captions -->
-    {% for kpi_name, kpi_dict in intro_section_config['kpi_tabels'].items() %}
+    <!-- Tables with captions -->
+    {% for kpi_name, kpi_dict in intro_section_config['kpi_tables'].items() %}
       <table>
-        <caption><strong>Tabel {{kpi_dict['number']}}</strong>:
+        <caption><strong>Table {{kpi_dict['number']}}</strong>:
           {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
           {% include caption %}
         </caption>
-        {% for row_number, row_dict in intro_tabels[kpi_dict['number']].items() %}
+        {% for row_number, row_dict in intro_tables[kpi_dict['number']].items() %}
           {% if loop.index == 1 %}
             <tr>
               {% for col_key in row_dict.keys() %}
@@ -102,8 +102,8 @@
       {% endfor %}
 
     <!-- Text about each table in this section -->
-      {% for kpi_name, kpi_dict in config['kpi_tabels'].items() %}
-        Tabel {{kpi_dict['number']}} shows
+      {% for kpi_name, kpi_dict in config['kpi_tables'].items() %}
+        Table {{kpi_dict['number']}} shows
         {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
         {% include text %}
       {% endfor %}
@@ -117,20 +117,20 @@
         <figcaption><strong>Figure {{kpi_dict['number']}}</strong>:
           {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
           {% include caption %}
-          {{config['fig_label_name_html']}}.
+          {{config['fig_lable_name_html']}}.
         </figcaption>
       </figure>
     {% endfor %}
 
-    <!-- Tabels with captions -->
-    {% for kpi_name, kpi_dict in config['kpi_tabels'].items() %}
+    <!-- Tables with captions -->
+    {% for kpi_name, kpi_dict in config['kpi_tables'].items() %}
       <table>
-        <caption><strong>Tabel {{kpi_dict['number']}}</strong>:
+        <caption><strong>Table {{kpi_dict['number']}}</strong>:
             {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
             {% include caption %}
-            {{config['fig_label_name_html']}}.
+            {{config['fig_lable_name_html']}}.
         </caption>
-        {% for row_number, row_dict in meas_tabels[kpi_dict['number']].items() %}
+        {% for row_number, row_dict in meas_tables[kpi_dict['number']].items() %}
           {% if loop.index == 1 %}
             <tr>
               {% for col_key in row_dict.keys() %}
