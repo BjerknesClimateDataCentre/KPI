@@ -4,7 +4,7 @@
             "code": "26NA",
             "short_name": "Nuka",
             "variables": [
-                "underway_pco2"
+                "underway_fCO2"
             ],
             "diagnostics": []
         },
@@ -12,13 +12,13 @@
             "code": "58GS",
             "short_name": "GOSars",
             "variables": [
-                "underway_pco2"
+                "underway_fCO2"
             ],
             "diagnostics": []
         }
     },
     "variable_config": {
-        "underway_pco2": {
+        "underway_fCO2": {
             "sensors": [
                 "SST",
                 "xCO2",
