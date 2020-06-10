@@ -177,20 +177,20 @@ def meas_qc_comment_table(sensor, meas_section_config, df):
 
 	# Extract unique comments and their frequency and store in a dictonary
 	unique_comments, freq = np.unique(comment_list_cleaned, return_counts=True)
-	tabel_dict = dict(zip(list(unique_comments), list(freq)))
+	table_dict = dict(zip(list(unique_comments), list(freq)))
 
 	# Sort dictionary by the frequency, high to low.
-	tabel_dict_sorted = {k: v for k, v in sorted(tabel_dict.items(),
+	table_dict_sorted = {k: v for k, v in sorted(table_dict.items(),
 		key=lambda item: item[1], reverse=True)}
 
-	# Restructure dict to tabel format and add percentages to each count
-	tabel_dict_percent = {}
+	# Restructure dict to table format and add percentages to each count
+	table_dict_percent = {}
 	count = 1
-	for key, value in tabel_dict_sorted.items():
+	for key, value in table_dict_sorted.items():
 		percent = round((value/df.shape[0])*100,2)
-		tabel_dict_percent[count] = {}
-		tabel_dict_percent[count]['QC Comment'] = key
-		tabel_dict_percent[count]['Counts'] = str(value) + ' (' + str(percent) + '%)'
+		table_dict_percent[count] = {}
+		table_dict_percent[count]['QC Comment'] = key
+		table_dict_percent[count]['Counts'] = str(value) + ' (' + str(percent) + '%)'
 		count += 1
 
-	return tabel_dict_percent
+	return table_dict_percent

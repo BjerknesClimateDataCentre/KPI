@@ -1,5 +1,5 @@
 ###############################################################################
-### Tabel for introdcution section
+### table for introdcution section
 ###############################################################################
 
 ### Description:
@@ -17,11 +17,11 @@
 #------------------------------------------------------------------------------
 ### Functions
 
-def intro_count_tabel(df, intro_section_config):
+def intro_count_table(df, intro_section_config):
 
-	# Create a dummy tabel_dict
-	tabel_dict = {'1': {'QC Comment': 'temp bad', 'Count':'3', 'Percent':'10'},
-	'2': {'QC Comment': 'co2 bad', 'Count':'6', 'Percent':'24'},
-	'3': {'QC Comment': 'sal bad', 'Count':'1', 'Percent':'9'}}
+	# Create a dummy table_dict
+	table_dict = {'1': {'Col1 Name': 'value', 'Col2 Name':'value', 'Col3 Name':'value'},
+	'2': {'Col1 Name': 'value', 'Col2 Name':'value', 'Col3 Name':'value'},
+	'3': {'Col1 Name': 'value', 'Col2 Name':'value', 'Col3 Name':'value'}}
 
-	return tabel_dict
+	return table_dict

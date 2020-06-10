@@ -128,9 +128,9 @@ returned = kpi.add_number(kpi_dict=intro_section_config['kpi_figures'],
 intro_section_config['kpi_figures'] = returned[0]
 
 
-returned = kpi.add_number(kpi_dict=all_configs['kpi_config']['intro_tabels'],
+returned = kpi.add_number(kpi_dict=all_configs['kpi_config']['intro_tables'],
 	section_count=1, count=1)
-intro_section_config['kpi_tabels'] = returned[0]
+intro_section_config['kpi_tables'] = returned[0]
 
 #-----------
 # MEASURED AND CALCULATED CONFIG
@@ -152,7 +152,7 @@ for variable in inst_variables:
 		if calc_value not in calc_section_config:
 			calc_section_config[calc_value] = all_configs['vocab_config'][calc_value]
 
-# For measured variables, add all kpi figure/tabels with filenames and number
+# For measured variables, add all kpi figure/tables with filenames and number
 fig_count = 1
 tab_count = 1
 for variable, var_config in meas_section_config.items():
@@ -164,14 +164,14 @@ for variable, var_config in meas_section_config.items():
 		fig_count += 1
 	var_config['kpi_figures'] = kpi_figures
 
-	kpi_tabels = {}
-	for kpi_name in all_configs['kpi_config']['meas_tabels'].keys():
-		kpi_tabels[kpi_name] = {'number': '2.' + str(tab_count)}
+	kpi_tables = {}
+	for kpi_name in all_configs['kpi_config']['meas_tables'].keys():
+		kpi_tables[kpi_name] = {'number': '2.' + str(tab_count)}
 		tab_count += 1
-	var_config['kpi_tabels'] = kpi_tabels
+	var_config['kpi_tables'] = kpi_tables
 
 
-# For calculated values, add all kpi figure/tabels with filenames and number
+# For calculated values, add all kpi figure/tables with filenames and number
 fig_count = 1
 tab_count = 1
 for value, value_config in calc_section_config.items():
@@ -183,11 +183,11 @@ for value, value_config in calc_section_config.items():
 		fig_count += 1
 	value_config['kpi_figures'] = kpi_figures
 
-	kpi_tabels = {}
-	for kpi_name in all_configs['kpi_config']['calc_param_tabels'].keys():
-		kpi_tabels[kpi_name] = {'number': '3.' + str(tab_count)}
+	kpi_tables = {}
+	for kpi_name in all_configs['kpi_config']['calc_param_tables'].keys():
+		kpi_tables[kpi_name] = {'number': '3.' + str(tab_count)}
 		tab_count += 1
-	value_config['kpi_tabels'] = kpi_tabels
+	value_config['kpi_tables'] = kpi_tables
 
 
 #-----------
@@ -216,16 +216,16 @@ render_dict.update({'intro_section_config': intro_section_config,
 kpi.intro_figures(intro_section_config=intro_section_config, df=df,
 	output_dir=output_dir)
 
-# Create introduction section tabels and store them in the render dictionary
-render_dict['intro_tabels'] = kpi.intro_tabels(
+# Create introduction section tables and store them in the render dictionary
+render_dict['intro_tables'] = kpi.intro_tables(
 	intro_section_config=intro_section_config, df=df)
 
 # Create the measured section figures, stored in output directory
 kpi.meas_figures(meas_section_config=meas_section_config, df=df,
 	output_dir=output_dir)
 
-# Create the measured section tabels and store them in the render dictionary
-render_dict['meas_tabels'] = kpi.meas_tabels(
+# Create the measured section tables and store them in the render dictionary
+render_dict['meas_tables'] = kpi.meas_tables(
 	meas_section_config=meas_section_config, df=df)
 
 # !!! Create the fgures and tables for the calculated parameters section !!!
