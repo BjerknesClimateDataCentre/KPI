@@ -14,7 +14,7 @@ def set_datetime(df):
 	df.loc[:,'Date/Time'] = pd.to_datetime(
 		df.loc[:,'Date/Time'], format = '%Y-%m-%dT%H:%M:%S.%fZ')
 
-# Extract a list of parameters from a dataframe
+# Extract a list of parameters from a dataframe (NOT CURRENTLY IN USE)
 def get_parameters(df):
 	column_names = list(df.columns)
 	georefs = ['Date/Time', 'Latitude', 'Longitude', 'Depth [m]']
@@ -24,20 +24,3 @@ def get_parameters(df):
 		if column not in georefs and 'QC' not in column:
 			parameters.append(column)
 	return parameters
-
-# Go through a kpi dictionary and add filename (REMOVE AFTER RESTRUCTURE)
-def add_filename(kpi_dict, kpi_type, short_name):
-	for kpi_name, kpi_config in kpi_dict.items():
-		if kpi_type == 'intro':
-			filename = kpi_name + '.png'
-		else:
-			filename = short_name + '_' + kpi_name + '.png'
-		kpi_dict[kpi_name]['filename'] = filename
-	return kpi_dict
-
-# Go through a kpi dictionary and add figure/table number (REMOVE AFTER RESTRUCTURE)
-def add_number(kpi_dict, section_count, count):
-	for kpi_name, kpi_config in kpi_dict.items():
-		kpi_dict[kpi_name]['number'] = str(section_count) + '.' +  str(count)
-		count += 1
-	return [kpi_dict, count]

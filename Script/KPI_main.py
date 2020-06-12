@@ -80,6 +80,7 @@ for file in data_files:
 	data_path = os.path.join(data_dir, file)
 	df = pd.read_csv(data_path, low_memory=False)
 
+
 ###---------------------------------------------------------------------------
 ### Extract basic information from the data frame
 ###----------------------------------------------------------------------------
@@ -113,27 +114,6 @@ render_dict = {'report_type': sys.argv[1], 'data_filename': file,
 ### Create report section configuration dictionaries
 ###---------------------------------------------------------------------------
 
-#-----------
-# INTRO CONFIG
-
-# Create an introduction section configuration dictionary and fill with
-# figure filenames and fig/tab numbers
-intro_section_config = {}
-intro_section_config['kpi_figures'] = kpi.add_filename(
-	kpi_dict=all_configs['kpi_config']['intro_figures'], kpi_type='intro',
-	short_name='')
-returned = kpi.add_number(kpi_dict=intro_section_config['kpi_figures'],
-	section_count=1, count=1)
-intro_section_config['kpi_figures'] = returned[0]
-
-
-returned = kpi.add_number(kpi_dict=all_configs['kpi_config']['intro_tables'],
-	section_count=1, count=1)
-intro_section_config['kpi_tables'] = returned[0]
-
-#-----------
-# MEASURED AND CALCULATED CONFIG
-
 # Create config dictionaries for the measured (sensor) and calculated values
 meas_section_config = {}
 calc_section_config = {}
@@ -151,52 +131,23 @@ for variable in inst_variables:
 		if calc_value not in calc_section_config:
 			calc_section_config[calc_value] = all_configs['vocab_config'][calc_value]
 
-#-----------
-# Add all parameters ('parameters' are use when there is a mix of sensor and
-# calculated values) with their col header name in df and the fig label name
-# to the intro config dictionray
-intro_section_config['parameters'] = {
-	config['col_header_name'] : config['fig_label_name_python']
-	for param, config in meas_section_config.items()}
-
-intro_section_config['parameters'].update(
-	{config['col_header_name'] : config['fig_label_name_python']
-	for param, config in calc_section_config.items()})
-
+# !!! Remove param_dict when code depending on it can use the meas and calc
+#  configs instead!!!
 parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
 	for config in meas_section_config.values()}
 parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
 	for config in calc_section_config.values()})
 
-## ---------
 # Add the section configs to the render dictionary
-render_dict.update({'intro_section_config': intro_section_config,
+render_dict.update({
 	'meas_section_config': meas_section_config,
 	'calc_section_config': calc_section_config,
-	'new_kpi_config': all_configs['new_kpi_config'],
+	'kpi_config': all_configs['kpi_config'],
 	'parameter_dict': parameter_dict})
-
-
-###----------------------------------------------------------------------------
-### Create KPIs (remove after restructure!!!)
-###----------------------------------------------------------------------------
-
-# Create introduction section figures, stored in the output directort
-kpi.intro_figures(intro_section_config=intro_section_config, df=df,
-	output_dir=output_dir)
-
-# Create introduction section tables and store them in the render dictionary
-render_dict['intro_tables'] = kpi.intro_tables(
-	intro_section_config=intro_section_config, df=df)
-
-
-# !!! Create the fgures and tables for the calculated parameters section !!!
-
 
 ###----------------------------------------------------------------------------
 ### Create report
 ###----------------------------------------------------------------------------
-
 
 # Load the html template and send the kpi package to the jinja environment
 template_loader = FileSystemLoader("templates")
