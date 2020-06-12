@@ -42,7 +42,7 @@
     {% for kpi_name in kpi_config['intro_figures'] %}
       <figure>
         <!- Create the figures (as comment to avoid 'None' in report)
-        {{ kpi.eval_intro_fig_function(kpi_name=kpi_name, parameter_dict=parameter_dict, df=df, output_dir=output_dir) }} -->
+        {{ kpi.eval_intro_fig_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df, output_dir=output_dir) }} -->
         {% set filename = kpi_name + '.png' %}
         <img src={{filename}} >
         <figcaption><strong>Figure 1.{{loop.index}}</strong>:
@@ -54,7 +54,7 @@
 
     <!-- Create and include tables with captions -->
     {% for kpi_name in kpi_config['intro_tables'] %}
-      {% set table_dict = kpi.eval_intro_tab_function(kpi_name=kpi_name, parameter_dict=parameter_dict, df=df) %}
+      {% set table_dict = kpi.eval_intro_tab_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
       <table>
         <caption><strong>Table 1.{{loop.index}}</strong>:
           {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
