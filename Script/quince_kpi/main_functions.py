@@ -43,9 +43,15 @@ def meas_figures(meas_section_config, df, output_dir):
 # This function creates and returns the KPI tables for the measured section
 def meas_tables(meas_section_config, df):
 	meas_tables_dict = {}
-	for sensor, config in meas_section_config.items():
-		for kpi_name, kpi_config in config['kpi_tables'].items():
-			table_dict = eval('kpi.' + kpi_name)(sensor=sensor, df=df,
+	for sensor_name, sensor_config in meas_section_config.items():
+		for kpi_name, kpi_config in sensor_config['kpi_tables'].items():
+			table_dict = eval('kpi.' + kpi_name)(sensor=sensor_name, df=df,
 				meas_section_config=meas_section_config)
 			meas_tables_dict[kpi_config['number']] = table_dict
 	return meas_tables_dict
+
+
+def eval_meas_fig_function(kpi_name, sensor, meas_section_config, df, output_dir):
+	eval('kpi.' + kpi_name)(sensor=sensor,
+		meas_section_config=meas_section_config, df=df, output_dir=output_dir)
+

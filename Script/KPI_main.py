@@ -80,7 +80,6 @@ for file in data_files:
 	data_path = os.path.join(data_dir, file)
 	df = pd.read_csv(data_path, low_memory=False)
 
-
 ###---------------------------------------------------------------------------
 ### Extract basic information from the data frame
 ###----------------------------------------------------------------------------
@@ -207,6 +206,24 @@ render_dict.update({'intro_section_config': intro_section_config,
 	'meas_section_config': meas_section_config,
 	'calc_section_config': calc_section_config})
 
+###----------------------------------------------------------------------------
+### ALTERNATIVE:
+###----------------------------------------------------------------------------
+# Make new configs to the render dictionary used in the restructured version
+
+# For each variable measured by the instrument add all sensors and calc values
+# to the dictionaries
+#meas_section_config = {}
+#for variable in inst_variables:
+#	variable_dict = all_configs['variable_config'][variable]
+#	for sensor in variable_dict['sensors']:
+#		if sensor not in meas_section_config:
+#			meas_section_config[sensor] = all_configs['vocab_config'][sensor]
+#render_dict.update({'meas_section_config': meas_section_config})
+
+
+render_dict.update({'new_kpi_config': all_configs['new_kpi_config']})
+
 
 ###----------------------------------------------------------------------------
 ### Create KPIs
@@ -221,8 +238,8 @@ render_dict['intro_tables'] = kpi.intro_tables(
 	intro_section_config=intro_section_config, df=df)
 
 # Create the measured section figures, stored in output directory
-kpi.meas_figures(meas_section_config=meas_section_config, df=df,
-	output_dir=output_dir)
+#kpi.meas_figures(meas_section_config=meas_section_config, df=df,
+#	output_dir=output_dir)
 
 # Create the measured section tables and store them in the render dictionary
 render_dict['meas_tables'] = kpi.meas_tables(
@@ -236,27 +253,17 @@ render_dict['meas_tables'] = kpi.meas_tables(
 ###----------------------------------------------------------------------------
 
 
-#def clever_function(a, b):
-#	sum = a + b
-#	return sum
-
-#def clever_function2(a, b):
-#	difference = a - b
-#	return difference
-
-#render_dict.update({'test_a': 2, 'test_b': 3})
-
-# Load the html template
+# Load the html template and send the kpi package to the jinja environment
 template_loader = FileSystemLoader("templates")
 template_env = Environment(loader=template_loader)
-#template_env.globals['clever_function'] = clever_function
-#template_env.globals['clever_function2'] = clever_function2
-#template_env.globals['intro_figures'] = kpi.intro_figures
+template_env.globals['kpi'] = kpi
+template_env.globals['df'] = df
+template_env.globals['output_dir'] = output_dir
 template = template_env.get_template("base.html")
 
 # Create the html string and write to file
 html_string = template.render(render_dict)
-report_path = """output/Data_Quality_Report_{inst}_{start}-{end}""".format(
+report_path = """output/DataQualityReport_{inst}_{start}-{end}""".format(
 	inst=inst_name_short, start=str(df_start.replace('-', '')),
 	end=str(df_end.replace('-', '')))
 with open(report_path + '.html','w') as f:
