@@ -74,6 +74,72 @@
     {% endfor %}
 
   {#-------------------------------------------------------------------------#}
+  <!-- ALTERNATIVE INTRODUCTION SECTION -->
+  <h3>1.&emsp;Introduction</h3>
+
+    <!-- Introduction text (depends on the report type) -->
+    {% if report_type == 'HO' %}
+      {% set intro_text_filename = 'intro_text/intro_text_HO.html' %}
+    {% elif report_type == 'PI' %}
+      {% set intro_text_filename = 'intro_text/intro_text_PI.html' %}
+    {% endif %}
+    {% include intro_text_filename %}
+
+    <!-- Text about each figure in this section -->
+    <p>
+      {% for kpi_name in new_kpi_config['intro_figures'] %}
+        Figure 1.{{loop.index}} shows
+        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
+        {% include text %}
+      {% endfor %}
+
+    <!-- Text about each table in this section -->
+      {% for kpi_name in new_kpi_config['intro_tables'] %}
+        Table 1.{{loop.index}} shows
+        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
+        {% include text %}
+      {% endfor %}
+    </p>
+
+    <!-- Create and include figures with captions -->
+    {% for kpi_name in new_kpi_config['intro_figures'] %}
+      <figure>
+        <!- Create the figures (as comment to avoid 'None' in report)
+        {{ kpi.eval_intro_fig_function(kpi_name=kpi_name, parameter_dict=parameter_dict, df=df, output_dir=output_dir) }} -->
+        {% set filename = kpi_name + '.png' %}
+        <img src={{filename}} >
+        <figcaption><strong>Figure 1.{{loop.index}}</strong>:
+          {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+          {% include caption %}
+        </figcaption>
+      </figure>
+    {% endfor %}
+
+    <!-- Create and include tables with captions -->
+    {% for kpi_name in new_kpi_config['intro_tables'] %}
+      {% set table_dict = kpi.eval_intro_tab_function(kpi_name=kpi_name, parameter_dict=parameter_dict, df=df) %}
+      <table>
+        <caption><strong>Table 1.{{loop.index}}</strong>:
+          {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+          {% include caption %}
+        </caption>
+        {% for row_number, row_dict in table_dict.items() %}
+            <tr>
+              {% if loop.first == 1 %}
+                {% for col_key in row_dict.keys() %}
+                  <th id='center'> {{ col_key }} </th>
+                {% endfor %}
+              {% else %}
+                {% for col_value in row_dict.values() %}
+                  <td id='center'> {{ col_value }} </td>
+                {% endfor %}
+              {% endif %}
+            </tr>
+        {% endfor %}
+      </table>
+    {% endfor %}
+
+  {#-------------------------------------------------------------------------#}
   <!--  MEASURED VALUES SECTION -->
   <h3>2.&emsp;Measured values</h3>
 
