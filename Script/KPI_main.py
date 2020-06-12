@@ -151,44 +151,6 @@ for variable in inst_variables:
 		if calc_value not in calc_section_config:
 			calc_section_config[calc_value] = all_configs['vocab_config'][calc_value]
 
-# For measured variables, add all kpi figure/tables with filenames and number
-fig_count = 1
-tab_count = 1
-for variable, var_config in meas_section_config.items():
-
-	kpi_figures = {}
-	for kpi_name in all_configs['kpi_config']['meas_figures'].keys():
-		kpi_figures[kpi_name] = {'filename': variable + '_' + kpi_name + '.png'}
-		kpi_figures[kpi_name].update({'number': '2.' + str(fig_count)})
-		fig_count += 1
-	var_config['kpi_figures'] = kpi_figures
-
-	kpi_tables = {}
-	for kpi_name in all_configs['kpi_config']['meas_tables'].keys():
-		kpi_tables[kpi_name] = {'number': '2.' + str(tab_count)}
-		tab_count += 1
-	var_config['kpi_tables'] = kpi_tables
-
-
-# For calculated values, add all kpi figure/tables with filenames and number
-fig_count = 1
-tab_count = 1
-for value, value_config in calc_section_config.items():
-
-	kpi_figures = {}
-	for kpi_name in all_configs['kpi_config']['calc_param_figures'].keys():
-		kpi_figures[kpi_name] = {'filename': value + '_' + kpi_name + '.png'}
-		kpi_figures[kpi_name].update({'number': '3.' + str(fig_count)})
-		fig_count += 1
-	value_config['kpi_figures'] = kpi_figures
-
-	kpi_tables = {}
-	for kpi_name in all_configs['kpi_config']['calc_param_tables'].keys():
-		kpi_tables[kpi_name] = {'number': '3.' + str(tab_count)}
-		tab_count += 1
-	value_config['kpi_tables'] = kpi_tables
-
-
 #-----------
 # Add all parameters ('parameters' are use when there is a mix of sensor and
 # calculated values) with their col header name in df and the fig label name
@@ -204,29 +166,12 @@ intro_section_config['parameters'].update(
 # Add the section configs to the render dictionary
 render_dict.update({'intro_section_config': intro_section_config,
 	'meas_section_config': meas_section_config,
-	'calc_section_config': calc_section_config})
-
-###----------------------------------------------------------------------------
-### ALTERNATIVE:
-###----------------------------------------------------------------------------
-# Make new configs to the render dictionary used in the restructured version
-
-# For each variable measured by the instrument add all sensors and calc values
-# to the dictionaries
-#meas_section_config = {}
-#for variable in inst_variables:
-#	variable_dict = all_configs['variable_config'][variable]
-#	for sensor in variable_dict['sensors']:
-#		if sensor not in meas_section_config:
-#			meas_section_config[sensor] = all_configs['vocab_config'][sensor]
-#render_dict.update({'meas_section_config': meas_section_config})
-
-
-render_dict.update({'new_kpi_config': all_configs['new_kpi_config']})
+	'calc_section_config': calc_section_config,
+	'new_kpi_config': all_configs['new_kpi_config']})
 
 
 ###----------------------------------------------------------------------------
-### Create KPIs
+### Create KPIs (remove after restructure!!!)
 ###----------------------------------------------------------------------------
 
 # Create introduction section figures, stored in the output directort
@@ -237,13 +182,6 @@ kpi.intro_figures(intro_section_config=intro_section_config, df=df,
 render_dict['intro_tables'] = kpi.intro_tables(
 	intro_section_config=intro_section_config, df=df)
 
-# Create the measured section figures, stored in output directory
-#kpi.meas_figures(meas_section_config=meas_section_config, df=df,
-#	output_dir=output_dir)
-
-# Create the measured section tables and store them in the render dictionary
-render_dict['meas_tables'] = kpi.meas_tables(
-	meas_section_config=meas_section_config, df=df)
 
 # !!! Create the fgures and tables for the calculated parameters section !!!
 
