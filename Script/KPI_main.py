@@ -115,8 +115,8 @@ render_dict = {'report_type': sys.argv[1], 'data_filename': file,
 ###---------------------------------------------------------------------------
 
 # Create config dictionaries for the measured (sensor) and calculated values
-meas_section_config = {}
-calc_section_config = {}
+meas_vocab = {}
+calc_vocab = {}
 
 # For each variable measured by the instrument add all sensors and calc values
 # to the dictionaries
@@ -124,24 +124,24 @@ for variable in inst_variables:
 	variable_dict = all_configs['variable_config'][variable]
 
 	for sensor in variable_dict['sensors']:
-		if sensor not in meas_section_config:
-			meas_section_config[sensor] = all_configs['vocab_config'][sensor]
+		if sensor not in meas_vocab:
+			meas_vocab[sensor] = all_configs['vocab_config'][sensor]
 
 	for calc_value in variable_dict['calc_values']:
-		if calc_value not in calc_section_config:
-			calc_section_config[calc_value] = all_configs['vocab_config'][calc_value]
+		if calc_value not in calc_vocab:
+			calc_vocab[calc_value] = all_configs['vocab_config'][calc_value]
 
 # !!! Remove param_dict when code depending on it can use the meas and calc
 #  configs instead!!!
 parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
-	for config in meas_section_config.values()}
+	for config in meas_vocab.values()}
 parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
-	for config in calc_section_config.values()})
+	for config in calc_vocab.values()})
 
 # Add the section configs to the render dictionary
 render_dict.update({
-	'meas_section_config': meas_section_config,
-	'calc_section_config': calc_section_config,
+	'meas_vocab': meas_vocab,
+	'calc_vocab': calc_vocab,
 	'kpi_config': all_configs['kpi_config'],
 	'parameter_dict': parameter_dict})
 

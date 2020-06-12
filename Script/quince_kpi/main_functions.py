@@ -25,12 +25,12 @@ def eval_intro_tab_function(kpi_name, parameter_dict, df):
 	return table_dict
 
 # Creates a KPI figure for the measured section and store it in the output dir
-def eval_meas_fig_function(kpi_name, sensor, meas_section_config, df, output_dir):
+def eval_meas_fig_function(kpi_name, sensor, meas_vocab, df, output_dir):
 	eval('kpi.' + kpi_name)(sensor=sensor,
-		meas_section_config=meas_section_config, df=df, output_dir=output_dir)
+		meas_vocab=meas_vocab, df=df, output_dir=output_dir)
 
 # Ccreate and return a KPI table for the measured section
-def eval_meas_tab_function(kpi_name, sensor, meas_section_config, df):
+def eval_meas_tab_function(kpi_name, sensor, meas_vocab, df):
 	table_dict = eval('kpi.' + kpi_name)(sensor=sensor,
-		meas_section_config=meas_section_config, df=df)
+		meas_vocab=meas_vocab, df=df)
 	return table_dict
