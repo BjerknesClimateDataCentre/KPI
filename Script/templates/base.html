@@ -80,7 +80,7 @@
   <!--  MEASURED VALUES SECTION -->
   <h3>2.&emsp;Measured values</h3>
 
-  {% for sensor_name, sensor_config in meas_section_config.items() %}
+  {% for sensor_name, sensor_config in meas_vocab.items() %}
 
     <!-- Subsection number and title -->
     <h4> 2.{{loop.index}}&emsp;{{sensor_config['subsection_title']}} </h4>
@@ -113,7 +113,7 @@
     <!-- Create and include figures with captions -->
     {% for kpi_name in kpi_config['meas_figures'] %}
       <!-- Create the figures (as comment to avoid 'None' in report)
-        {{ kpi.eval_meas_fig_function(kpi_name=kpi_name, sensor=sensor_name, meas_section_config=meas_section_config, df=df, output_dir=output_dir) }} -->
+        {{ kpi.eval_meas_fig_function(kpi_name=kpi_name, sensor=sensor_name, meas_vocab=meas_vocab, df=df, output_dir=output_dir) }} -->
       <figure>
         {% set filename = sensor_name + '_' + kpi_name + '.png' %}
         <img src={{filename}} >
@@ -127,7 +127,7 @@
 
   <!-- Create and include tables with captions -->
     {% for kpi_name in kpi_config['meas_tables'] %}
-      {% set table_dict = kpi.eval_meas_tab_function(kpi_name=kpi_name, sensor=sensor_name, meas_section_config=meas_section_config, df=df) %}
+      {% set table_dict = kpi.eval_meas_tab_function(kpi_name=kpi_name, sensor=sensor_name, meas_vocab=meas_vocab, df=df) %}
       <table>
         <caption><strong>Table 2.{{loop.index}}</strong>:
             {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
@@ -156,14 +156,14 @@
   {#-------------------------------------------------------------------------#}
   <!-- CALCULATED VALUES SECTION -->
 
-  {% if calc_section_config != {} %}
+  {% if calc_vocab != {} %}
     <h3>3.&emsp;Calculated values</h3>
-    {% for calc_value, config in calc_section_config.items() %}
+    {% for calc_name, calc_config in calc_vocab.items() %}
 
       <!-- Add section title with numbering -->
-      <h4> 3.{{loop.index}}&emsp;{{config['chapter_title']}} </h4>
+      <h4> 3.{{loop.index}}&emsp;{{calc_config['subsection_title']}} </h4>
 
-      <!-- !!! Same content as for measured values. Somehow create loop?-->
+      <!-- !!! Same content as for measured values. Use macros!!! -->
 
     {% endfor %}
   {% endif %}
@@ -171,6 +171,9 @@
   {#-------------------------------------------------------------------------#}
   <!-- PROP-PROP SECTION -->
   <h3>4.&emsp;Property-property plots</h3>
+
+  <!-- !! Create e.g. delta T plots, and similar (look for inspiration for such
+  plots in socat) -->
 
   {#-------------------------------------------------------------------------#}
   <!-- DIAGNOSTICS SECTION -->
