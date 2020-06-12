@@ -58,19 +58,17 @@
           {% include caption %}
         </caption>
         {% for row_number, row_dict in intro_tables[kpi_dict['number']].items() %}
-          {% if loop.index == 1 %}
             <tr>
-              {% for col_key in row_dict.keys() %}
-                <th id='center'> {{ col_key }} </th>
-              {% endfor %}
+              {% if loop.first == 1 %}
+                {% for col_key in row_dict.keys() %}
+                  <th id='center'> {{ col_key }} </th>
+                {% endfor %}
+              {% else %}
+                {% for col_value in row_dict.values() %}
+                  <td id='center'> {{ col_value }} </td>
+                {% endfor %}
+              {% endif %}
             </tr>
-          {% else %}
-            <tr>
-              {% for col_value in row_dict.values() %}
-                <td id='center'> {{ col_value }} </td>
-              {% endfor %}
-            </tr>
-          {% endif %}
         {% endfor %}
       </table>
     {% endfor %}
@@ -84,11 +82,11 @@
     <!-- Subsection number and title -->
     <h4> 2.{{loop.index}}&emsp;{{config['subsection_title']}} </h4>
 
-    <!-- If report is for HO: Description about the parameter -->
+    <!-- If report is for HO: Description about the sensorr -->
     {% if report_type == 'HO' %}
       <p>
         {% set description =
-          'param_descriptions/'+ parameter + '.html' %}
+          'param_descriptions/'+ sensor + '.html' %}
         {% include description %}
       </p>
     {% endif %}
@@ -117,7 +115,7 @@
         <figcaption><strong>Figure {{kpi_dict['number']}}</strong>:
           {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
           {% include caption %}
-          {{config['fig_lable_name_html']}}.
+          {{config['fig_label_name_html']}}.
         </figcaption>
       </figure>
     {% endfor %}
@@ -128,20 +126,98 @@
         <caption><strong>Table {{kpi_dict['number']}}</strong>:
             {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
             {% include caption %}
-            {{config['fig_lable_name_html']}}.
+            {{config['fig_label_name_html']}}.
         </caption>
         {% for row_number, row_dict in meas_tables[kpi_dict['number']].items() %}
-          {% if loop.index == 1 %}
             <tr>
-              {% for col_key in row_dict.keys() %}
-                <th id='center'> {{ col_key }} </th>
-              {% endfor %}
+              {% if loop.first %}
+                {% for col_key in row_dict.keys() %}
+                  <th id='center'> {{ col_key }} </th>
+                {% endfor %}
+              {% else %}
+                {% for col_value in row_dict.values() %}
+                  <td id='center'> {{ col_value }} </td>
+                {% endfor %}
             </tr>
-          {% else %}
+          {% endif %}
+        {% endfor %}
+      </table>
+    {% endfor %}
+
+  {% endfor %}
+
+  {#-------------------------------------------------------------------------#}
+  <!-- ALTERNATIVE MEASURED VALUES SECTION -->
+  <h3>2.&emsp;Measured values</h3>
+
+  {% for sensor_name, sensor_config in meas_section_config.items() %}
+
+    <!-- Subsection number and title -->
+    <h4> 2.{{loop.index}}&emsp;{{sensor_config['subsection_title']}} </h4>
+
+    <!-- If report is for HO: Description about the sensor -->
+    {% if report_type == 'HO' %}
+      <p>
+        {% set description =
+          'param_descriptions/'+ sensor_name + '.html' %}
+        {% include description %}
+      </p>
+    {% endif %}
+
+    <!-- Text about each figure in this section -->
+    <p>
+      {% for kpi_name in new_kpi_config['meas_figures'] %}
+        Figure 2.{{loop.index}} shows
+        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
+        {% include text %}
+      {% endfor %}
+
+    <!-- Text about each table in this section -->
+      {% for kpi_name in new_kpi_config['meas_tables'] %}
+        Table 2.{{loop.index}} shows
+        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
+        {% include text %}
+      {% endfor %}
+    </p>
+
+    <!-- Create and include figures with captions -->
+    {% for kpi_name in new_kpi_config['meas_figures'] %}
+
+      <!-- Create the figures (as comment to avoid 'None' in report)
+        {{ kpi.eval_meas_fig_function(kpi_name=kpi_name, sensor=sensor_name, meas_section_config=meas_section_config, df=df, output_dir=output_dir) }} -->
+
+      <figure>
+        {% set filename = sensor_name + '_' + kpi_name + '.png' %}
+        <img src={{filename}} >
+        <figcaption><strong>Figure 2.{{loop.index}}</strong>:
+          {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+          {% include caption %}
+          {{sensor_config['fig_label_name_html']}}.
+        </figcaption>
+      </figure>
+    {% endfor %}
+
+  <!-- Create and include tables with captions -->
+    {% for kpi_name in new_kpi_config['meas_tables'] %}
+
+      {% set table_dict = kpi.meas_qc_comment_table(sensor=sensor_name, meas_section_config=meas_section_config, df=df) %}
+
+      <table>
+        <caption><strong>Table 2.{{loop.index}}</strong>:
+            {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+            {% include caption %}
+            {{sensor_config['fig_label_name_html']}}.
+        </caption>
+        {% for row_number, row_dict in table_dict.items() %}
             <tr>
-              {% for col_value in row_dict.values() %}
-                <td id='center'> {{ col_value }} </td>
-              {% endfor %}
+              {% if loop.first %}
+                {% for col_key in row_dict.keys() %}
+                  <th id='center'> {{ col_key }} </th>
+                {% endfor %}
+              {% else %}
+                {% for col_value in row_dict.values() %}
+                  <td id='center'> {{ col_value }} </td>
+                {% endfor %}
             </tr>
           {% endif %}
         {% endfor %}
