@@ -25,7 +25,7 @@ def get_parameters(df):
 			parameters.append(column)
 	return parameters
 
-# Go through a kpi dictionary and add filename
+# Go through a kpi dictionary and add filename (REMOVE AFTER RESTRUCTURE)
 def add_filename(kpi_dict, kpi_type, short_name):
 	for kpi_name, kpi_config in kpi_dict.items():
 		if kpi_type == 'intro':
@@ -35,7 +35,7 @@ def add_filename(kpi_dict, kpi_type, short_name):
 		kpi_dict[kpi_name]['filename'] = filename
 	return kpi_dict
 
-# Go through a kpi dictionary and add figure/table number
+# Go through a kpi dictionary and add figure/table number (REMOVE AFTER RESTRUCTURE)
 def add_number(kpi_dict, section_count, count):
 	for kpi_name, kpi_config in kpi_dict.items():
 		kpi_dict[kpi_name]['number'] = str(section_count) + '.' +  str(count)
