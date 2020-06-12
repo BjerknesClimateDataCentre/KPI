@@ -53,7 +53,14 @@ def get_figsize(parameter_dict):
 
 
 # Function creates a barplot, and saves the figure in the output directory.
-def intro_bar_plot(parameter_dict, df, output_dir):
+def intro_bar_plot(meas_vocab, calc_vocab, df, output_dir):
+
+	# Create parameter_dict (CHANGE FUNCTION SO THAT THIS IS NOT NEEDED)
+	parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
+	for config in meas_vocab.values()}
+
+	parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
+	for config in calc_vocab.values()})
 
 	# In order to create the barplot we need to create a new data frame
 	# containing two columns: 'label' (containg the the parameter names), and
@@ -107,7 +114,15 @@ def intro_bar_plot(parameter_dict, df, output_dir):
 
 # Function creates a stacked barplot, and saves the figure in the output
 # directory.
-def intro_stacked_bar_plot(parameter_dict, df, output_dir):
+def intro_stacked_bar_plot(meas_vocab, calc_vocab, df, output_dir):
+
+	# Create parameter_dict (CHANGE FUNCTION SO THAT THIS IS NOT NEEDED)
+	parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
+	for config in meas_vocab.values()}
+
+	parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
+	for config in calc_vocab.values()})
+
 	#---------
 	# STRUCTURE DATA FOR PLOTTING
 	# Create a list of unique flags given to the selected data.

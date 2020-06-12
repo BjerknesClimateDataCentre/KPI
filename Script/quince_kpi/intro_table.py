@@ -17,7 +17,7 @@
 #------------------------------------------------------------------------------
 ### Functions
 
-def intro_count_table(df, parameter_dict):
+def intro_count_table(df, meas_vocab, calc_vocab):
 
 	# Create a dummy table_dict
 	table_dict = {'1': {'Col1 Name': 'value', 'Col2 Name':'value', 'Col3 Name':'value'},

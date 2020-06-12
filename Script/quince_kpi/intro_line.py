@@ -82,7 +82,14 @@ def make_subplot(parameter, df, ax):
 
 # Function plots parameter(s) vs time, saves the figure in the output
 # directory, and returns the figures filename back to the main script.
-def intro_line_plot(parameter_dict, df, output_dir):
+def intro_line_plot(meas_vocab, calc_vocab, df, output_dir):
+
+	# Create parameter_dict (CHANGE FUNCTION SO THAT THIS IS NOT NEEDED)
+	parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
+	for config in meas_vocab.values()}
+
+	parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
+	for config in calc_vocab.values()})
 
 	# Store number of plots to create
 	n_plot = len(parameter_dict)

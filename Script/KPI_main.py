@@ -107,11 +107,12 @@ df_end = str(df['Date/Time'][len(df)-1].date())
 # finally be used as input when the report is created.
 render_dict = {'report_type': sys.argv[1], 'data_filename': file,
 	'data_level': data_level, 'inst_name_full': inst_name_full,
-	'inst_name_short': inst_name_short, 'df_start': df_start, 'df_end': df_end}
+	'inst_name_short': inst_name_short, 'df_start': df_start, 'df_end': df_end,
+	'output_dir': output_dir, 'kpi_config': all_configs['kpi_config']}
 
 
 ###---------------------------------------------------------------------------
-### Create report section configuration dictionaries
+### Add section vocabularies to render dictionary
 ###---------------------------------------------------------------------------
 
 # Create config dictionaries for the measured (sensor) and calculated values
@@ -122,28 +123,16 @@ calc_vocab = {}
 # to the dictionaries
 for variable in inst_variables:
 	variable_dict = all_configs['variable_config'][variable]
-
 	for sensor in variable_dict['sensors']:
 		if sensor not in meas_vocab:
 			meas_vocab[sensor] = all_configs['vocab_config'][sensor]
-
 	for calc_value in variable_dict['calc_values']:
 		if calc_value not in calc_vocab:
 			calc_vocab[calc_value] = all_configs['vocab_config'][calc_value]
 
-# !!! Remove param_dict when code depending on it can use the meas and calc
-#  configs instead!!!
-parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
-	for config in meas_vocab.values()}
-parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
-	for config in calc_vocab.values()})
-
 # Add the section configs to the render dictionary
-render_dict.update({
-	'meas_vocab': meas_vocab,
-	'calc_vocab': calc_vocab,
-	'kpi_config': all_configs['kpi_config'],
-	'parameter_dict': parameter_dict})
+render_dict.update({'meas_vocab': meas_vocab, 'calc_vocab': calc_vocab})
+
 
 ###----------------------------------------------------------------------------
 ### Create report
@@ -154,7 +143,6 @@ template_loader = FileSystemLoader("templates")
 template_env = Environment(loader=template_loader)
 template_env.globals['kpi'] = kpi
 template_env.globals['df'] = df
-template_env.globals['output_dir'] = output_dir
 template = template_env.get_template("base.html")
 
 # Create the html string and write to file
