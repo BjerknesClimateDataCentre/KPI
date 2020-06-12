@@ -158,16 +158,23 @@ for variable in inst_variables:
 intro_section_config['parameters'] = {
 	config['col_header_name'] : config['fig_label_name_python']
 	for param, config in meas_section_config.items()}
+
 intro_section_config['parameters'].update(
 	{config['col_header_name'] : config['fig_label_name_python']
 	for param, config in calc_section_config.items()})
+
+parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
+	for config in meas_section_config.values()}
+parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
+	for config in calc_section_config.values()})
 
 ## ---------
 # Add the section configs to the render dictionary
 render_dict.update({'intro_section_config': intro_section_config,
 	'meas_section_config': meas_section_config,
 	'calc_section_config': calc_section_config,
-	'new_kpi_config': all_configs['new_kpi_config']})
+	'new_kpi_config': all_configs['new_kpi_config'],
+	'parameter_dict': parameter_dict})
 
 
 ###----------------------------------------------------------------------------
