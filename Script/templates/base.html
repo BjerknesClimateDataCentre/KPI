@@ -2,6 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" href='..\templates\style.css' type="text/css">
+  {% import "macros.jinja" as macros %}
 </head>
 <body>
 
@@ -10,8 +11,9 @@
   <h1>Data Quality Report</h1>
   <h2> For ICOS station <i>{{inst_name_full}}</i> - {{df_start}} to {{df_end}}</h2>
 
+
   {#-------------------------------------------------------------------------#}
-  <!-- ALTERNATIVE INTRODUCTION SECTION -->
+  <!-- INTRODUCTION SECTION -->
   <h3>1.&emsp;Introduction</h3>
 
     <!-- Introduction text (depends on the report type) -->
@@ -36,6 +38,14 @@
         {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
         {% include text %}
       {% endfor %}
+    </p>
+
+    <!-- ALTERNATIVE. Text about each figure and table in this section -->
+    <p>
+      {{ macros.visuals_text(kpi_list=kpi_config['intro_figures'],
+        section_number=1, figure=True) }}
+      {{ macros.visuals_text(kpi_list=kpi_config['intro_tables'],
+        section_number=1, figure=False) }}
     </p>
 
     <!-- Create and include figures with captions -->
