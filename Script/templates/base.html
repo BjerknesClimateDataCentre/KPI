@@ -64,13 +64,13 @@
 
     <!-- Create and include tables with captions -->
     {% for kpi_name in kpi_config['intro_tables'] %}
-      {% set table_dict = kpi.eval_intro_tab_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
+      {% set table_list = kpi.eval_intro_tab_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
       <table>
         <caption><strong>Table 1.{{loop.index}}</strong>:
           {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
           {% include caption %}
         </caption>
-        {% for row_dict in table_dict.values() %}
+        {% for row_dict in table_list %}
           {% if loop.first %}
             <tr>
               {% for header in row_dict.keys() %}
@@ -138,14 +138,14 @@
 
   <!-- Create and include tables with captions -->
     {% for kpi_name in kpi_config['meas_tables'] %}
-      {% set table_dict = kpi.eval_meas_tab_function(kpi_name=kpi_name, sensor=sensor_name, meas_vocab=meas_vocab, df=df) %}
+      {% set table_list = kpi.eval_meas_tab_function(kpi_name=kpi_name, sensor=sensor_name, meas_vocab=meas_vocab, df=df) %}
       <table>
         <caption><strong>Table 2.{{loop.index}}</strong>:
             {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
             {% include caption %}
             {{sensor_config['fig_label_name_html']}}.
         </caption>
-        {% for row_dict in table_dict.values() %}
+        {% for row_dict in table_list %}
           {% if loop.first %}
             <tr>
               {% for header in row_dict.keys() %}
