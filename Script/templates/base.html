@@ -17,6 +17,7 @@
   <h3>1.&emsp;Introduction</h3>
 
     <!-- Introduction text (depends on the report type) -->
+    <!-- !!! macro that creates the filename -->
     {% if report_type == 'HO' %}
       {% set intro_text_filename = 'intro_text/intro_text_HO.html' %}
     {% elif report_type == 'PI' %}
@@ -25,6 +26,7 @@
     {% include intro_text_filename %}
 
     <!-- Text about each figure in this section -->
+    <!-- python function which returns a dict with fig number and text -->
     <p>
       {% for kpi_name in kpi_config['intro_figures'] %}
         Figure 1.{{loop.index}} shows
@@ -49,9 +51,10 @@
     </p>
 
     <!-- Create and include figures with captions -->
+    <!-- Create macro inside loop -->
     {% for kpi_name in kpi_config['intro_figures'] %}
       <figure>
-        <!- Create the figures (as comment to avoid 'None' in report)
+        <!-- Create the figures (as comment to avoid 'None' in report)
         {{ kpi.eval_intro_fig_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df, output_dir=output_dir) }} -->
         {% set filename = kpi_name + '.png' %}
         <img src={{filename}} >
@@ -63,6 +66,7 @@
     {% endfor %}
 
     <!-- Create and include tables with captions -->
+    <!-- Create macro inside loop below table_list-->
     {% for kpi_name in kpi_config['intro_tables'] %}
       {% set table_list = kpi.eval_intro_tab_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
       <table>
@@ -97,6 +101,7 @@
     <h4> 2.{{loop.index}}&emsp;{{sensor_config['subsection_title']}} </h4>
 
     <!-- If report is for HO: Description about the sensor -->
+    <!-- Macro to create filename (remove if) -->
     {% if report_type == 'HO' %}
       <p>
         {% set description =
