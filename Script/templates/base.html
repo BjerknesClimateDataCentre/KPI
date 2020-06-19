@@ -17,32 +17,9 @@
   <h3>1.&emsp;Introduction</h3>
 
     <!-- Introduction text (depends on the report type) -->
-    <!-- !!! macro that creates the filename -->
-    {% if report_type == 'HO' %}
-      {% set intro_text_filename = 'intro_text/intro_text_HO.html' %}
-    {% elif report_type == 'PI' %}
-      {% set intro_text_filename = 'intro_text/intro_text_PI.html' %}
-    {% endif %}
-    {% include intro_text_filename %}
+    {{ macros.intro_text(report_type, meas_vocab, calc_vocab) }}
 
-    <!-- Text about each figure in this section -->
-    <!-- python function which returns a dict with fig number and text -->
-    <p>
-      {% for kpi_name in kpi_config['intro_figures'] %}
-        Figure 1.{{loop.index}} shows
-        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
-        {% include text %}
-      {% endfor %}
-
-    <!-- Text about each table in this section -->
-      {% for kpi_name in kpi_config['intro_tables'] %}
-        Table 1.{{loop.index}} shows
-        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
-        {% include text %}
-      {% endfor %}
-    </p>
-
-    <!-- ALTERNATIVE. Text about each figure and table in this section -->
+    <!-- Text about each figure and table in this section -->
     <p>
       {{ macros.visuals_text(kpi_list=kpi_config['intro_figures'],
         section_number=1, figure=True) }}
@@ -51,18 +28,10 @@
     </p>
 
     <!-- Create and include figures with captions -->
-    <!-- Create macro inside loop -->
     {% for kpi_name in kpi_config['intro_figures'] %}
-      <figure>
-        <!-- Create the figures (as comment to avoid 'None' in report)
-        {{ kpi.eval_intro_fig_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df, output_dir=output_dir) }} -->
-        {% set filename = kpi_name + '.png' %}
-        <img src={{filename}} >
-        <figcaption><strong>Figure 1.{{loop.index}}</strong>:
-          {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
-          {% include caption %}
-        </figcaption>
-      </figure>
+      <p hidden> {{ kpi.eval_intro_fig_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df, output_dir=output_dir) }} </p>
+      {% set figure_number = '1.' ~ loop.index %}
+      {{ macros.figure(kpi_name, figure_number) }}
     {% endfor %}
 
     <!-- Create and include tables with captions -->
