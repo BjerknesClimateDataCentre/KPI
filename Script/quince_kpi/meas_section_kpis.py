@@ -185,13 +185,10 @@ def meas_qc_comment_table(sensor, meas_vocab, df):
 		key=lambda item: item[1], reverse=True)}
 
 	# Restructure dict to table format and add percentages to each count
-	table_dict_percent = {}
-	count = 1
+	table_list = []
 	for key, value in table_dict_sorted.items():
 		percent = round((value/df.shape[0])*100,2)
-		table_dict_percent[count] = {}
-		table_dict_percent[count]['QC Comment'] = key
-		table_dict_percent[count]['Counts'] = str(value) + ' (' + str(percent) + '%)'
-		count += 1
+		table_list.append({'QC Comment': key,
+			'Counts': str(value) + ' (' + str(percent) + '%)'})
 
-	return table_dict_percent
+	return table_list
