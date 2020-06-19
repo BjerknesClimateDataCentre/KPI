@@ -21,56 +21,38 @@
 
     <!-- Text about each figure and table in this section -->
     <p>
-      {{ macros.visuals_text(kpi_list=kpi_config['intro_figures'],
-        section_number=1, figure=True) }}
-      {{ macros.visuals_text(kpi_list=kpi_config['intro_tables'],
-        section_number=1, figure=False) }}
+      {{ macros.visuals_text(kpi_config['intro_figures'], 1, True) }}
+      {{ macros.visuals_text(kpi_config['intro_tables'], 1, False) }}
     </p>
 
     <!-- Create and include figures with captions -->
     {% for kpi_name in kpi_config['intro_figures'] %}
       <p hidden> {{ kpi.eval_intro_fig_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df, output_dir=output_dir) }} </p>
+      {% set filename = kpi_name + '.png' %}
       {% set figure_number = '1.' ~ loop.index %}
-      {{ macros.figure(kpi_name, figure_number) }}
+      {{ macros.figure(kpi_name, filename, figure_number, False) }}
     {% endfor %}
 
     <!-- Create and include tables with captions -->
-    <!-- Create macro inside loop below table_list-->
     {% for kpi_name in kpi_config['intro_tables'] %}
       {% set table_list = kpi.eval_intro_tab_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
-      <table>
-        <caption><strong>Table 1.{{loop.index}}</strong>:
-          {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
-          {% include caption %}
-        </caption>
-        {% for row_dict in table_list %}
-          {% if loop.first %}
-            <tr>
-              {% for header in row_dict.keys() %}
-                <th id='center'> {{header}} </th>
-              {% endfor %}
-            </tr>
-          {% endif %}
-          <tr>
-            {% for value in row_dict.values() %}
-              <td id='center'> {{ value }} </td>
-            {% endfor %}
-          </tr>
-        {% endfor %}
-      </table>
+      {% set table_number = '1.' ~ loop.index %}
+      {{ macros.table(kpi_name, table_list, table_number, False) }}
     {% endfor %}
+
 
   {#-------------------------------------------------------------------------#}
   <!--  MEASURED VALUES SECTION -->
   <h3>2.&emsp;Measured values</h3>
 
+  <!-- Loop to create a subsection per sensors -->
   {% for sensor_name, sensor_config in meas_vocab.items() %}
 
     <!-- Subsection number and title -->
     <h4> 2.{{loop.index}}&emsp;{{sensor_config['subsection_title']}} </h4>
 
     <!-- If report is for HO: Description about the sensor -->
-    <!-- Macro to create filename (remove if) -->
+    <!-- !!! Macro to create filename (remove if) -->
     {% if report_type == 'HO' %}
       <p>
         {% set description =
@@ -79,64 +61,29 @@
       </p>
     {% endif %}
 
-    <!-- Text about each figure in this section -->
+    <!-- Text about each figure and table in this section -->
     <p>
-      {% for kpi_name in kpi_config['meas_figures'] %}
-        Figure 2.{{loop.index}} shows
-        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
-        {% include text %}
-      {% endfor %}
-
-    <!-- Text about each table in this section -->
-      {% for kpi_name in kpi_config['meas_tables'] %}
-        Table 2.{{loop.index}} shows
-        {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
-        {% include text %}
-      {% endfor %}
+      {{ macros.visuals_text(kpi_config['meas_figures'], 2, True) }}
+      {{ macros.visuals_text(kpi_config['meas_tables'], 2, False) }}
     </p>
 
     <!-- Create and include figures with captions -->
     {% for kpi_name in kpi_config['meas_figures'] %}
-      <!-- Create the figures (as comment to avoid 'None' in report)
-        {{ kpi.eval_meas_fig_function(kpi_name=kpi_name, sensor=sensor_name, meas_vocab=meas_vocab, df=df, output_dir=output_dir) }} -->
-      <figure>
-        {% set filename = sensor_name + '_' + kpi_name + '.png' %}
-        <img src={{filename}} >
-        <figcaption><strong>Figure 2.{{loop.index}}</strong>:
-          {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
-          {% include caption %}
-          {{sensor_config['fig_label_name_html']}}.
-        </figcaption>
-      </figure>
+      <p hidden>{{ kpi.eval_meas_fig_function(kpi_name=kpi_name, sensor=sensor_name, meas_vocab=meas_vocab, df=df, output_dir=output_dir) }} </p>
+      {% set filename = sensor_name + '_' + kpi_name + '.png'  %}
+      {% set figure_number = '2.' ~ loop.index %}
+      {{ macros.figure(kpi_name, filename, figure_number, sensor_config['fig_label_name_html']) }}
     {% endfor %}
 
   <!-- Create and include tables with captions -->
     {% for kpi_name in kpi_config['meas_tables'] %}
       {% set table_list = kpi.eval_meas_tab_function(kpi_name=kpi_name, sensor=sensor_name, meas_vocab=meas_vocab, df=df) %}
-      <table>
-        <caption><strong>Table 2.{{loop.index}}</strong>:
-            {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
-            {% include caption %}
-            {{sensor_config['fig_label_name_html']}}.
-        </caption>
-        {% for row_dict in table_list %}
-          {% if loop.first %}
-            <tr>
-              {% for header in row_dict.keys() %}
-                <th id='center'> {{header}} </th>
-              {% endfor %}
-            </tr>
-          {% endif %}
-          <tr>
-            {% for value in row_dict.values() %}
-              <td id='center'> {{ value }} </td>
-            {% endfor %}
-          </tr>
-        {% endfor %}
-      </table>
+      {% set table_number = '2.' ~ loop.index %}
+      {{ macros.table(kpi_name, table_list, table_number, sensor_config['fig_label_name_html']) }}
     {% endfor %}
 
   {% endfor %}
+
 
   {#-------------------------------------------------------------------------#}
   <!-- CALCULATED VALUES SECTION -->
@@ -148,7 +95,7 @@
       <!-- Add section title with numbering -->
       <h4> 3.{{loop.index}}&emsp;{{calc_config['subsection_title']}} </h4>
 
-      <!-- !!! Same content as for measured values. Use macros!!! -->
+      <!-- Add similar content as for measured values -->
 
     {% endfor %}
   {% endif %}

@@ -22,13 +22,42 @@
 {% endmacro %}
 
 
-{% macro figure(kpi_name, figure_number) %}
+{% macro figure(kpi_name, filename, figure_number, sensor_label) %}
   <figure>
-    {% set filename = kpi_name + '.png' %}
-      <img src={{filename}} >
-      <figcaption><strong>Figure {{figure_number}}</strong>:
-        {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
-        {% include caption %}
-      </figcaption>
+    <img src={{filename}} >
+    <figcaption><strong>Figure {{figure_number}}</strong>:
+      {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+      {% include caption %}
+      {% if sensor_label %}
+        {{sensor_label}}.
+      {% endif %}
+    </figcaption>
   </figure>
+{% endmacro %}
+
+
+{% macro table(kpi_name, table_list, table_number, sensor_label) %}
+  <table>
+    <caption><strong>Table {{table_number}}</strong>:
+      {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
+      {% include caption %}
+      {% if sensor_label %}
+        {{sensor_label}}.
+      {% endif %}
+    </caption>
+    {% for row_dict in table_list %}
+      {% if loop.first %}
+        <tr>
+          {% for header in row_dict.keys() %}
+            <th id='center'> {{header}} </th>
+          {% endfor %}
+        </tr>
+      {% endif %}
+      <tr>
+        {% for value in row_dict.values() %}
+          <td id='center'> {{ value }} </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
 {% endmacro %}
