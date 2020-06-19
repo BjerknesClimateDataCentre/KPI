@@ -70,18 +70,19 @@
           {% set caption = 'kpi_descriptions/' + kpi_name + '_caption.html' %}
           {% include caption %}
         </caption>
-        {% for row_number, row_dict in table_dict.items() %}
+        {% for row_dict in table_dict.values() %}
+          {% if loop.first %}
             <tr>
-              {% if loop.first == 1 %}
-                {% for col_key in row_dict.keys() %}
-                  <th id='center'> {{ col_key }} </th>
-                {% endfor %}
-              {% else %}
-                {% for col_value in row_dict.values() %}
-                  <td id='center'> {{ col_value }} </td>
-                {% endfor %}
-              {% endif %}
+              {% for header in row_dict.keys() %}
+                <th id='center'> {{header}} </th>
+              {% endfor %}
             </tr>
+          {% endif %}
+          <tr>
+            {% for value in row_dict.values() %}
+              <td id='center'> {{ value }} </td>
+            {% endfor %}
+          </tr>
         {% endfor %}
       </table>
     {% endfor %}
@@ -144,21 +145,21 @@
             {% include caption %}
             {{sensor_config['fig_label_name_html']}}.
         </caption>
-        {% for row_number, row_dict in table_dict.items() %}
+        {% for row_dict in table_dict.values() %}
+          {% if loop.first %}
             <tr>
-              {% if loop.first %}
-                {% for col_key in row_dict.keys() %}
-                  <th id='center'> {{ col_key }} </th>
-                {% endfor %}
-              {% else %}
-                {% for col_value in row_dict.values() %}
-                  <td id='center'> {{ col_value }} </td>
-                {% endfor %}
+              {% for header in row_dict.keys() %}
+                <th id='center'> {{header}} </th>
+              {% endfor %}
             </tr>
           {% endif %}
+          <tr>
+            {% for value in row_dict.values() %}
+              <td id='center'> {{ value }} </td>
+            {% endfor %}
+          </tr>
         {% endfor %}
       </table>
-
     {% endfor %}
 
   {% endfor %}
