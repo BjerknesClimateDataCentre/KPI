@@ -16,8 +16,8 @@
   <!-- INTRODUCTION SECTION -->
   <h3>1.&emsp;Introduction</h3>
 
-    <!-- Introduction text (depends on the report type) -->
-    {{ macros.intro_text(report_type, meas_vocab, calc_vocab) }}
+    <!-- Introduction text -->
+    {{ macros.intro_text(report_type, meas_vocab, calc_vocab, inst_name_short) }}
 
     <!-- Text about each figure and table in this section -->
     <p>
@@ -51,15 +51,8 @@
     <!-- Subsection number and title -->
     <h4> 2.{{loop.index}}&emsp;{{sensor_config['subsection_title']}} </h4>
 
-    <!-- If report is for HO: Description about the sensor -->
-    <!-- !!! Macro to create filename (remove if) -->
-    {% if report_type == 'HO' %}
-      <p>
-        {% set description =
-          'param_descriptions/'+ sensor_name + '.html' %}
-        {% include description %}
-      </p>
-    {% endif %}
+    <!-- Description about the sensor -->
+    <p> {{ macros.param_text(report_type, sensor_name) }} </p>
 
     <!-- Text about each figure and table in this section -->
     <p>

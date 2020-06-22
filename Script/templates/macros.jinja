@@ -1,3 +1,21 @@
+{% macro intro_text(report_type, meas_vocab, calc_vocab, inst_name_short) %}
+  {% if report_type == 'HO' %}
+    {% set intro_text_filename = 'intro_text/intro_text_HO.html' %}
+  {% elif report_type == 'PI' %}
+    {% set intro_text_filename = 'intro_text/intro_text_PI.html' %}
+  {% endif %}
+  {% include intro_text_filename %}
+{% endmacro %}
+
+
+{% macro param_text(report_type, param_name) %}
+  {% if report_type == 'HO' %}
+    {% set param_text_filename = 'param_descriptions/' + param_name + '.html' %}
+    {% include param_text_filename %}
+  {% endif %}
+{% endmacro %}
+
+
 {% macro visuals_text(kpi_list, section_number, figure) %}
   {% for kpi_name in kpi_list %}
     {% if figure %}
@@ -9,16 +27,6 @@
     {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
     {% include text %}
   {% endfor %}
-{% endmacro %}
-
-
-{% macro intro_text(report_type, meas_vocab, calc_vocab) %}
-  {% if report_type == 'HO' %}
-    {% set intro_text_filename = 'intro_text/intro_text_HO.html' %}
-  {% elif report_type == 'PI' %}
-    {% set intro_text_filename = 'intro_text/intro_text_PI.html' %}
-  {% endif %}
-  {% include intro_text_filename %}
 {% endmacro %}
 
 
