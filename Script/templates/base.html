@@ -9,7 +9,7 @@
   {#-------------------------------------------------------------------------#}
   <!-- REPORT TITLE -->
   <h1>Data Quality Report</h1>
-  <h2> For ICOS station <i>{{inst_name_full}}</i> - {{df_start}} to {{df_end}}</h2>
+  <h2> For ICOS station <i>{{inst_config['inst_name_full']}}</i> - {{data_config['df_start']}} to {{data_config['df_end']}}</h2>
 
 
   {#-------------------------------------------------------------------------#}
@@ -17,7 +17,7 @@
   <h3>1.&emsp;Introduction</h3>
 
     <!-- Introduction text -->
-    {{ macros.intro_text(report_type, meas_vocab, calc_vocab, inst_name_short) }}
+    {{ macros.intro_text(report_type, meas_vocab, calc_vocab, inst_config, data_config) }}
 
     <!-- Text about each figure and table in this section -->
     <p>
@@ -88,10 +88,11 @@
       <!-- Add section title with numbering -->
       <h4> 3.{{loop.index}}&emsp;{{calc_config['subsection_title']}} </h4>
 
-      <!-- Add similar content as for measured values -->
+      <!-- !!! Add similar content as for measured values !!! -->
 
     {% endfor %}
   {% endif %}
+
 
   {#-------------------------------------------------------------------------#}
   <!-- PROP-PROP SECTION -->
@@ -100,12 +101,13 @@
   <!-- !! Create e.g. delta T plots, and similar (look for inspiration for such
   plots in socat) -->
 
+
   {#-------------------------------------------------------------------------#}
   <!-- DIAGNOSTICS SECTION -->
   <h3>5.&emsp;Diagnostics</h3>
 
   <!-- !! On hold until KPI scripts communicate directly with QuinCe, and until
-  the diagnostic data also has got QC flags from QuinCe -->
+  the diagnostic data also has got QC flags in QuinCe -->
 
 </body>
 </html>

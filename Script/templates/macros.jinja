@@ -1,4 +1,4 @@
-{% macro intro_text(report_type, meas_vocab, calc_vocab, inst_name_short) %}
+{% macro intro_text(report_type, meas_vocab, calc_vocab, inst_config, data_config) %}
   {% if report_type == 'HO' %}
     {% set intro_text_filename = 'intro_text/intro_text_HO.html' %}
   {% elif report_type == 'PI' %}

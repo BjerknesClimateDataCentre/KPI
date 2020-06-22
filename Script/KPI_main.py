@@ -43,12 +43,22 @@ for content in old_content:
 
 
 ###----------------------------------------------------------------------------
+### Create render dictionary
+###----------------------------------------------------------------------------
+
+# Store the report_type and output_dir in the render dictionary. This
+# dictionary will be filled with information thourghout this script, and
+# finally be used as input to the report template.
+render_dict = {'report_type': sys.argv[1], 'output_dir': output_dir}
+
+
+###----------------------------------------------------------------------------
 ### Extract configurations
 ###----------------------------------------------------------------------------
 
 # Store configuration variables
-with open ('./config.json') as file:
-	all_configs = json.load(file)
+with open ('./config.json') as json_file:
+	all_configs = json.load(json_file)
 
 
 ###---------------------------------------------------------------------------
@@ -76,8 +86,8 @@ data_files = os.listdir(data_dir)
 # !!! Currenlty this only works with one file!
 # !!! If more than one file (from the same instrument): add the df's together
 # (NaN's if some cols missing).
-for file in data_files:
-	data_path = os.path.join(data_dir, file)
+for data_file in data_files:
+	data_path = os.path.join(data_dir, data_file)
 	df = pd.read_csv(data_path, low_memory=False)
 
 
@@ -90,6 +100,11 @@ for level in all_configs['data_level_config']:
 	if level in data_files[0]:
 		data_level = level
 
+# Set the timestamp column, and extract start and end date
+kpi.set_datetime(df)
+df_start = str(df['Date/Time'][0].date())
+df_end = str(df['Date/Time'][len(df)-1].date())
+
 # Identify instrument name (full and short) from filename
 for instrument, config in all_configs['instrument_config'].items():
 	if config['code'] in data_files[0]:
@@ -97,22 +112,19 @@ for instrument, config in all_configs['instrument_config'].items():
 		inst_name_short = config['short_name']
 		inst_variables = config['variables']
 
-# Set the timestamp column, and extract start and end date
-kpi.set_datetime(df)
-df_start = str(df['Date/Time'][0].date())
-df_end = str(df['Date/Time'][len(df)-1].date())
+# Create a dictionary of instrument and data configurations and store in
+# render dictionary
+inst_config = {'inst_name_full': inst_name_full,
+	'inst_name_short': inst_name_short}
+data_config = {'data_filename': data_file, 'data_level': data_level,
+	'df_start': df_start,'df_end': df_end}
 
-# Store the basic information extracted above in the render dictionary. This
-# dictionary will be filled with information thourghout this script, and
-# finally be used as input when the report is created.
-render_dict = {'report_type': sys.argv[1], 'data_filename': file,
-	'data_level': data_level, 'inst_name_full': inst_name_full,
-	'inst_name_short': inst_name_short, 'df_start': df_start, 'df_end': df_end,
-	'output_dir': output_dir, 'kpi_config': all_configs['kpi_config']}
+render_dict.update({'inst_config': inst_config, 'data_config': data_config,
+	'kpi_config': all_configs['kpi_config']})
 
 
 ###---------------------------------------------------------------------------
-### Add section vocabularies to render dictionary
+### Add parameter vocabularies to render dictionary
 ###---------------------------------------------------------------------------
 
 # Create config dictionaries for the measured (sensor) and calculated values
@@ -160,10 +172,8 @@ options = {'margin-top': '0.75in', 'margin-right': '0.75in',
 pdfkit.from_file(report_path + '.html', report_path + '.pdf', options=options)
 
 
-
 # -------------------------
 #!!! While working on this script, export the render dict to a json file
-# for easy reading !!!
-with open('output/render_dict.json', 'w') as file:
-	json.dump(render_dict, file, indent=4,
-		separators=(',', ': '))
+#for easy reading !!!
+with open('output/render_dict.json', 'w') as render_file:
+	json.dump(render_dict, render_file, indent=4, separators=(',', ': '))
