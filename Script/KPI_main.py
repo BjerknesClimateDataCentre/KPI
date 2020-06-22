@@ -1,22 +1,45 @@
 ###############################################################################
-###  MAIN SCRIPT FOR MAKING KPI REPORTS                                     ###
+###  SCRIPT FOR CREATING A KPI REPORT
 ###############################################################################
 
-# Description
-# ...
+# Description:
+# What the script does:
+# - Imports the data and the the configuration file.
+# - Use the data and configurations to create a render dictionary containing
+# all information relevant for the report.
+# - Feed the data and render dictionary to the html template ('base.html'). The
+# outcome of this is an html string.
+# - Converted the html string to a pdf.
+
+# Requiremens:
+# - The following command line arguments when running the script:
+# 	- report type (either 'PI' or 'HO') which determines the amount of
+#   descriptions in the report.
+# - The package 'quince_kpi' must be in the same directory as this script.
+# - The 'templates' folder which contains all html related files must be in the
+# same directory as this script.
+# - A data file (in QuinCe export format) inside the 'data_files' folder in the
+# same directory as this script. (This is a temporary solution. The plan is
+# that the script will fetch data directly from QuinCe based on instrument and
+# date information given in the command line arguments.)
+
+# Outputs (stored in the output folder):
+# - The report (.pdf and .html).
+# - Report figures (.png).
+# - The render dictionary (.json; for convenience while developing)
 
 
 ###----------------------------------------------------------------------------
 ### Import packages
 ###----------------------------------------------------------------------------
 
-import quince_kpi as kpi
 import os
-import json
-import pandas as pd
-from jinja2 import FileSystemLoader, Environment
-import pdfkit
 import sys
+import pandas as pd
+import json
+from jinja2 import FileSystemLoader, Environment
+import quince_kpi as kpi
+import pdfkit
 
 
 ###----------------------------------------------------------------------------
@@ -43,67 +66,40 @@ for content in old_content:
 
 
 ###----------------------------------------------------------------------------
-### Create render dictionary
+### Import dataset(s) and configuration file
 ###----------------------------------------------------------------------------
-
-# Store the report_type and output_dir in the render dictionary. This
-# dictionary will be filled with information thourghout this script, and
-# finally be used as input to the report template.
-render_dict = {'report_type': sys.argv[1], 'output_dir': output_dir}
-
-
-###----------------------------------------------------------------------------
-### Extract configurations
-###----------------------------------------------------------------------------
-
-# Store configuration variables
-with open ('./config.json') as json_file:
-	all_configs = json.load(json_file)
-
-
-###---------------------------------------------------------------------------
-### Identify / extract / import (???) datasets
-###----------------------------------------------------------------------------
-
-# !!! Need input when run script about for which instrument/station and
-# time period!!! To be added later.
-
-# !!! This section cannot be completed before we know how the script will
-# extract/receive data from QuinCe.
-
-# !!! Suggestion for import: Create a function which reads all filenames in
-# data directory and extracts their vessel and data level info from the
-# filename. The functions output is a list of dictionaries with info on which
-# files to combine etc. which will be used as loop indexes later when KPIs are
-# created.
-# -----------
-
-# !!! For now:
-# Store the file names from the data direcotry in a list
-data_files = os.listdir(data_dir)
 
 # Loop through all files in data directory and read data into 'df'
-# !!! Currenlty this only works with one file!
-# !!! If more than one file (from the same instrument): add the df's together
-# (NaN's if some cols missing).
+# Note: Currently the script can only deal with one input data file, but future
+# plan is to concatenate df's if more than one file from the same instrument.
+data_files = os.listdir(data_dir)
 for data_file in data_files:
 	data_path = os.path.join(data_dir, data_file)
 	df = pd.read_csv(data_path, low_memory=False)
 
+# Extract configuration file
+with open ('./config.json') as config_file:
+	all_configs = json.load(config_file)
 
-###---------------------------------------------------------------------------
-### Extract basic information from the data frame
+
+###----------------------------------------------------------------------------
+### Extract relevant info from data and configuration
 ###----------------------------------------------------------------------------
 
-# Identify data level from filename
+# Identify data level from the filename
 for level in all_configs['data_level_config']:
 	if level in data_files[0]:
 		data_level = level
 
 # Set the timestamp column, and extract start and end date
-kpi.set_datetime(df)
+df.loc[:,'Date/Time'] = pd.to_datetime(
+	df.loc[:,'Date/Time'], format = '%Y-%m-%dT%H:%M:%S.%fZ')
 df_start = str(df['Date/Time'][0].date())
 df_end = str(df['Date/Time'][len(df)-1].date())
+
+# Store all data related info in data_config
+data_config = {'data_filename': data_file, 'data_level': data_level,
+	'df_start': df_start,'df_end': df_end}
 
 # Identify instrument name (full and short) from filename
 for instrument, config in all_configs['instrument_config'].items():
@@ -112,27 +108,15 @@ for instrument, config in all_configs['instrument_config'].items():
 		inst_name_short = config['short_name']
 		inst_variables = config['variables']
 
-# Create a dictionary of instrument and data configurations and store in
-# render dictionary
+# Create a dictionary of instrument namings
 inst_config = {'inst_name_full': inst_name_full,
 	'inst_name_short': inst_name_short}
-data_config = {'data_filename': data_file, 'data_level': data_level,
-	'df_start': df_start,'df_end': df_end}
 
-render_dict.update({'inst_config': inst_config, 'data_config': data_config,
-	'kpi_config': all_configs['kpi_config']})
-
-
-###---------------------------------------------------------------------------
-### Add parameter vocabularies to render dictionary
-###---------------------------------------------------------------------------
-
-# Create config dictionaries for the measured (sensor) and calculated values
+# Create config dictionaries for the measured (sensor) and calculated values.
+# For each variable measured by the instrument add all sensors and calc values
+# to the dictionaries.
 meas_vocab = {}
 calc_vocab = {}
-
-# For each variable measured by the instrument add all sensors and calc values
-# to the dictionaries
 for variable in inst_variables:
 	variable_dict = all_configs['variable_config'][variable]
 	for sensor in variable_dict['sensors']:
@@ -142,15 +126,20 @@ for variable in inst_variables:
 		if calc_value not in calc_vocab:
 			calc_vocab[calc_value] = all_configs['vocab_config'][calc_value]
 
-# Add the section configs to the render dictionary
-render_dict.update({'meas_vocab': meas_vocab, 'calc_vocab': calc_vocab})
+# Create the render dictionary and store the report type, output directory
+# and other configurations extracted above
+render_dict = {'report_type': sys.argv[1], 'output_dir': output_dir,
+	'inst_config': inst_config, 'data_config': data_config,
+	'kpi_config': all_configs['kpi_config'], 'meas_vocab': meas_vocab,
+	'calc_vocab': calc_vocab}
 
 
 ###----------------------------------------------------------------------------
 ### Create report
 ###----------------------------------------------------------------------------
 
-# Load the html template and send the kpi package to the jinja environment
+# Load the html template, and share the data frame and kpi package with the
+# jinja environment
 template_loader = FileSystemLoader("templates")
 template_env = Environment(loader=template_loader)
 template_env.globals['kpi'] = kpi
@@ -162,8 +151,8 @@ html_string = template.render(render_dict)
 report_path = """output/DataQualityReport_{inst}_{start}-{end}""".format(
 	inst=inst_name_short, start=str(df_start.replace('-', '')),
 	end=str(df_end.replace('-', '')))
-with open(report_path + '.html','w') as f:
-	f.write(html_string)
+with open(report_path + '.html','w') as html_file:
+	html_file.write(html_string)
 
 # Convert html string to pdf
 options = {'margin-top': '0.75in', 'margin-right': '0.75in',
@@ -172,8 +161,9 @@ options = {'margin-top': '0.75in', 'margin-right': '0.75in',
 pdfkit.from_file(report_path + '.html', report_path + '.pdf', options=options)
 
 
-# -------------------------
-#!!! While working on this script, export the render dict to a json file
-#for easy reading !!!
+###----------------------------------------------------------------------------
+### Export render dictionary to json file
+###----------------------------------------------------------------------------
+
 with open('output/render_dict.json', 'w') as render_file:
 	json.dump(render_dict, render_file, indent=4, separators=(',', ': '))
