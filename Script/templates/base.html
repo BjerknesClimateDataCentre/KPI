@@ -62,7 +62,7 @@
 
     <!-- Create and include figures with captions -->
     {% for kpi_name in kpi_config['meas_figures'] %}
-      <p hidden>{{ kpi.eval_meas_fig_function(kpi_name=kpi_name, sensor=sensor_name, meas_vocab=meas_vocab, df=df, output_dir=output_dir) }} </p>
+      <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name, param=sensor_name, vocab=meas_vocab, df=df, output_dir=output_dir) }} </p>
       {% set filename = sensor_name + '_' + kpi_name + '.png'  %}
       {% set figure_number = '2.' ~ loop.index %}
       {{ macros.figure(kpi_name, filename, figure_number, sensor_config['fig_label_name_html']) }}
@@ -70,7 +70,7 @@
 
   <!-- Create and include tables with captions -->
     {% for kpi_name in kpi_config['meas_tables'] %}
-      {% set table_list = kpi.eval_meas_tab_function(kpi_name=kpi_name, sensor=sensor_name, meas_vocab=meas_vocab, df=df) %}
+      {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name, param=sensor_name, vocab=meas_vocab, df=df) %}
       {% set table_number = '2.' ~ loop.index %}
       {{ macros.table(kpi_name, table_list, table_number, sensor_config['fig_label_name_html']) }}
     {% endfor %}
