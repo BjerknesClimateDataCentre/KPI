@@ -122,7 +122,7 @@
         "intro_tables": ["intro_count_table"],
         "meas_figures": ["meas_flag_piechart", "meas_line_plot"],
         "meas_tables": ["meas_qc_comment_table"],
-        "calc_param_figures": [],
-        "calc_param_tables": []
+        "calc_figures": [],
+        "calc_tables": []
     }
 }

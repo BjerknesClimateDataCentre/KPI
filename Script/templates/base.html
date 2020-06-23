@@ -6,18 +6,19 @@
 </head>
 <body>
 
-  {#-------------------------------------------------------------------------#}
+  <!-------------------------------------------------------------------------->
   <!-- REPORT TITLE -->
   <h1>Data Quality Report</h1>
-  <h2> For ICOS station <i>{{inst_config['inst_name_full']}}</i> - {{data_config['df_start']}} to {{data_config['df_end']}}</h2>
+  <h2> For ICOS station <i>{{inst_config['inst_name_full']}}</i> -
+    {{data_config['df_start']}} to {{data_config['df_end']}}</h2>
 
-
-  {#-------------------------------------------------------------------------#}
+  <!-------------------------------------------------------------------------->
   <!-- INTRODUCTION SECTION -->
   <h3>1.&emsp;Introduction</h3>
 
     <!-- Introduction text -->
-    {{ macros.intro_text(report_type, meas_vocab, calc_vocab, inst_config, data_config) }}
+    {{ macros.intro_text(report_type, meas_vocab, calc_vocab, inst_config,
+      data_config) }}
 
     <!-- Text about each figure and table in this section -->
     <p>
@@ -27,7 +28,9 @@
 
     <!-- Create and include figures with captions -->
     {% for kpi_name in kpi_config['intro_figures'] %}
-      <p hidden> {{ kpi.eval_intro_fig_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df, output_dir=output_dir) }} </p>
+      <p hidden> {{ kpi.eval_intro_fig_function(kpi_name=kpi_name,
+        meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df,
+        output_dir=output_dir) }} </p>
       {% set filename = kpi_name + '.png' %}
       {% set figure_number = '1.' ~ loop.index %}
       {{ macros.figure(kpi_name, filename, figure_number, False) }}
@@ -35,13 +38,13 @@
 
     <!-- Create and include tables with captions -->
     {% for kpi_name in kpi_config['intro_tables'] %}
-      {% set table_list = kpi.eval_intro_tab_function(kpi_name=kpi_name, meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
+      {% set table_list = kpi.eval_intro_tab_function(kpi_name=kpi_name,
+        meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
       {% set table_number = '1.' ~ loop.index %}
       {{ macros.table(kpi_name, table_list, table_number, False) }}
     {% endfor %}
 
-
-  {#-------------------------------------------------------------------------#}
+  <!-------------------------------------------------------------------------->
   <!--  MEASURED VALUES SECTION -->
   <h3>2.&emsp;Measured values</h3>
 
@@ -62,52 +65,76 @@
 
     <!-- Create and include figures with captions -->
     {% for kpi_name in kpi_config['meas_figures'] %}
-      <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name, param=sensor_name, vocab=meas_vocab, df=df, output_dir=output_dir) }} </p>
+      <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name, param=sensor_name,
+        vocab=meas_vocab, df=df, output_dir=output_dir) }} </p>
       {% set filename = sensor_name + '_' + kpi_name + '.png'  %}
       {% set figure_number = '2.' ~ loop.index %}
-      {{ macros.figure(kpi_name, filename, figure_number, sensor_config['fig_label_name_html']) }}
+      {{ macros.figure(kpi_name, filename, figure_number,
+        sensor_config['fig_label_name_html']) }}
     {% endfor %}
 
   <!-- Create and include tables with captions -->
     {% for kpi_name in kpi_config['meas_tables'] %}
-      {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name, param=sensor_name, vocab=meas_vocab, df=df) %}
+      {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
+        param=sensor_name, vocab=meas_vocab, df=df) %}
       {% set table_number = '2.' ~ loop.index %}
-      {{ macros.table(kpi_name, table_list, table_number, sensor_config['fig_label_name_html']) }}
+      {{ macros.table(kpi_name, table_list, table_number,
+        sensor_config['fig_label_name_html']) }}
     {% endfor %}
 
+  <!-- End measured subsection for loop -->
   {% endfor %}
 
-
-  {#-------------------------------------------------------------------------#}
-  <!-- CALCULATED VALUES SECTION -->
-
+  <!-------------------------------------------------------------------------->
   {% if calc_vocab != {} %}
+  <!-- CALCULATED VALUES SECTION -->
     <h3>3.&emsp;Calculated values</h3>
+
+    <!-- Loop to create a subsection per sensors -->
     {% for calc_name, calc_config in calc_vocab.items() %}
 
-      <!-- Add section title with numbering -->
+      <!-- Subsection number and title -->
       <h4> 3.{{loop.index}}&emsp;{{calc_config['subsection_title']}} </h4>
 
-      <!-- !!! Add similar content as for measured values !!! -->
+      <!-- Description about the value -->
+      <p> {{ macros.param_text(report_type, calc_name) }} </p>
 
+      <!-- Text about each figure and table in this section -->
+      <p>
+        {{ macros.visuals_text(kpi_config['calc_figures'], 3, True) }}
+        {{ macros.visuals_text(kpi_config['calc_tables'], 3, False) }}
+      </p>
+
+      <!-- Create and include figures with captions -->
+      {% for kpi_name in kpi_config['calc_figures'] %}
+        <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name, param=calc_name,
+          vocab=calc_vocab, df=df, output_dir=output_dir) }} </p>
+        {% set filename = calc_name + '_' + kpi_name + '.png'  %}
+        {% set figure_number = '3.' ~ loop.index %}
+        {{ macros.figure(kpi_name, filename, figure_number,
+          calc_config['fig_label_name_html']) }}
+      {% endfor %}
+
+      <!-- Create and include tables with captions -->
+      {% for kpi_name in kpi_config['calc_tables'] %}
+        {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
+          param=calc_name, vocab=calc_vocab, df=df) %}
+        {% set table_number = '3.' ~ loop.index %}
+        {{ macros.table(kpi_name, table_list, table_number,
+          calc_config['fig_label_name_html']) }}
+      {% endfor %}
+
+    <!-- End measured subsection for loop -->
     {% endfor %}
   {% endif %}
 
-
-  {#-------------------------------------------------------------------------#}
+  <!-------------------------------------------------------------------------->
   <!-- PROP-PROP SECTION -->
   <h3>4.&emsp;Property-property plots</h3>
 
-  <!-- !! Create e.g. delta T plots, and similar (look for inspiration for such
-  plots in socat) -->
-
-
-  {#-------------------------------------------------------------------------#}
+  <!-------------------------------------------------------------------------->
   <!-- DIAGNOSTICS SECTION -->
   <h3>5.&emsp;Diagnostics</h3>
-
-  <!-- !! On hold until KPI scripts communicate directly with QuinCe, and until
-  the diagnostic data also has got QC flags in QuinCe -->
 
 </body>
 </html>
