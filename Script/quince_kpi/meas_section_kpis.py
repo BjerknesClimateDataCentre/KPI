@@ -47,12 +47,12 @@ K = 1.5
 ### Functions
 
 
-def meas_flag_piechart(sensor, meas_vocab, df,
+def meas_flag_piechart(param, vocab, df,
 	output_dir):
 
-	col_header_name = meas_vocab[sensor]['col_header_name']
+	col_header_name = vocab[param]['col_header_name']
 
-	# Store the sensors QC flags in a list (remove '.0' if needed)
+	# Store the sensors (param) QC flags in a list (remove '.0' if needed)
 	flag_list = list(df[col_header_name + ' QC Flag'])
 	flag_list_cleaned = [str(item).split('.')[0] for item in flag_list]
 
@@ -77,14 +77,14 @@ def meas_flag_piechart(sensor, meas_vocab, df,
 	plt.tight_layout()
 
 	# Save the plot to file and close figure
-	filename = sensor + '_meas_flag_piechart.png'
+	filename = param + '_meas_flag_piechart.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()
 
 
 def make_plot(df, col_header_name, ax):
-	# Identify the sensors QC flag columns
+	# Identify the sensors (param) QC flag columns
 	color_column = col_header_name + ' QC Flag'
 
 	# Remove NaNs from color_dict since missing values are not plotted
@@ -99,10 +99,10 @@ def make_plot(df, col_header_name, ax):
 					marker='.')
 
 
-def meas_line_plot(sensor, meas_vocab, df, output_dir):
+def meas_line_plot(param, vocab, df, output_dir):
 
 	# Remove rows with NaNs
-	col_header_name = meas_vocab[sensor]['col_header_name']
+	col_header_name = vocab[param]['col_header_name']
 	df = df.dropna(subset=[col_header_name])
 
 	# The figure created will contain two plots: a) show all measurements, b)
@@ -137,7 +137,7 @@ def meas_line_plot(sensor, meas_vocab, df, output_dir):
 	# Add grid and labels etc.
 	ax.grid(True)
 	fig.autofmt_xdate()
-	plt.ylabel(meas_vocab[sensor]['fig_label_name_python'])
+	plt.ylabel(vocab[param]['fig_label_name_python'])
 	ax.set_title('a)', loc='left', fontsize=TITLE_FONTSIZE, fontweight='bold')
 
 	# Create the second plot removing values outside upper and lower range
@@ -149,21 +149,21 @@ def meas_line_plot(sensor, meas_vocab, df, output_dir):
 	ax.legend()
 	ax.grid(True)
 	fig.autofmt_xdate()
-	#plt.ylabel(meas_vocab[sensor]['fig_label_name_python'])
+	#plt.ylabel(vocab[param]['fig_label_name_python'])
 	ax.set_title('b)', loc='left', fontsize=TITLE_FONTSIZE, fontweight='bold')
 	#plt.xlabel('Time')
 
 	# Save the plot to file and close figure
-	filename = sensor + '_meas_line_plot.png'
+	filename = param + '_meas_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()
 
 
-def meas_qc_comment_table(sensor, meas_vocab, df):
+def meas_qc_comment_table(param, vocab, df):
 
-	# Store the sensors QC comments in a list and remove nan's.
-	col_header_name = meas_vocab[sensor]['col_header_name']
+	# Store the sensors (param) QC comments in a list and remove nan's.
+	col_header_name = vocab[param]['col_header_name']
 	comment_list = list(df[col_header_name + ' QC Comment'])
 	comment_list = [x for x in comment_list if x == x]
 
