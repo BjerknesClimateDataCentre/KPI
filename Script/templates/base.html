@@ -19,59 +19,57 @@
   <!-- INTRODUCTION SECTION -->
   <h3>{{section_counter}}.&emsp;Introduction</h3>
 
-    <!-- Introduction text -->
-    {% set filename='section_text/intro_text.html' %}
-    {% include filename %}
+  <!-- Introduction text -->
+  {% include 'section_text/intro_text.html' %}
 
-    <!-- Insert code for map showing station position -->
+  <!-- Insert cruise track/station locaton map -->
 
-    <!-- Station/instrument description -->
-    {% if report_type == 'HO' %}
-      <h4>Station description</h4>
-        {% include 'instrument_descriptions/' + inst_config['inst_name_short']
+  <!-- Station/instrument description -->
+  {% if report_type == 'HO' %}
+    <h4>Station Description</h4>
+      {% include 'instrument_descriptions/' + inst_config['inst_name_short']
         + '.html' %}
-    {% endif %}
+    <!-- Insert image of station -->
+  {% endif %}
 
-    <!-- Insert code for station image -->
-
-    <!-- Increase section counter -->
-    {% set section_counter = section_counter + 1 %}
+  <!-- Increase section counter -->
+  {% set section_counter = section_counter + 1 %}
 
   <!-------------------------------------------------------------------------->
   <!-- DATA OVERVIEW SECTION -->
   <h3>{{section_counter}}.&emsp;Data overview</h3>
 
-    <!-- Data overview text -->
-    {% include 'section_text/data_overview_text.html' %}
+  <!-- Data overview text -->
+  {% include 'section_text/data_overview_text.html' %}
 
-    <!-- Text about each figure and table in this section -->
-    <p>
-      {{ macros.visuals_text(
-        kpi_config['intro_figures'], section_counter, False, True) }}
-      {{ macros.visuals_text(
-        kpi_config['intro_tables'], section_counter, False, False) }}
-    </p>
+  <!-- Text about each figure and table in this section -->
+  <p>
+    {{ macros.visuals_text(
+      kpi_config['intro_figures'], section_counter, False, True) }}
+    {{ macros.visuals_text(
+      kpi_config['intro_tables'], section_counter, False, False) }}
+  </p>
 
-    <!-- Create and include figures with captions -->
-    {% for kpi_name in kpi_config['intro_figures'] %}
-      <p hidden> {{ kpi.eval_intro_fig_function(kpi_name=kpi_name,
-        meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df,
+  <!-- Create and include figures with captions -->
+  {% for kpi_name in kpi_config['intro_figures'] %}
+    <p hidden> {{ kpi.eval_intro_fig_function(kpi_name=kpi_name,
+      meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df,
         output_dir=output_dir) }} </p>
-      {% set filename = kpi_name + '.png' %}
-      {% set figure_number = section_counter ~ '.' ~ loop.index %}
-      {{ macros.figure(kpi_name, filename, figure_number, False) }}
-    {% endfor %}
+    {% set filename = kpi_name + '.png' %}
+    {% set figure_number = section_counter ~ '.' ~ loop.index %}
+    {{ macros.figure(kpi_name, filename, figure_number, False) }}
+  {% endfor %}
 
-    <!-- Create and include tables with captions -->
-    {% for kpi_name in kpi_config['intro_tables'] %}
-      {% set table_list = kpi.eval_intro_tab_function(kpi_name=kpi_name,
-        meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
-      {% set table_number = section_counter ~ '.' ~ loop.index %}
-      {{ macros.table(kpi_name, table_list, table_number, False) }}
-    {% endfor %}
+  <!-- Create and include tables with captions -->
+  {% for kpi_name in kpi_config['intro_tables'] %}
+    {% set table_list = kpi.eval_intro_tab_function(kpi_name=kpi_name,
+      meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
+    {% set table_number = section_counter ~ '.' ~ loop.index %}
+    {{ macros.table(kpi_name, table_list, table_number, False) }}
+  {% endfor %}
 
-    <!-- Increase section counter -->
-    {% set section_counter = section_counter + 1 %}
+  <!-- Increase section counter -->
+  {% set section_counter = section_counter + 1 %}
 
   <!-------------------------------------------------------------------------->
   <!--  MEASURED VALUES SECTION -->
@@ -137,7 +135,7 @@
       {% set subsection_counter = loop.index %}
 
       <!-- Subsection number and title -->
-      <h4> {{section_counter}}.{{loop.index}}&emsp;
+      <h4> {{section_counter}}.{{subsection_counter}}&emsp;
       {{calc_config['subsection_title']}} </h4>
 
       <!-- Description about the value -->
@@ -145,10 +143,10 @@
 
       <!-- Text about each figure and table in this section -->
       <p>
-        {{ macros.visuals_text(
-          kpi_config['calc_figures'], section_counter, subsection_counter, True) }}
-        {{ macros.visuals_text(
-          kpi_config['calc_tables'], section_counter, subsection_counter, False) }}
+        {{ macros.visuals_text(kpi_config['calc_figures'], section_counter,
+          subsection_counter, True) }}
+        {{ macros.visuals_text(kpi_config['calc_tables'], section_counter,
+          subsection_counter, False) }}
       </p>
 
       <!-- Create and include figures with captions -->
@@ -157,7 +155,7 @@
           vocab=calc_vocab, df=df, output_dir=output_dir) }} </p>
         {% set filename = calc_name + '_' + kpi_name + '.png'  %}
         {% set figure_number = section_counter ~ '.' ~ subsection_counter ~ '.'
-      ~ loop.index %}
+          ~ loop.index %}
         {{ macros.figure(kpi_name, filename, figure_number,
           calc_config['fig_label_name_html']) }}
       {% endfor %}
@@ -167,7 +165,7 @@
         {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
           param=calc_name, vocab=calc_vocab, df=df) %}
         {% set table_number = section_counter ~ '.' ~ subsection_counter ~ '.'
-      ~ loop.index %}
+          ~ loop.index %}
         {{ macros.table(kpi_name, table_list, table_number,
           calc_config['fig_label_name_html']) }}
       {% endfor %}
