@@ -6,14 +6,18 @@
 {% endmacro %}
 
 
-{% macro visuals_text(kpi_list, section_number, figure) %}
+{% macro visuals_text(kpi_list, section_number, subsection_number, figure) %}
   {% for kpi_name in kpi_list %}
     {% if figure %}
       Figure
     {% else %}
       Table
     {% endif %}
-    {{section_number}}.{{loop.index}}
+    {% if subsection_number %}
+      {{section_number}}.{{subsection_number}}.{{loop.index}}
+    {% else %}
+      {{section_number}}.{{loop.index}}
+    {% endif %}
     {% set text = 'kpi_descriptions/' + kpi_name + '_text.html' %}
     {% include text %}
   {% endfor %}
