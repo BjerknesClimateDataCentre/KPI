@@ -120,11 +120,23 @@
         "L2"
     ],
     "kpi_config": {
-        "intro_figures": ["intro_line_plot", "intro_stacked_bar_plot"],
-        "intro_tables": ["intro_count_table"],
-        "meas_figures": ["meas_flag_piechart", "meas_line_plot"],
-        "meas_tables": ["meas_qc_comment_table"],
-        "calc_figures": [],
-        "calc_tables": []
+        "overview_figures": [
+            "overview_line_plot",
+            "overview_stacked_bar_plot"
+        ],
+        "overview_tables": [
+            "overview_count_table"
+        ],
+        "meas_figures": [
+            "meas_flag_piechart",
+            "meas_line_plot"
+        ],
+        "meas_tables": [
+            "meas_qc_comment_table"
+        ],
+        "calc_figures": [
+        ],
+        "calc_tables": [
+        ]
     }
 }

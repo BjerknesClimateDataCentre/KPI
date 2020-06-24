@@ -1,5 +1,5 @@
 ###############################################################################
-### KPI: Line plot(s)                                                       ###
+### LINE PLOT FOR OVERVIEW SECTION
 ###############################################################################
 
 ### Description:
@@ -7,7 +7,6 @@
 
 #----------
 # TODO:
-# - Style these plots as if they were default seaborn plots (use sns.set())
 # - Improve layout when plot in three columns (things collide)
 # - Time label is not added if there is no subplot in the lowest row (e.g. when
 # plot 5 params). Fix this!
@@ -82,7 +81,7 @@ def make_subplot(parameter, df, ax):
 
 # Function plots parameter(s) vs time, saves the figure in the output
 # directory, and returns the figures filename back to the main script.
-def intro_line_plot(meas_vocab, calc_vocab, df, output_dir):
+def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
 
 	# Create parameter_dict (CHANGE FUNCTION SO THAT THIS IS NOT NEEDED)
 	parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
@@ -146,7 +145,7 @@ def intro_line_plot(meas_vocab, calc_vocab, df, output_dir):
 	fig.autofmt_xdate()
 
 	# Save plot to file and close figure
-	filename = 'intro_line_plot.png'
+	filename = 'overview_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()

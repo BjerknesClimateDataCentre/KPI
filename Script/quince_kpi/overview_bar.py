@@ -1,5 +1,5 @@
 ###############################################################################
-###  Bar plot(s) for introduction section                                   ###
+###  BAR PLOT FOR SUMMARY SECTION
 ###############################################################################
 
 ### Description:
@@ -53,7 +53,7 @@ def get_figsize(parameter_dict):
 
 
 # Function creates a barplot, and saves the figure in the output directory.
-def intro_bar_plot(meas_vocab, calc_vocab, df, output_dir):
+def overview_bar_plot(meas_vocab, calc_vocab, df, output_dir):
 
 	# Create parameter_dict (CHANGE FUNCTION SO THAT THIS IS NOT NEEDED)
 	parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
@@ -106,7 +106,7 @@ def intro_bar_plot(meas_vocab, calc_vocab, df, output_dir):
 	plt.ylabel('Frequency')
 
 	# Save file abd close figure
-	filename = 'intro_bar_plot.png'
+	filename = 'overview_bar_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()
@@ -114,7 +114,7 @@ def intro_bar_plot(meas_vocab, calc_vocab, df, output_dir):
 
 # Function creates a stacked barplot, and saves the figure in the output
 # directory.
-def intro_stacked_bar_plot(meas_vocab, calc_vocab, df, output_dir):
+def overview_stacked_bar_plot(meas_vocab, calc_vocab, df, output_dir):
 
 	# Create parameter_dict (CHANGE FUNCTION SO THAT THIS IS NOT NEEDED)
 	parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
@@ -230,7 +230,7 @@ def intro_stacked_bar_plot(meas_vocab, calc_vocab, df, output_dir):
 	plt.ylabel('Frequency')
 
 	# Save file and close figure
-	filename = 'intro_stacked_bar_plot.png'
+	filename = 'overview_stacked_bar_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
 	plt.close()
