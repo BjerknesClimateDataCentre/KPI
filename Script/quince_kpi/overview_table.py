@@ -17,7 +17,7 @@
 #------------------------------------------------------------------------------
 ### Functions
 
-def intro_count_table(df, meas_vocab, calc_vocab):
+def overview_count_table(df, meas_vocab, calc_vocab):
 	table_list = []
 	for sensor_vocab in meas_vocab.values():
 		table_list.append({

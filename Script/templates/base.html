@@ -24,8 +24,8 @@
 
   <!-- Insert cruise track/station locaton map -->
 
-  <!-- Station/instrument description -->
   {% if report_type == 'HO' %}
+    <!-- Station/instrument subsection -->
     <h4>Station Description</h4>
       {% include 'instrument_descriptions/' + inst_config['inst_name_short']
         + '.html' %}
@@ -45,14 +45,14 @@
   <!-- Text about each figure and table in this section -->
   <p>
     {{ macros.visuals_text(
-      kpi_config['intro_figures'], section_counter, False, True) }}
+      kpi_config['overview_figures'], section_counter, False, True) }}
     {{ macros.visuals_text(
-      kpi_config['intro_tables'], section_counter, False, False) }}
+      kpi_config['overview_tables'], section_counter, False, False) }}
   </p>
 
   <!-- Create and include figures with captions -->
-  {% for kpi_name in kpi_config['intro_figures'] %}
-    <p hidden> {{ kpi.eval_intro_fig_function(kpi_name=kpi_name,
+  {% for kpi_name in kpi_config['overview_figures'] %}
+    <p hidden> {{ kpi.eval_overview_fig_function(kpi_name=kpi_name,
       meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df,
         output_dir=output_dir) }} </p>
     {% set filename = kpi_name + '.png' %}
@@ -61,8 +61,8 @@
   {% endfor %}
 
   <!-- Create and include tables with captions -->
-  {% for kpi_name in kpi_config['intro_tables'] %}
-    {% set table_list = kpi.eval_intro_tab_function(kpi_name=kpi_name,
+  {% for kpi_name in kpi_config['overview_tables'] %}
+    {% set table_list = kpi.eval_overview_tab_function(kpi_name=kpi_name,
       meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
     {% set table_number = section_counter ~ '.' ~ loop.index %}
     {{ macros.table(kpi_name, table_list, table_number, False) }}

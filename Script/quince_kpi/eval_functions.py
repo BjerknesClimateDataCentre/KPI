@@ -39,13 +39,13 @@ import quince_kpi as kpi
 #------------------------------------------------------------------------------
 ### Functions
 
-# Run a kpi function which creates a figure for the intro section
-def eval_intro_fig_function(kpi_name, meas_vocab, calc_vocab, df, output_dir):
+# Run a kpi function which creates a figure for the overview section
+def eval_overview_fig_function(kpi_name, meas_vocab, calc_vocab, df, output_dir):
 	eval('kpi.' + kpi_name)(meas_vocab=meas_vocab, calc_vocab=calc_vocab,
 		df=df, output_dir=output_dir)
 
-# Run a kpi function which creates and returns a table for the intro section
-def eval_intro_tab_function(kpi_name, meas_vocab, calc_vocab, df):
+# Run a kpi function which creates and returns a table for the overview section
+def eval_overview_tab_function(kpi_name, meas_vocab, calc_vocab, df):
 	table_list = eval('kpi.' + kpi_name)(meas_vocab=meas_vocab,
 		calc_vocab=calc_vocab, df=df)
 	return table_list
