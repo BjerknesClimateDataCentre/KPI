@@ -1,0 +1,15 @@
+<p>
+  The quality of the following parameters (measured and calculated) are assessed in the report:
+  <ul>
+    {% for param, config in meas_vocab.items() %}
+      <li>
+        {{config['subsection_title']}} ({{config['fig_label_name_html']}})
+      </li>
+    {% endfor %}
+    {% for param, config in calc_vocab.items() %}
+      <li>
+        {{config['subsection_title']}} ({{config['fig_label_name_html']}})
+      </li>
+    {% endfor %}
+  </ul>
+</p>
