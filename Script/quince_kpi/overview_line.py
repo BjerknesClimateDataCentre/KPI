@@ -2,14 +2,12 @@
 ### LINE PLOT FOR OVERVIEW SECTION
 ###############################################################################
 
-### Description:
-# This KPI provides a visualisation of the data.
-
-#----------
-# TODO:
-# - Improve layout when plot in three columns (things collide)
-# - Time label is not added if there is no subplot in the lowest row (e.g. when
-# plot 5 params). Fix this!
+### Description of KPI:
+# The kpi function 'overview_line_plot' creates a figure which visualises all
+# parameters (measured or calculated) evaluated in the report. The figure
+# contains one subplot per parameter. The subplots are arranged in one or two
+# columns depending on the number of parameters. The dot colors indicate the
+# QC flag assigned.
 
 
 #------------------------------------------------------------------------------
@@ -24,7 +22,7 @@ import math
 #------------------------------------------------------------------------------
 ### Declair constants etc.
 
-# Layout adjustments related to the number of plots in figure
+# Layout adjustments related to the number of parameters/subplots
 LIMIT_1COL = 3
 LIMIT_HEIGHT_2 = 8
 LIMIT_HEIGHT_3 = 12
@@ -41,62 +39,36 @@ ALPHA = 0.7
 # Title fontsize:
 TITLE_FONTSIZE = 9
 
-# QC Flag color dictionary
+# Specify the color representing each QC flag
 COLOR_DICT = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A'}
 
 
 #------------------------------------------------------------------------------
-### Functions
+### Function
 
-# Returns how many rows and columns of subplots in the resulting figure
-def get_row_col(n_plot):
+# Create line plot figure and store it in the output directory
+def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
+
+	# Extract what is needed from meas_vocab and calc_vocab into param_dict
+	parameter_dict = {
+		config['col_header_name'] : config['fig_label_name_python']
+		for config in meas_vocab.values()}
+
+	parameter_dict.update(
+		{config['col_header_name'] : config['fig_label_name_python']
+		for config in calc_vocab.values()})
+
+	# Get number of subplots
+	n_plot = len(parameter_dict)
+
+	# Set number of rows and columns for the subplots
 	if n_plot <= LIMIT_1COL:
 		n_col = 1
-	elif n_plot > LIMIT_1COL:
+	else:
 		n_col = 2
 	n_row = math.ceil(n_plot/n_col)
 
-	return n_row, n_col
-
-
-def make_subplot(parameter, df, ax):
-	# Remove rows with NaNs
-	df = df.dropna(subset=[parameter])
-
-	# Identify the parameters QC flag columns
-	flag_column = parameter + ' QC Flag'
-
-	# Set plot color for the QC flags and plot one flag at the time
-	for flag, col in COLOR_DICT.items():
-			limited_df = df[df[flag_column]==int(flag)]
-			ax.scatter(x=limited_df['Date/Time'], y=limited_df[parameter],
-				c=col, label=int(flag), alpha=ALPHA, edgecolors='none',
-				marker='.')
-
-	ax.grid(True)
-	# !!! To adjust the suplots- Try this:
-	#plt.subplots_adjust(bottom=0.2, wspace=0.35)
-	# Other inputs are: top, left, right, hspace
-
-
-# Function plots parameter(s) vs time, saves the figure in the output
-# directory, and returns the figures filename back to the main script.
-def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
-
-	# Create parameter_dict (CHANGE FUNCTION SO THAT THIS IS NOT NEEDED)
-	parameter_dict = {config['col_header_name'] : config['fig_label_name_python']
-	for config in meas_vocab.values()}
-
-	parameter_dict.update({config['col_header_name'] : config['fig_label_name_python']
-	for config in calc_vocab.values()})
-
-	# Store number of plots to create
-	n_plot = len(parameter_dict)
-
-	# Get the number of rows and columns in figure
-	n_row, n_col = get_row_col(n_plot)
-
-	# Set up the figure
+    # Set height of each subplot
 	if n_plot > LIMIT_HEIGHT_3:
 		plot_height = PLOT_HEIGHT_3
 	elif n_plot > LIMIT_HEIGHT_2:
@@ -104,44 +76,48 @@ def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
 	else:
 		plot_height = PLOT_HEIGHT_1
 
-	figsize = (FIG_WIDTH, plot_height*n_row)
-	fig, ax = plt.subplots(sharex=True, figsize=figsize)
+	# Set up the figure
+	fig, ax = plt.subplots(sharex=True, figsize=(FIG_WIDTH, plot_height*n_row))
 
-	# Loop through all row and column positions and make their subplots
-	count = 0
+	# Loop through all row and column positions and create each subplot
+	subplot_count = 0
 	for row in range(n_row):
 		for col in range(n_col):
 
-			# Specify which param to plot, and where.
-			parameter = list(parameter_dict.keys())[count]
-			ax = plt.subplot2grid((n_row, n_col), (row,col))
+			# Specify which parameter to plot
+			parameter = list(parameter_dict.keys())[subplot_count]
 
-			# Make subplot
-			make_subplot(parameter, df, ax)
-			ax.legend()
-			# !!! HOW TO ADD ONLY ONCE??
-			#ax.legend(fontsize=9, bbox_to_anchor=(1, 1)) ???
+			# Create copy of df witouh missing values for the current parameter
+			df_edit = df.dropna(subset=[parameter])
 
-			# Add title (and letter if needed)
-			if n_plot == 1:
-				plt.title('     ' + list(parameter_dict.values())[count], fontsize=TITLE_FONTSIZE,
-					fontweight='bold')
-			else:
-				title = string.ascii_lowercase[count] + ')     ' + list(parameter_dict.values())[count]
-				ax.set_title(title, loc='left', fontsize=TITLE_FONTSIZE,
-					fontweight='bold')
+			# Specify subplot location
+			ax = plt.subplot2grid((n_row, n_col), (row, col))
 
-			# Increase counter (stop when exceeds number of params)
-			count += 1
-			if count >= n_plot:
+			# Create subplot in loop (add one flag at the time)
+			for flag, col in COLOR_DICT.items():
+				df_edit2 = df_edit[df_edit[parameter + ' QC Flag']==int(flag)]
+				ax.scatter(x=df_edit2['Date/Time'], y=df_edit2[parameter],
+					c=col, label=int(flag), alpha=ALPHA, edgecolors='none',
+					marker='.')
+
+			# Add subplot grid, legend and tittle
+			ax.grid(True)
+
+			if subplot_count == 0:
+				ax.legend()
+
+			title = '{letter})     {param_label}'.format(
+				letter=string.ascii_lowercase[subplot_count],
+				param_label=list(parameter_dict.values())[subplot_count])
+			ax.set_title(title, loc='left', fontsize=TITLE_FONTSIZE,
+				fontweight='bold')
+
+			# Increase subplot_count (stop when reach total number of subplots)
+			subplot_count += 1
+			if subplot_count == n_plot:
 				break
 
-	# If odd number of plots, add an empty plot in the last position so
-	# that the x-axis get included on the second row of plots
-	#ax = plt.subplot2grid((n_row, n_col), (n_row-1,n_col-1))
-	#ax.scatter(x=df['Date/Time'], y=df[parameter])
-
-	# Add x-axis sideways
+	# Add shared x-axis sideways to bottom subplots
 	fig.autofmt_xdate()
 
 	# Save plot to file and close figure
