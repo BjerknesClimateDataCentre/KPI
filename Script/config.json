@@ -3,6 +3,7 @@
         "Nuka Arctica": {
             "code": "26NA",
             "short_name": "Nuka",
+            "type": "SOOP",
             "variables": [
                 "underway_fCO2"
             ],
@@ -11,6 +12,7 @@
         "G.O. Sars": {
             "code": "58GS",
             "short_name": "GOSars",
+            "type": "SOOP",
             "variables": [
                 "underway_fCO2"
             ],
