@@ -1,8 +1,8 @@
 ###############################################################################
-### KPI figures/tables for measured section
+### FIGURES AND TABLE(S) FOR THE MEASURED SECTION
 ###############################################################################
 
-### Description:
+### Description of KPI:
 # - KPI function for creating a pie chart for a single parameter
 # - KPI function for creating two line plots for a single paramter. One plot
 # showing all measurements, the other scaled (only k times IQR)
@@ -22,7 +22,7 @@ import numpy as np
 
 
 #------------------------------------------------------------------------------
-### Declair constants etc.
+### Declare constants etc.
 
 # Figure sizes
 PIE_FIG_SIZE = 2.5
