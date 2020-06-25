@@ -98,8 +98,9 @@
 
     <!-- Create and include figures with captions -->
     {% for kpi_name in kpi_config['meas_figures'] %}
-      <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name, param=sensor_name,
-        vocab=meas_vocab, df=df, output_dir=output_dir) }} </p>
+      <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name,
+        parameter=sensor_name, vocab=meas_vocab, df=df,
+        output_dir=output_dir) }} </p>
       {% set filename = sensor_name + '_' + kpi_name + '.png'  %}
       {% set figure_number = section_counter ~ '.' ~ subsection_counter ~ '.'
       ~ loop.index %}
@@ -110,7 +111,7 @@
   <!-- Create and include tables with captions -->
     {% for kpi_name in kpi_config['meas_tables'] %}
       {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
-        param=sensor_name, vocab=meas_vocab, df=df) %}
+        parameter=sensor_name, vocab=meas_vocab, df=df) %}
       {% set table_number = section_counter ~ '.' ~ subsection_counter ~ '.'
       ~ loop.index %}
       {{ macros.table(kpi_name, table_list, table_number,
@@ -151,8 +152,9 @@
 
       <!-- Create and include figures with captions -->
       {% for kpi_name in kpi_config['calc_figures'] %}
-        <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name, param=calc_name,
-          vocab=calc_vocab, df=df, output_dir=output_dir) }} </p>
+        <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name,
+          parameter=calc_name, vocab=calc_vocab, df=df,
+          output_dir=output_dir) }} </p>
         {% set filename = calc_name + '_' + kpi_name + '.png'  %}
         {% set figure_number = section_counter ~ '.' ~ subsection_counter ~ '.'
           ~ loop.index %}
@@ -163,7 +165,7 @@
       <!-- Create and include tables with captions -->
       {% for kpi_name in kpi_config['calc_tables'] %}
         {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
-          param=calc_name, vocab=calc_vocab, df=df) %}
+          parameter=calc_name, vocab=calc_vocab, df=df) %}
         {% set table_number = section_counter ~ '.' ~ subsection_counter ~ '.'
           ~ loop.index %}
         {{ macros.table(kpi_name, table_list, table_number,

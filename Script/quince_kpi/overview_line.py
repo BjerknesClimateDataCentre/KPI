@@ -94,7 +94,7 @@ def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
 			# Specify subplot location
 			ax = plt.subplot2grid((n_row, n_col), (row, col))
 
-			# Create subplot in loop (add one flag at the time)
+			# Create subplot in loop - one flag at the time
 			for flag, col in COLOR_DICT.items():
 				df_edit2 = df_edit[df_edit[parameter + ' QC Flag']==int(flag)]
 				ax.scatter(x=df_edit2['Date/Time'], y=df_edit2[parameter],
@@ -121,7 +121,7 @@ def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
 	# Add shared x-axis sideways to bottom subplots
 	fig.autofmt_xdate()
 
-	# Save plot to file and close figure
+	# Save figure to file and close figure
 	filename = 'overview_line_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')

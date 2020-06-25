@@ -12,9 +12,9 @@
 # - Converted the html string to a pdf.
 
 # Requiremens:
-# - The following command line arguments when running the script:
-# 	- report type (either 'PI' or 'HO') which determines the amount of
-#   descriptions in the report.
+# - The command line arguments required when running the script is report type
+# (either 'PI' or 'HO') which determines the amount of descriptions in the
+# report.
 # - The package 'quince_kpi' must be in the same directory as this script.
 # - The 'templates' folder which contains all html related files must be in the
 # same directory as this script.
