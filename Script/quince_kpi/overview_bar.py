@@ -169,7 +169,7 @@ def overview_bar_plot(meas_vocab, calc_vocab, df, output_dir):
 
 	plt.ylabel('Frequency')
 
-	# Save file and close figure
+	# Save figure to file and close figure
 	filename = 'overview_bar_plot.png'
 	filepath = os.path.join(output_dir, filename)
 	plt.savefig(filepath, bbox_inches='tight')
