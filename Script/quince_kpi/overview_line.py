@@ -20,7 +20,7 @@ import math
 
 
 #------------------------------------------------------------------------------
-### Declair constants etc.
+### Declare constants etc.
 
 # Layout adjustments related to the number of parameters/subplots
 LIMIT_1COL = 3
@@ -57,6 +57,7 @@ def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
 	parameter_dict.update(
 		{config['col_header_name'] : config['fig_label_name_python']
 		for config in calc_vocab.values()})
+
 
 	# Get number of subplots
 	n_plot = len(parameter_dict)
