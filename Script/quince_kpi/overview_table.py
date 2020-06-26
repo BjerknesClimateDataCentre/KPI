@@ -23,23 +23,23 @@
 # long and short names, and number of measurements/calculated values
 def overview_count_table(df, meas_vocab, calc_vocab):
 
-	# Add type (measured or calculated) to each parameter vocabulary
-	for vocab in meas_vocab.values():
-		vocab['type'] = 'Measured'
-	for vocab in calc_vocab.values():
-		vocab['type'] = 'Calculated'
-
-	# Merge the two vocabulary dictionaries (updates meas_vocab)
-	meas_vocab.update(calc_vocab)
-
 	# Loop through each parameter and add element (row) to the table list
 	table_list = []
 	for vocab in meas_vocab.values():
 		table_list.append({
 			'Parameter': vocab['subsection_title'],
 			'Short Name [Unit]': vocab['fig_label_name_html'],
-			'Parameter Type': vocab['type'],
-			'Total Number of Values':
+			'Type': 'Measured',
+			'Number of Measurements/Values':
 				len(df.dropna(subset=[vocab['col_header_name']]))
-			})
+		})
+	for vocab in calc_vocab.values():
+		table_list.append({
+			'Parameter': vocab['subsection_title'],
+			'Short Name [Unit]': vocab['fig_label_name_html'],
+			'Type': 'Calculated',
+			'Number of Measurements/Values':
+				len(df.dropna(subset=[vocab['col_header_name']]))
+		})
+
 	return table_list
