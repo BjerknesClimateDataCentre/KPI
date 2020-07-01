@@ -6,43 +6,43 @@
 </head>
 <body>
 
-  <!-------------------------------------------------------------------------->
-  <!-- REPORT TITLE -->
+  {#-------------------------------------------------------------------------#}
+  {# REPORT TITLE #}
   <h1>Key Performance Indicators Report</h1>
-  <h2> For ICOS station <i>{{inst_config['inst_name_full']}}</i> -
+  <h2>For ICOS station <i>{{inst_config['inst_name_full']}}</i> -
     {{data_config['df_start']}} to {{data_config['df_end']}}</h2>
 
-  <!-- Create section counter -->
+  {# Create section counter #}
   {% set section_counter = 1 %}
 
-  <!-------------------------------------------------------------------------->
-  <!-- INTRODUCTION SECTION -->
+  {#-------------------------------------------------------------------------#}
+  {# INTRODUCTION SECTION #}
   <h3>{{section_counter}}.&emsp;Introduction</h3>
 
-  <!-- Introduction text -->
+  {# Introduction text #}
   {% include 'section_text/intro_text.html' %}
 
-  <!-- Insert cruise track/station locaton map -->
+  {# Insert cruise track/station locaton map #}
 
   {% if report_type == 'HO' %}
-    <!-- Station/instrument subsection -->
+    {# Station/instrument subsection #}
     <h4>Station Description</h4>
       {% include 'instrument_descriptions/' + inst_config['inst_name_short']
         + '.html' %}
-    <!-- Insert image of station -->
+    {# Insert image of station #}
   {% endif %}
 
-  <!-- Increase section counter -->
+  {# Increase section counter #}
   {% set section_counter = section_counter + 1 %}
 
-  <!-------------------------------------------------------------------------->
-  <!-- DATA OVERVIEW SECTION -->
+  {#-------------------------------------------------------------------------#}
+  {# DATA OVERVIEW SECTION #}
   <h3>{{section_counter}}.&emsp;Data and quality overview</h3>
 
-  <!-- Data overview text -->
+  {# Data overview text #}
   {% include 'section_text/data_overview_text.html' %}
 
-  <!-- Text about each figure and table in this section -->
+  {# Text about each figure and table in this section #}
   <p>
     {{ macros.visuals_text(
       kpi_config['overview_figures'], section_counter, False, True) }}
@@ -50,17 +50,17 @@
       kpi_config['overview_tables'], section_counter, False, False) }}
   </p>
 
-  <!-- Create and include figures with captions -->
+  {# Create and include figures with captions #}
   {% for kpi_name in kpi_config['overview_figures'] %}
-    <p hidden> {{ kpi.eval_overview_fig_function(kpi_name=kpi_name,
+    {{kpi.eval_overview_fig_function(kpi_name=kpi_name,
       meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df,
-        output_dir=output_dir) }} </p>
+        output_dir=output_dir) | default("", True)}}
     {% set filename = kpi_name + '.png' %}
     {% set figure_number = section_counter ~ '.' ~ loop.index %}
     {{ macros.figure(kpi_name, filename, figure_number, False) }}
   {% endfor %}
 
-  <!-- Create and include tables with captions -->
+  {# Create and include tables with captions #}
   {% for kpi_name in kpi_config['overview_tables'] %}
     {% set table_list = kpi.eval_overview_tab_function(kpi_name=kpi_name,
       meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
@@ -68,28 +68,28 @@
     {{ macros.table(kpi_name, table_list, table_number, False) }}
   {% endfor %}
 
-  <!-- Increase section counter -->
+  {# Increase section counter #}
   {% set section_counter = section_counter + 1 %}
 
 
-  <!-------------------------------------------------------------------------->
-  <!--  MEASURED VALUES SECTION -->
+  {#-------------------------------------------------------------------------#}
+  {#  MEASURED VALUES SECTION #}
   <h3>{{section_counter}}.&emsp;Measured values</h3>
 
-  <!-- Loop to create a subsection per sensors -->
+  {# Loop to create a subsection per sensors #}
   {% for sensor_name, sensor_config in meas_vocab.items() %}
 
-    <!-- Store subsection counter -->
+    {# Store subsection counter #}
     {% set subsection_counter = loop.index %}
 
-    <!-- Subsection number and title -->
+    {# Subsection number and title #}
     <h4> {{section_counter}}.{{subsection_counter}}&emsp;
       {{sensor_config['subsection_title']}} </h4>
 
-    <!-- Description about the sensor -->
+    {# Description about the sensor #}
     <p> {{ macros.param_text(report_type, sensor_name) }} </p>
 
-    <!-- Text about each figure and table in this section -->
+    {# Text about each figure and table in this section #}
     <p>
       {{ macros.visuals_text(kpi_config['meas_figures'], section_counter,
       subsection_counter, True) }}
@@ -97,11 +97,11 @@
       subsection_counter, False) }}
     </p>
 
-    <!-- Create and include figures with captions -->
+    {# Create and include figures with captions #}
     {% for kpi_name in kpi_config['meas_figures'] %}
-      <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name,
+      {{ kpi.eval_fig_function(kpi_name=kpi_name,
         parameter=sensor_name, vocab=meas_vocab, df=df,
-        output_dir=output_dir) }} </p>
+        output_dir=output_dir) | default("", True)}}
       {% set filename = sensor_name + '_' + kpi_name + '.png'  %}
       {% set figure_number = section_counter ~ '.' ~ subsection_counter ~ '.'
       ~ loop.index %}
@@ -109,7 +109,7 @@
         sensor_config['fig_label_name_html']) }}
     {% endfor %}
 
-  <!-- Create and include tables with captions -->
+    {# Create and include tables with captions #}
     {% for kpi_name in kpi_config['meas_tables'] %}
       {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
         parameter=sensor_name, vocab=meas_vocab, df=df) %}
@@ -119,31 +119,31 @@
         sensor_config['fig_label_name_html']) }}
     {% endfor %}
 
-  <!-- End measured subsection for loop -->
+  {# End measured subsection for loop #}
   {% endfor %}
 
-  <!-- Increase section counter -->
+  {# Increase section counter #}
   {% set section_counter = section_counter + 1 %}
 
-  <!-------------------------------------------------------------------------->
+  {#-------------------------------------------------------------------------#}
+  {# CALCULATED VALUES SECTION #}
   {% if calc_vocab != {} %}
-  <!-- CALCULATED VALUES SECTION -->
     <h3>{{section_counter}}.&emsp;Calculated values</h3>
 
-    <!-- Loop to create a subsection per sensors -->
+    {# Loop to create a subsection per sensors #}
     {% for calc_name, calc_config in calc_vocab.items() %}
 
-      <!-- Store subsection counter -->
+      {# Store subsection counter #}
       {% set subsection_counter = loop.index %}
 
-      <!-- Subsection number and title -->
+      {# Subsection number and title #}
       <h4> {{section_counter}}.{{subsection_counter}}&emsp;
       {{calc_config['subsection_title']}} </h4>
 
-      <!-- Description about the value -->
+      {# Description about the value #}
       <p> {{ macros.param_text(report_type, calc_name) }} </p>
 
-      <!-- Text about each figure and table in this section -->
+      {# Text about each figure and table in this section #}
       <p>
         {{ macros.visuals_text(kpi_config['calc_figures'], section_counter,
           subsection_counter, True) }}
@@ -151,11 +151,11 @@
           subsection_counter, False) }}
       </p>
 
-      <!-- Create and include figures with captions -->
+      {# Create and include figures with captions #}
       {% for kpi_name in kpi_config['calc_figures'] %}
-        <p hidden>{{ kpi.eval_fig_function(kpi_name=kpi_name,
+        {{ kpi.eval_fig_function(kpi_name=kpi_name,
           parameter=calc_name, vocab=calc_vocab, df=df,
-          output_dir=output_dir) }} </p>
+          output_dir=output_dir) | default("", True)}}
         {% set filename = calc_name + '_' + kpi_name + '.png'  %}
         {% set figure_number = section_counter ~ '.' ~ subsection_counter ~ '.'
           ~ loop.index %}
@@ -163,7 +163,7 @@
           calc_config['fig_label_name_html']) }}
       {% endfor %}
 
-      <!-- Create and include tables with captions -->
+      {# Create and include tables with captions #}
       {% for kpi_name in kpi_config['calc_tables'] %}
         {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
           parameter=calc_name, vocab=calc_vocab, df=df) %}
@@ -173,26 +173,26 @@
           calc_config['fig_label_name_html']) }}
       {% endfor %}
 
-    <!-- End measured subsection for loop -->
+    {# End measured subsection for loop #}
     {% endfor %}
 
-    <!-- Increase section counter -->
+    {# Increase section counter #}
     {% set section_counter = section_counter + 1 %}
 
   {% endif %}
 
-  <!-------------------------------------------------------------------------->
-  <!-- PROP-PROP SECTION -->
+  {#-------------------------------------------------------------------------#}
+  {# PROP-PROP SECTION #}
   <h3>{{section_counter}}.&emsp;Property-property plots</h3>
 
-  <!-- Increase section counter -->
+  {# Increase section counter #}
   {% set section_counter = section_counter + 1 %}
 
-  <!-------------------------------------------------------------------------->
-  <!-- DIAGNOSTICS SECTION -->
+  {#-------------------------------------------------------------------------#}
+  {# DIAGNOSTICS SECTION #}
   <h3>{{section_counter}}.&emsp;Diagnostics</h3>
 
-  <!-- Increase section counter -->
+  {# Increase section counter #}
   {% set section_counter = section_counter + 1 %}
 
 

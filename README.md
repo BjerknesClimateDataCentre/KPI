@@ -57,6 +57,6 @@ produce other reports types should wait OTC and PIs are more or less happy with
 the station report type.
 
 
-### Short system descritpion ###
+### System description ###
 
 *Coming soon*...

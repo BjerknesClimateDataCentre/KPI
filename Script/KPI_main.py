@@ -141,7 +141,8 @@ render_dict = {'report_type': sys.argv[1], 'output_dir': output_dir,
 # Load the html template, and share the data frame and kpi package with the
 # jinja environment
 template_loader = FileSystemLoader("templates")
-template_env = Environment(loader=template_loader)
+template_env = Environment(loader=template_loader, trim_blocks=True,
+	lstrip_blocks=True)
 template_env.globals['kpi'] = kpi
 template_env.globals['df'] = df
 template = template_env.get_template("base.html")
