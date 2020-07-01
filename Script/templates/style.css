@@ -1,50 +1,47 @@
 p {
 	font-family: Calibri;
-	font-size: 12;
+	font-size: medium;
 }
 
 h1 {
 	font-family: Calibri;
-	font-size: 40;
+	font-size: xxx-large;
 	text-align: center;
 	text-transform: uppercase;
 }
 
 h2 {
 	font-family: Calibri;
-	font-size: 30;
+	font-size: xx-large;
 	text-align: center;
 }
 
 h3 {
 	font-family: Calibri;
-	font-size: 24;
+	font-size: x-large;
 	margin-left: 40px;
 	margin-top:75px;
 	color: #26428b;
-	font-style: bold;
 	text-transform: capitalize;
 }
 
 h4 {
 	font-family: Calibri;
-	font-size: 18;
+	font-size: large;
 	margin-top:40px;
 	margin-left: 40px;
 	color: black;
-	font-style: bold;
 }
 
 h5 {
 	font-family: Calibri;
-	font-size: 12;
+	font-size: medium;
 	color: black;
-	font-style: bold;
 }
 
 ul {
 	font-family: Calibri;
-	font-size: 11;
+	font-size: medium;
 }
 
 figure, table {
@@ -59,12 +56,12 @@ figure{
 
 figcaption {
     font-family: Calibri;
-	font-size: 8;
+	font-size: medium;
 }
 
 table {
 	font-family: Calibri;
-	font-size: 10;
+	font-size: medium;
 	border-collapse: collapse;
 	width: 60%;
 }
@@ -79,7 +76,7 @@ th, td, tr {
 
 caption {
 	text-align: left;
-	font-size: 8;
+	font-size: medium;
 }
 
 #center {
