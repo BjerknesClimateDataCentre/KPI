@@ -5,7 +5,7 @@
 ### Description:
 # The functions below (called 'eval functions') are simply running the other
 # functions which creates KPI tables and figures (called 'kpi functions').
-# The reason for this inbetween-step is that the python function 'eval' (which
+# The reason for this in-between-step is that the python function 'eval' (which
 # is needed since the we change the function name inside a for loop) is not
 # allowed inside the html base template (where this mentioned for loop is
 # located). The html base template instead calls these eval functions.
@@ -40,9 +40,10 @@ import quince_kpi as kpi
 ### Functions
 
 # Run a kpi function which creates a figure for the overview section
-def eval_overview_fig_function(kpi_name, meas_vocab, calc_vocab, df, output_dir):
-	eval('kpi.' + kpi_name)(meas_vocab=meas_vocab, calc_vocab=calc_vocab,
-		df=df, output_dir=output_dir)
+def eval_overview_fig_function(kpi_name, meas_vocab, calc_vocab, df,
+	output_dir):
+		eval('kpi.' + kpi_name)(meas_vocab=meas_vocab, calc_vocab=calc_vocab,
+			df=df, output_dir=output_dir)
 
 # Run a kpi function which creates and returns a table for the overview section
 def eval_overview_tab_function(kpi_name, meas_vocab, calc_vocab, df):
@@ -60,5 +61,6 @@ def eval_fig_function(kpi_name, parameter, vocab, df, output_dir):
 # measured/calculated value sections. (Note: the diagnostics section can likely
 # use this function too.)
 def eval_tab_function(kpi_name, parameter, vocab, df):
-	table_list = eval('kpi.' + kpi_name)(parameter=parameter, vocab=vocab, df=df)
+	table_list = eval('kpi.' + kpi_name)(parameter=parameter, vocab=vocab,
+		df=df)
 	return table_list

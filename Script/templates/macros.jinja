@@ -52,13 +52,13 @@
       {% if loop.first %}
         <tr>
           {% for header in row_dict.keys() %}
-            <th id='center'> {{header}} </th>
+            <th> {{header}} </th>
           {% endfor %}
         </tr>
       {% endif %}
       <tr>
         {% for value in row_dict.values() %}
-          <td id='center'> {{ value }} </td>
+          <td> {{ value }} </td>
         {% endfor %}
       </tr>
     {% endfor %}
