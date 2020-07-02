@@ -121,7 +121,7 @@
     ],
     "kpi_config": {
         "overview_figures": ["overview_line_plot", "overview_bar_plot"],
-        "overview_tables": ["overview_count_table"],
+        "overview_tables": ["overview_table"],
         "meas_figures": ["meas_flag_piechart", "meas_line_plot"],
         "meas_tables": ["meas_qc_comment_table"],
         "calc_figures": [],
