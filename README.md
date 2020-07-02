@@ -1,6 +1,6 @@
 
 Creating Key Performance Indicators Reports for the marine ICOS data
-============================================================
+====================================================================
 
 
 ### Project description ###
@@ -58,5 +58,22 @@ the station report type.
 
 
 ### System description ###
+The system is based on the python package Jinja2 which is a temlate language
+for python and html (see Jinja2 documentation [here](https://overiq.com/flask-101/basics-of-jinja-template-language/).
 
-*Coming soon*...
+The main python script [KPI_main.py](Script/KPI_main.py) is ran (inside a
+virtual python environment) to create the report. The only input arument is
+currently 'HO' or 'PI', which defines the level of descriptions in the report.
+(In the future these input arguments can include e.g. report type, start and
+end date.)
+
+The main script imports the data and the configuration file, extracts relevant
+information from both, and shares this information and the data frame with the
+html base template [base.html](Script/templates/base.html). The html base
+template: exports the relevant hard coded text from smaller html templates
+files; it calls python functions which creates figures and tables; and it uses
+macros (equivalent to a function) to add content which is repeated (e.g. adding
+all figures to a report section). Finally, the main script creates the report
+as an html string and converts it to pdf format.
+
+See more detialed information inside the individual script files.
