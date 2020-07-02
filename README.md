@@ -14,14 +14,14 @@ time scales. An exact list of such KPIs have not yet been decided.
 We will setup a system so that various reports based on the KPIs plots can be
 made on the fly (possibly with an easy to use GUI on the OTC website/jupter
 notebook). The reports we have in mind includes (but are not limited to):
-* **station reports**: giving insight into how a station has performed since
+* **station report**: giving insight into how a station has performed since
 entering ICOS. These are of interest to the Station PIs
-* **annual reports**: showing how the marine stations have perfomed in the last
+* **annual report**: showing how the marine stations have perfomed in the last
  year. OTC can include these in their annual reports to stakeholders such as
  NFR and the Head Office.
-* **sensor reports**: combining statistics on a specific sensor type across the
+* **sensor report**: combining statistics on a specific sensor type across the
 stations. These are relevant for the manufacturers.
-* **country reports**: how does the stations from a specific counry perform. Of
+* **country report**: how does the stations from a specific counry perform. Of
 interest to the countries focal point and their funders.
 * **QuinCe report**: can show how people QC their data, and shed light on
 weaknesses in the QC system, and possibly detect if QC is not performed in a
@@ -59,7 +59,7 @@ the station report type.
 
 ### System description ###
 The system is based on the python package Jinja2 which is a temlate language
-for python and html (see Jinja2 documentation [here](https://overiq.com/flask-101/basics-of-jinja-template-language/).
+for python and html (see Jinja2 documentation [here](https://overiq.com/flask-101/basics-of-jinja-template-language/)).
 
 The main python script [KPI_main.py](Script/KPI_main.py) is ran (inside a
 virtual python environment) to create the report. The only input arument is
@@ -76,4 +76,4 @@ macros (equivalent to a function) to add content which is repeated (e.g. adding
 all figures to a report section). Finally, the main script creates the report
 as an html string and converts it to pdf format.
 
-See more detialed information inside the individual script files.
+See more detailed information inside the individual script files.
