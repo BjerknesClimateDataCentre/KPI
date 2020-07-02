@@ -51,15 +51,18 @@ planned (as described above). See how the system is build in the figure
 ### The road ahead ###
 Work can continue on the 'station reports'. Minor and major suggested tasks are
 listed in githubs issues section. The major task include adding contents to the
-secions 'calculated parameters' and 'property property plots'. Feedback from
-PIs (and possibly OTC) would soon be nessecary. Work on expancind the system to
-produce other reports types should wait OTC and PIs are more or less happy with
-the station report type.
+secions 'calculated parameters' and 'property property plots'. (See description
+of how to add a new kpi figure or table in the file [function_template.py](
+Script/quince_kpi/function_template.py).) Feedback from PIs (and possibly OTC)
+would soon be nessecary. Work on expancind the system to produce other reports
+types should wait OTC and PIs are more or less happy with the station report
+type.
 
 
 ### System description ###
 The system is based on the python package Jinja2 which is a temlate language
-for python and html (see Jinja2 documentation [here](https://overiq.com/flask-101/basics-of-jinja-template-language/)).
+for python and html (see Jinja2 documentation [here](
+https://overiq.com/flask-101/basics-of-jinja-template-language/)).
 
 The main python script [KPI_main.py](Script/KPI_main.py) is ran (inside a
 virtual python environment) to create the report. The only input arument is
