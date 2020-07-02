@@ -44,7 +44,9 @@ def overview_table(df, meas_vocab, calc_vocab):
 		return table_list
 
 	table_list = []
-	table_list = add_rows(table_list=table_list, vocab=meas_vocab, type='Measured')
-	table_list = add_rows(table_list=table_list, vocab=calc_vocab, type='Calculated')
+	table_list = add_rows(table_list=table_list, vocab=meas_vocab,
+		type='Measured')
+	table_list = add_rows(table_list=table_list, vocab=calc_vocab,
+		type='Calculated')
 
 	return table_list
