@@ -58,7 +58,11 @@
       {% endif %}
       <tr>
         {% for value in row_dict.values() %}
-          <td> {{ value }} </td>
+          {% if loop.first %}
+            <td id='text_left'> {{ value }} </td>
+          {% else %}
+            <td> {{ value }} </td>
+          {% endif %}
         {% endfor %}
       </tr>
     {% endfor %}

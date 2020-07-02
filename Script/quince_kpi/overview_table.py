@@ -19,27 +19,32 @@
 #------------------------------------------------------------------------------
 ### Functions
 
-# Create a table with overview of parameters evaluated in the reports, their
-# long and short names, and number of measurements/calculated values
-def overview_count_table(df, meas_vocab, calc_vocab):
 
-	# Loop through each parameter and add element (row) to the table list
+# Create a table with overview of parameters evaluated in the reports
+def overview_table(df, meas_vocab, calc_vocab):
+
+	# Loops through each parameter and adds a row to the table list
+	def add_rows(table_list, vocab, type):
+		for param_vocab in vocab.values():
+			label = param_vocab['fig_label_name_html']
+			if '[' in label:
+				short_name = list(label.split(' ['))[0]
+				unit = list(label.split(' ['))[1].replace(']','')
+			else:
+				short_name = label
+				unit = '-'
+			table_list.append({
+				'Parameter': param_vocab['subsection_title'],
+				'Short Name': short_name,
+				'Unit': unit,
+				'Type': type,
+				'Number of Data Points':
+					len(df.dropna(subset=[param_vocab['col_header_name']]))
+			})
+		return table_list
+
 	table_list = []
-	for vocab in meas_vocab.values():
-		table_list.append({
-			'Parameter': vocab['subsection_title'],
-			'Short Name [Unit]': vocab['fig_label_name_html'],
-			'Type': 'Measured',
-			'Number of Measurements/Values':
-				len(df.dropna(subset=[vocab['col_header_name']]))
-		})
-	for vocab in calc_vocab.values():
-		table_list.append({
-			'Parameter': vocab['subsection_title'],
-			'Short Name [Unit]': vocab['fig_label_name_html'],
-			'Type': 'Calculated',
-			'Number of Measurements/Values':
-				len(df.dropna(subset=[vocab['col_header_name']]))
-		})
+	table_list = add_rows(table_list=table_list, vocab=meas_vocab, type='Measured')
+	table_list = add_rows(table_list=table_list, vocab=calc_vocab, type='Calculated')
 
 	return table_list
