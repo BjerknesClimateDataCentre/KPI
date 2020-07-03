@@ -61,7 +61,7 @@ def make_plot(df, col_header_name, ax):
 
 # Creates figure with two subplots for a parameter (sensor), one with all
 # measurements, the other scaled
-def line_plot(parameter, vocab, df, output_dir):
+def line_plot(parameter, vocab, df, output_dir, var_config):
 
 	# Remove rows where parameter value is missing
 	col_header_name = vocab[parameter]['col_header_name']
