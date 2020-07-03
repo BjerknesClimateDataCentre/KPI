@@ -53,14 +53,14 @@ def eval_overview_tab_function(kpi_name, meas_vocab, calc_vocab, df):
 
 # Run a kpi function which creates a figure for the measured/calculated value
 # sections. (Note: the diagnostics section can likely use this function too.)
-def eval_fig_function(kpi_name, parameter, vocab, df, output_dir):
+def eval_fig_function(kpi_name, parameter, vocab, df, output_dir, var_config):
 	eval('kpi.' + kpi_name)(parameter=parameter, vocab=vocab, df=df,
-		output_dir=output_dir)
+		output_dir=output_dir, var_config=var_config)
 
 # Run a kpi function which creates and returns a table for the
 # measured/calculated value sections. (Note: the diagnostics section can likely
 # use this function too.)
-def eval_tab_function(kpi_name, parameter, vocab, df):
+def eval_tab_function(kpi_name, parameter, vocab, df, var_config):
 	table_list = eval('kpi.' + kpi_name)(parameter=parameter, vocab=vocab,
-		df=df)
+		df=df, var_config=var_config)
 	return table_list

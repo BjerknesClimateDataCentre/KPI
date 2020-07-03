@@ -28,7 +28,7 @@ COLOR_DICT = {'2':'#85C0F9','3':'#A95AA1','4':'#F5793A', 'nan':'grey'}
 ### Functions
 
 # Create a piechart showing the distribution of flags for a given sensor
-def flag_piechart(parameter, vocab, df, output_dir):
+def flag_piechart(parameter, vocab, df, output_dir, var_config):
 
 	# Store the parameter QC flags in a list (remove '.0')
 	col_header_name = vocab[parameter]['col_header_name']

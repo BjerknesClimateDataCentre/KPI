@@ -19,7 +19,7 @@ import numpy as np
 #------------------------------------------------------------------------------
 ### Functions
 
-def meas_qc_comment_table(parameter, vocab, df):
+def meas_qc_comment_table(parameter, vocab, df, var_config):
 
 	# Store the parameter QC comments in a list and remove nan's
 	col_header_name = vocab[parameter]['col_header_name']
@@ -53,7 +53,7 @@ def meas_qc_comment_table(parameter, vocab, df):
 	return table_list
 
 
-def calc_qc_comment_table(parameter, vocab, df):
+def calc_qc_comment_table(parameter, vocab, df, var_config):
 
 	# Store the parameter QC comments in a list and remove nan's
 	col_header_name = vocab[parameter]['col_header_name']
