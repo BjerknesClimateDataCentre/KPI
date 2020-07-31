@@ -58,7 +58,6 @@ def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
 		{config['col_header_name'] : config['fig_label_name_python']
 		for config in calc_vocab.values()})
 
-
 	# Get number of subplots
 	n_plot = len(parameter_dict)
 
@@ -78,35 +77,46 @@ def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
 		plot_height = PLOT_HEIGHT_1
 
 	# Set up the figure
-	fig, ax = plt.subplots(sharex=True, figsize=(FIG_WIDTH, plot_height*n_row))
+	fig, axs = plt.subplots(n_row, n_col, sharex=True,
+		figsize=(FIG_WIDTH, plot_height*n_row))
 
 	# Loop through all row and column positions and create each subplot
 	subplot_count = 0
 	for row in range(n_row):
 		for col in range(n_col):
 
+			# Set the ax object depending on number of columns in figure
+			if n_col == 1:
+				ax = axs[row]
+			else:
+				ax = axs[row, col]
+
 			# Specify which parameter to plot
 			parameter = list(parameter_dict.keys())[subplot_count]
 
-			# Create copy of df witouh missing values for the current parameter
+			# Create copy of df without missing values for parameter to plot
 			df_edit = df.dropna(subset=[parameter])
 
-			# Specify subplot location
-			ax = plt.subplot2grid((n_row, n_col), (row, col))
+			# Create subplot in loop: add one flag at the time
+			#for flag, col in COLOR_DICT.items():
+			#	df_edit2 = df_edit[df_edit[parameter + ' QC Flag']==int(flag)]
+			#	axs[subplot_count].scatter(x=df_edit2['Date/Time'], y=df_edit2[parameter],
+			#		c=col, label=int(flag), alpha=ALPHA, edgecolors='none',
+			#		marker='.')
+			ax.plot(df_edit['Date/Time'], df_edit[parameter], linestyle='None',
+				alpha=ALPHA, marker='.')
 
-			# Create subplot in loop - one flag at the time
-			for flag, col in COLOR_DICT.items():
-				df_edit2 = df_edit[df_edit[parameter + ' QC Flag']==int(flag)]
-				ax.scatter(x=df_edit2['Date/Time'], y=df_edit2[parameter],
-					c=col, label=int(flag), alpha=ALPHA, edgecolors='none',
-					marker='.')
+			# Add x-label manually for the special case with odd number of
+			# subplots in two columns
+			if (n_col == 2) and (n_plot - subplot_count < 3):
+				ax.tick_params(labelbottom=True)
+				for tick in ax.get_xticklabels():
+					tick.set_rotation(45)
 
 			# Add subplot grid, legend and tittle
 			ax.grid(True)
-
-			if subplot_count == 0:
-				ax.legend()
-
+			#if subplot_count == 0:
+			#	axs[row, col].legend()
 			title = '{letter})     {param_label}'.format(
 				letter=string.ascii_lowercase[subplot_count],
 				param_label=list(parameter_dict.values())[subplot_count])
@@ -118,8 +128,9 @@ def overview_line_plot(meas_vocab, calc_vocab, df, output_dir):
 			if subplot_count == n_plot:
 				break
 
-	# Add shared x-axis sideways to bottom subplots
-	fig.autofmt_xdate()
+	# Hide any last empty subplots (if odd number, higher than 4, of subplots)
+	if (n_plot % 2 != 0) and (n_plot > 4):
+		axs[n_row-1, n_col-1].set_visible(False)
 
 	# Save figure to file and close figure
 	filename = 'overview_line_plot.png'
