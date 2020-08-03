@@ -24,8 +24,7 @@
             "sensors": [
                 "SST",
                 "xCO2",
-                "sal",
-                "Peq"
+                "sal"
             ],
             "calc_values": [
                 "fCO2"
