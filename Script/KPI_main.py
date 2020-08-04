@@ -113,8 +113,8 @@ inst_config = {'inst_name_full': inst_name_full,
 	'inst_name_short': inst_name_short}
 
 # Create config dictionaries for the measured (sensor) and calculated values.
-# For each variable measured by the instrument add all sensors and calc values
-# to the dictionaries.
+# For each variable measured by the instrument add all sensors and calculated
+# values to the dictionaries.
 meas_vocab = {}
 calc_vocab = {}
 for variable in inst_variables:
