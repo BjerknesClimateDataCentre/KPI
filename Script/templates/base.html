@@ -47,13 +47,13 @@
   {# Text about each figure and table in this section #}
   <p>
     {{ macros.visuals_text(
-      kpi_config['overview_figures'], section_counter, False, True) }}
+      section_config['overview_figures'], section_counter, False, True) }}
     {{ macros.visuals_text(
-      kpi_config['overview_tables'], section_counter, False, False) }}
+      section_config['overview_tables'], section_counter, False, False) }}
   </p>
 
   {# Create and include figures with captions #}
-  {% for kpi_name in kpi_config['overview_figures'] %}
+  {% for kpi_name in section_config['overview_figures'] %}
     {{kpi.eval_overview_fig_function(kpi_name=kpi_name,
       meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df,
         output_dir=output_dir) | default("", True)}}
@@ -63,7 +63,7 @@
   {% endfor %}
 
   {# Create and include tables with captions #}
-  {% for kpi_name in kpi_config['overview_tables'] %}
+  {% for kpi_name in section_config['overview_tables'] %}
     {% set table_list = kpi.eval_overview_tab_function(kpi_name=kpi_name,
       meas_vocab=meas_vocab, calc_vocab=calc_vocab, df=df) %}
     {% set table_number = section_counter ~ '.' ~ loop.index %}
@@ -93,14 +93,14 @@
 
     {# Text about each figure and table in this section #}
     <p>
-      {{ macros.visuals_text(kpi_config['meas_figures'], section_counter,
+      {{ macros.visuals_text(section_config['meas_figures'], section_counter,
       subsection_counter, True) }}
-      {{ macros.visuals_text(kpi_config['meas_tables'], section_counter,
+      {{ macros.visuals_text(section_config['meas_tables'], section_counter,
       subsection_counter, False) }}
     </p>
 
     {# Create and include figures with captions #}
-    {% for kpi_name in kpi_config['meas_figures'] %}
+    {% for kpi_name in section_config['meas_figures'] %}
       {{ kpi.eval_fig_function(kpi_name=kpi_name, parameter=sensor_name,
         vocab=meas_vocab, df=df, output_dir=output_dir, var_config=var_config)
          | default("", True)}}
@@ -112,7 +112,7 @@
     {% endfor %}
 
     {# Create and include tables with captions #}
-    {% for kpi_name in kpi_config['meas_tables'] %}
+    {% for kpi_name in section_config['meas_tables'] %}
       {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
         parameter=sensor_name, vocab=meas_vocab, df=df, var_config=var_config)
       %}
@@ -148,14 +148,14 @@
 
       {# Text about each figure and table in this section #}
       <p>
-        {{ macros.visuals_text(kpi_config['calc_figures'], section_counter,
+        {{ macros.visuals_text(section_config['calc_figures'], section_counter,
           subsection_counter, True) }}
-        {{ macros.visuals_text(kpi_config['calc_tables'], section_counter,
+        {{ macros.visuals_text(section_config['calc_tables'], section_counter,
           subsection_counter, False) }}
       </p>
 
       {# Create and include figures with captions #}
-      {% for kpi_name in kpi_config['calc_figures'] %}
+      {% for kpi_name in section_config['calc_figures'] %}
         {{ kpi.eval_fig_function(kpi_name=kpi_name, parameter=calc_name,
           vocab=calc_vocab, df=df, output_dir=output_dir, var_config=var_config)
           | default("", True)}}
@@ -167,7 +167,7 @@
       {% endfor %}
 
       {# Create and include tables with captions #}
-      {% for kpi_name in kpi_config['calc_tables'] %}
+      {% for kpi_name in section_config['calc_tables'] %}
         {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
           parameter=calc_name, vocab=calc_vocab, df=df, var_config=var_config)
         %}
