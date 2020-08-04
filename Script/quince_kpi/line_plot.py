@@ -56,7 +56,7 @@ def create_subplot(df, header, ax, letter):
 
 # Create figure with two subplots for a parameter, one showing all
 # measurements/values, the other scaled to improve visibility
-def line_plot(parameter, vocab, df, output_dir, var_config):
+def line_plot(parameter, vocab, df, output_dir):
 
 	# Remove rows in data frame with missing values
 	header = vocab[parameter]['col_header_name']

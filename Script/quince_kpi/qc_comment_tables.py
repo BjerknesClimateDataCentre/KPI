@@ -19,7 +19,7 @@ import numpy as np
 #------------------------------------------------------------------------------
 ### Functions
 
-def qc_comment_table(parameter, vocab, df, var_config):
+def qc_comment_table(parameter, vocab, df):
 
 	# Store the parameter QC comments in a list and remove nan's
 	col_header_name = vocab[parameter]['col_header_name']
