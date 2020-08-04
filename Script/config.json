@@ -80,8 +80,8 @@
         },
         "sal": {
             "col_header_name": "P_sal [psu]",
-            "fig_label_name_python": "sal",
-            "fig_label_name_html": "sal",
+            "fig_label_name_python": "Salinity",
+            "fig_label_name_html": "Salinity",
             "subsection_title": "Salinity"
         },
         "pCO2_atm": {
