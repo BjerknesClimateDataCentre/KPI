@@ -119,7 +119,7 @@
         "NRT",
         "L2"
     ],
-    "kpi_config": {
+    "section_config": {
         "overview_figures": ["overview_line_plot", "overview_bar_plot"],
         "overview_tables": ["overview_table"],
         "meas_figures": ["flag_piechart", "line_plot"],

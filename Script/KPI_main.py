@@ -136,7 +136,7 @@ for variable in inst_variables:
 # and other configurations extracted above
 render_dict = {'report_type': sys.argv[1], 'output_dir': output_dir,
 	'inst_config': inst_config, 'data_config': data_config,
-	'kpi_config': all_configs['kpi_config'], 'meas_vocab': meas_vocab,
+	'section_config': all_configs['section_config'], 'meas_vocab': meas_vocab,
 	'calc_vocab': calc_vocab, 'var_config': var_config}
 
 
