@@ -1,10 +1,10 @@
 ###############################################################################
-### TABLE(S) SHOWING QC COMMENTS
+### TABLE SHOWING QC COMMENTS
 ###############################################################################
 
 ### Description of the KPI functions:
-# - 'meas_qc_comment_table' creates a table showing counts of various QC
-# Comments assigned to a parameter (sensor) by the automatic QC.
+# - 'qc_comment_table' creates a table showing counts of various QC
+# Comments assigned to a parameter by the automatic QC.
 
 
 #------------------------------------------------------------------------------

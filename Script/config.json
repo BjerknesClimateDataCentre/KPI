@@ -122,7 +122,7 @@
     "section_config": {
         "overview_figures": ["overview_line_plot", "overview_bar_plot"],
         "overview_tables": ["overview_table"],
-        "meas_figures": ["flag_piechart", "line_plot"],
+        "meas_figures": ["flag_piechart", "line_plot","qc_comment_timeline"],
         "meas_tables": ["qc_comment_table"],
         "calc_figures": ["flag_piechart", "line_plot"],
         "calc_tables": ["qc_comment_table"]

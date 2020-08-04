@@ -25,8 +25,8 @@
  include report section name to be consistent)
  - Inside the new file create a function that produces the new figure or table
  - Add the new filename and function name to the __init__.py file
- - Add the function name to the 'kpi_config' in the configuration file. This
- config dictionary shows which kpi functions to run for each of the report
+ - Add the function name to the 'section_config' in the configuration file.
+ This config dictionary shows which kpi functions to run for each of the report
  sections
  - Create two new kpi description files in the folder
  templates/kpi_description. One description is uesd in the text of the report,
