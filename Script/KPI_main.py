@@ -126,18 +126,12 @@ for variable in inst_variables:
 		if calc_value not in calc_vocab:
 			calc_vocab[calc_value] = all_configs['vocab_config'][calc_value]
 
-# Create a variable configuration containing only the variables measures by
-# the relevant station
-var_config = {}
-for variable in inst_variables:
-	var_config[variable] = all_configs['variable_config'][variable]
-
 # Create the render dictionary and store the report type, output directory
 # and other configurations extracted above
 render_dict = {'report_type': sys.argv[1], 'output_dir': output_dir,
 	'inst_config': inst_config, 'data_config': data_config,
 	'section_config': all_configs['section_config'], 'meas_vocab': meas_vocab,
-	'calc_vocab': calc_vocab, 'var_config': var_config}
+	'calc_vocab': calc_vocab}
 
 
 ###----------------------------------------------------------------------------
@@ -169,7 +163,7 @@ pdfkit.from_file(report_path + '.html', report_path + '.pdf', options=options)
 
 
 ###----------------------------------------------------------------------------
-### Export render dictionary to json file
+### Export render dictionary to json file (convenient while developing scripts)
 ###----------------------------------------------------------------------------
 
 with open('output/render_dict.json', 'w') as render_file:

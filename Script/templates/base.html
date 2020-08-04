@@ -102,7 +102,7 @@
     {# Create and include figures with captions #}
     {% for kpi_name in section_config['meas_figures'] %}
       {{ kpi.eval_fig_function(kpi_name=kpi_name, parameter=sensor_name,
-        vocab=meas_vocab, df=df, output_dir=output_dir, var_config=var_config)
+        vocab=meas_vocab, df=df, output_dir=output_dir)
          | default("", True)}}
       {% set filename = sensor_name + '_' + kpi_name + '.png'  %}
       {% set figure_number = section_counter ~ '.' ~ subsection_counter ~ '.'
@@ -114,7 +114,7 @@
     {# Create and include tables with captions #}
     {% for kpi_name in section_config['meas_tables'] %}
       {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
-        parameter=sensor_name, vocab=meas_vocab, df=df, var_config=var_config)
+        parameter=sensor_name, vocab=meas_vocab, df=df)
       %}
       {% set table_number = section_counter ~ '.' ~ subsection_counter ~ '.'
       ~ loop.index %}
@@ -157,7 +157,7 @@
       {# Create and include figures with captions #}
       {% for kpi_name in section_config['calc_figures'] %}
         {{ kpi.eval_fig_function(kpi_name=kpi_name, parameter=calc_name,
-          vocab=calc_vocab, df=df, output_dir=output_dir, var_config=var_config)
+          vocab=calc_vocab, df=df, output_dir=output_dir)
           | default("", True)}}
         {% set filename = calc_name + '_' + kpi_name + '.png'  %}
         {% set figure_number = section_counter ~ '.' ~ subsection_counter ~ '.'
@@ -169,7 +169,7 @@
       {# Create and include tables with captions #}
       {% for kpi_name in section_config['calc_tables'] %}
         {% set table_list = kpi.eval_tab_function(kpi_name=kpi_name,
-          parameter=calc_name, vocab=calc_vocab, df=df, var_config=var_config)
+          parameter=calc_name, vocab=calc_vocab, df=df)
         %}
         {% set table_number = section_counter ~ '.' ~ subsection_counter ~ '.'
           ~ loop.index %}
