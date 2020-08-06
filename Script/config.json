@@ -126,5 +126,12 @@
         "meas_tables": ["qc_comment_table"],
         "calc_figures": ["flag_piechart", "line_plot"],
         "calc_tables": []
+    },
+    "prop_config": {
+        "deltaT": {
+            "subsection_title": "Delta T plot",
+            "x-axis": "SST",
+            "y-axis": "Teq"
+        }
     }
 }

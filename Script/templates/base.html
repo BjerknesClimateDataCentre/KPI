@@ -9,6 +9,14 @@
 <body>
 
   {#-------------------------------------------------------------------------#}
+  {# CREATE PARAMETER VOCABULARIES FOR MEASURED AND CALC SECTION#}
+  {% set meas_vocab = kpi.create_vocab(param_list=meas_param,
+    vocab_config=custom_vocab_config) %}
+  {% set calc_vocab = kpi.create_vocab(param_list=calc_param,
+    vocab_config=custom_vocab_config) %}
+
+
+  {#-------------------------------------------------------------------------#}
   {# REPORT TITLE #}
   <h1>Key Performance Indicators Report</h1>
   <h2>For ICOS station <i>{{inst_config['inst_name_full']}}</i> -
@@ -187,10 +195,14 @@
 
   {#-------------------------------------------------------------------------#}
   {# PROP-PROP SECTION #}
-  <h3>{{section_counter}}.&emsp;Property-property plots</h3>
+  {% if custom_prop_config != [] %}
+    <h3>{{section_counter}}.&emsp;Property-property plots</h3>
 
-  {# Increase section counter #}
-  {% set section_counter = section_counter + 1 %}
+
+    {# Increase section counter #}
+    {% set section_counter = section_counter + 1 %}
+
+  {% endif %}
 
   {#-------------------------------------------------------------------------#}
   {# DIAGNOSTICS SECTION #}
