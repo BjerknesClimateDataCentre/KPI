@@ -101,6 +101,7 @@ df_end = str(df['Date/Time'][len(df)-1].date())
 data_config = {'data_filename': data_file, 'data_level': data_level,
 	'df_start': df_start,'df_end': df_end}
 
+###---------------
 # Identify instrument name (full and short) from filename
 for instrument, config in all_configs['instrument_config'].items():
 	if config['code'] in data_files[0]:
@@ -112,26 +113,55 @@ for instrument, config in all_configs['instrument_config'].items():
 inst_config = {'inst_name_full': inst_name_full,
 	'inst_name_short': inst_name_short}
 
-# Create config dictionaries for the measured (sensor) and calculated values.
+###---------------
+# Create parameter lists for the measured (sensor) and calculated values.
 # For each variable measured by the instrument add all sensors and calculated
-# values to the dictionaries.
-meas_vocab = {}
-calc_vocab = {}
+# values to the lists.
+meas_param = []
+calc_param = []
 for variable in inst_variables:
 	variable_dict = all_configs['variable_config'][variable]
 	for sensor in variable_dict['sensors']:
-		if sensor not in meas_vocab:
-			meas_vocab[sensor] = all_configs['vocab_config'][sensor]
+		if sensor not in meas_param:
+			meas_param.append(sensor)
 	for calc_value in variable_dict['calc_values']:
-		if calc_value not in calc_vocab:
-			calc_vocab[calc_value] = all_configs['vocab_config'][calc_value]
+		if calc_value not in calc_param:
+			calc_param.append(calc_value)
 
+# Create customised vocab config to only include parameters from the measured
+# and calculated parameter lists
+custom_vocab_config = {}
+for param in meas_param:
+	custom_vocab_config[param] = all_configs['vocab_config'][param]
+for param in calc_param:
+	custom_vocab_config[param] = all_configs['vocab_config'][param]
+
+
+###---------------
+# Add relevant prop-prop-plot KPI names to the prop-prop_config list
+custom_prop_config = {}
+# Add deltaT KPI to prop list if Temp at equilibrator is measured
+Teq_header_name = all_configs['vocab_config']['Teq']['col_header_name']
+if not df[Teq_header_name].isnull().all():
+	custom_prop_config['deltaT'] = all_configs['prop_config']['deltaT']
+
+# Add x and y axis prop-prop parameters to the custom_vocab_config if not there
+for prop_config in all_configs['prop_config'].values():
+	x_param = prop_config['x-axis']
+	if x_param not in custom_vocab_config.keys():
+		custom_vocab_config[x_param] = all_configs['vocab_config'][x_param]
+	y_param = prop_config['y-axis']
+	if y_param not in custom_vocab_config.keys():
+		custom_vocab_config[y_param] = all_configs['vocab_config'][y_param]
+
+###---------------
 # Create the render dictionary and store the report type, output directory
 # and other configurations extracted above
 render_dict = {'report_type': sys.argv[1], 'output_dir': output_dir,
 	'inst_config': inst_config, 'data_config': data_config,
-	'section_config': all_configs['section_config'], 'meas_vocab': meas_vocab,
-	'calc_vocab': calc_vocab}
+	'section_config': all_configs['section_config'], 'meas_param': meas_param,
+	'calc_param': calc_param, 'custom_prop_config': custom_prop_config,
+	'custom_vocab_config': custom_vocab_config}
 
 
 ###----------------------------------------------------------------------------
