@@ -6,6 +6,14 @@
   {% endif %}
 {% endmacro %}
 
+{# Description about one prop-prop plot #}
+{% macro prop_text(report_type, prop_name) %}
+  {% if report_type == 'HO' %}
+    {% set prop_text_filename = 'prop_descriptions/' + prop_name + '.html' %}
+    {% include prop_text_filename %}
+  {% endif %}
+{% endmacro %}
+
 {# Description of all figures and tables inside one (sub-)section #}
 {% macro visuals_text(kpi_list, section_number, subsection_number, figure) %}
   {% for kpi_name in kpi_list %}
