@@ -198,6 +198,37 @@
   {% if custom_prop_config != [] %}
     <h3>{{section_counter}}.&emsp;Property-property plots</h3>
 
+    {# Loop to create a subsection per prop-prop plot #}
+    {% for prop_name, prop_config in custom_prop_config.items() %}
+
+      {# Store subsection counter #}
+      {% set subsection_counter = loop.index %}
+
+      {# Subsection number and title #}
+      <h4> {{section_counter}}.{{subsection_counter}}&emsp;
+      {{prop_config['subsection_title']}} </h4>
+
+      {# Description about the prop-prop plot #}
+      <p> {{ macros.prop_text(report_type, prop_name) }} </p>
+
+      {# Text about each figure in this section #}
+      <p>
+        {# (prop_kpi_list converts prop_name from string to list) #}
+        {% set prop_kpi_list = prop_name.split(' ') %}
+        {{ macros.visuals_text(prop_kpi_list, section_counter,
+          subsection_counter, True) }}
+      </p>
+
+      {# Create and include figures with captions #}
+      {{ kpi.deltaT(vocab=custom_vocab_config, prop_config=prop_config, df=df,
+        output_dir=output_dir) | default("", True) }}
+      {% set filename = prop_name + '.png'  %}
+      {% set figure_number = section_counter ~ '.' ~ subsection_counter ~ '.'
+        ~ loop.index %}
+      {{ macros.figure(prop_name, filename, figure_number, False) }}
+
+    {# End prop-prop subsection for loop #}
+    {% endfor %}
 
     {# Increase section counter #}
     {% set section_counter = section_counter + 1 %}
